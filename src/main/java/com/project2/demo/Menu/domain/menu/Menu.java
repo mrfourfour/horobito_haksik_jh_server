@@ -1,7 +1,7 @@
-package com.project2.demo.product.menu;
+package com.project2.demo.Menu.domain.menu;
 
 
-import com.project2.demo.product.category.Category;
+import com.project2.demo.Menu.domain.category.Category;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -29,6 +29,8 @@ public class Menu {
 
 
     private Boolean soldOut;
+
+    private Country country;
 
     private List<Category> categoryList = new ArrayList<>();
 

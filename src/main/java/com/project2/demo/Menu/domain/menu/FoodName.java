@@ -1,10 +1,9 @@
-package com.project2.demo.product.menu;
+package com.project2.demo.Menu.domain.menu;
 
 
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
 
 @Embeddable
 @NoArgsConstructor

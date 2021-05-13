@@ -1,16 +1,11 @@
-package com.project2.demo.product.menu;
+package com.project2.demo.Menu.domain.menu;
 
 
 import lombok.NoArgsConstructor;
-import lombok.Value;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import java.time.Clock;
 import java.time.LocalTime;
 import java.time.MonthDay;
-import java.util.Date;
 
 @Embeddable
 @NoArgsConstructor
