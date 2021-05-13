@@ -30,7 +30,18 @@ public class Time {
         this.endTime = endTime;
     }
 
+    private Time(LocalTime startTime, LocalTime endTime, MonthDay limitPeriod) {
+        this.endDay = limitPeriod;
+        this.limited = true;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public static Time create(LocalTime startTime, LocalTime endTime){
+        return new Time(startTime, endTime);
+    }
+
+    public static Time limit(LocalTime startTime, LocalTime endTime, MonthDay limitPeriod){
         return new Time(startTime, endTime);
     }
 

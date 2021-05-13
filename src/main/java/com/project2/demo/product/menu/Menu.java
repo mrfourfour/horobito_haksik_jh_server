@@ -5,6 +5,8 @@ import com.project2.demo.product.category.Category;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.MonthDay;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,16 +25,25 @@ public class Menu {
     private Price price;
 
     @Embedded
-    private Time startTime;
-
-    @Embedded
-    private Time FinishTime;
-
-    private List<Category> categoryList;
+    private Time salesTime;
 
 
+    private Boolean soldOut;
 
+    private List<Category> categoryList = new ArrayList<>();
 
+    private Menu(FoodName foodName, Price price, Time salesTime) {
+        this.foodName = foodName;
+        this.price = price;
+        this.salesTime = salesTime;
+        this.soldOut = false;
+    }
 
+    public static Menu create(FoodName foodName, Price price, Time salesTime){
+        return new Menu(foodName, price, salesTime);
+    }
 
+    public void LimitMenuSalePeriod(MonthDay period){
+        this.salesTime = Time.limit(this.salesTime.startTime, this.salesTime.endTime, period);
+    }
 }
