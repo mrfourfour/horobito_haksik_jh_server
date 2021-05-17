@@ -1,6 +1,7 @@
+
 plugins {
     id 'org.springframework.boot' version '2.4.5'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+   id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
 
@@ -8,19 +9,49 @@ group = 'com.project2'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+dependencyManagement {
+    imports {
+        mavenBom "org.keycloak.bom:keycloak-adapter-bom:12.0.1"
+    }
+}
+
 configurations {
+
+
     compileOnly {
         extendsFrom annotationProcessor
     }
+
+
 }
+
+apply {
+    plugin("org.springframework.boot")
+    plugin("io.spring.dependency-management")
+}
+
 
 repositories {
     mavenCentral()
 }
 
+
+
 dependencies {
+    // keycloak
+    compile 'org.keycloak:keycloak-spring-boot-adapter:2.5.1.Final'
+    compile 'org.keycloak:keycloak-tomcat8-adapter:2.5.1.Final'
+    implementation 'org.keycloak:keycloak-spring-boot-starter'
+
+    implementation 'org.flywaydb:flyway-core'
+    runtime 'org.postgresql:postgresql'
+
+
+
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
