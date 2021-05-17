@@ -2,6 +2,7 @@ package com.project2.demo.security.infrastructure;
 
 
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
@@ -21,14 +22,13 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
 @KeycloakConfiguration
+@RequiredArgsConstructor
 public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter{
 
 
-    private final KeycloakAuthenticationProvider keycloakAuthenticationProvider
-            = new KeycloakAuthenticationProvider();
+    private final KeycloakAuthenticationProvider keycloakAuthenticationProvider;
 
-    private final SessionRegistryImpl sessionRegistry
-            = new SessionRegistryImpl();
+    private final SessionRegistryImpl sessionRegistry;
 
 
     protected void configure(HttpSecurity httpSecurity) throws Exception {
