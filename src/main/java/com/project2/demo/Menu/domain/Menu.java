@@ -1,13 +1,11 @@
-package com.project2.demo.Menu.domain.menu;
+package com.project2.demo.Menu.domain;
 
 
-import com.project2.demo.Menu.domain.category.Category;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.MonthDay;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 @NoArgsConstructor
@@ -30,9 +28,10 @@ public class Menu {
 
     private Boolean soldOut;
 
-    private Country country;
+    private CategoryCountry country;
 
-    private List<Category> categoryList = new ArrayList<>();
+    private CategoryFood food;
+
 
     private Menu(FoodName foodName, Price price, Time salesTime) {
         this.foodName = foodName;
