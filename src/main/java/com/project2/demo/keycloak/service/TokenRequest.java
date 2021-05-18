@@ -6,4 +6,10 @@ import lombok.Value;
 public class TokenRequest {
     String username;
     String password;
+
+    public static TokenRequest create(String username, String password){
+        return new TokenRequest(username, password);
+    }
+
+
 }
