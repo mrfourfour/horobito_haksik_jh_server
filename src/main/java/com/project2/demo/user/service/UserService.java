@@ -21,7 +21,12 @@ public class UserService {
         return tokenProvider.issue(tokenRequest);
     }
 
-    public Token signUp(SignUpParameter)
+    public Token signUp(SignUpParameter signUpParameter){
+        TokenRequest tokenRequest
+                = TokenRequest.create(signUpParameter.getUsername(),
+                signUpParameter.getPassword());
+        return tokenProvider.issue(tokenRequest);
+    }
 
     public UserDto findLoggedUser(){
         UserDto userDto = null;
