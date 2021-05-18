@@ -4,7 +4,6 @@ package com.project2.demo.user.service;
 import com.project2.demo.keycloak.service.Token;
 import com.project2.demo.keycloak.service.TokenProvider;
 import com.project2.demo.keycloak.service.TokenRequest;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +20,8 @@ public class UserService {
                 ,loginParameter.getPassword());
         return tokenProvider.issue(tokenRequest);
     }
+
+    public Token signUp(SignUpParameter)
 
     public UserDto findLoggedUser(){
         UserDto userDto = null;

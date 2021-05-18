@@ -4,7 +4,7 @@ package com.project2.demo.user.controller;
 import com.project2.demo.keycloak.service.Token;
 import com.project2.demo.keycloak.service.TokenProvider;
 import com.project2.demo.user.service.LoginParameter;
-import com.project2.demo.user.service.SingUpParameter;
+import com.project2.demo.user.service.SignUpParameter;
 import com.project2.demo.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -66,8 +66,8 @@ class SignUpRequest{
     String username;
     String password;
 
-    SingUpParameter to(){
-        return new SingUpParameter(username, password);
+    SignUpParameter to(){
+        return new SignUpParameter(username, password);
     }
 
 }
