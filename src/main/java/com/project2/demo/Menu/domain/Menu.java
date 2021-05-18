@@ -33,18 +33,30 @@ public class Menu {
     private CategoryFood food;
 
 
-    private Menu(FoodName foodName, Price price, Time salesTime) {
+    private Menu(FoodName foodName,
+                 Price price,
+                 Time salesTime,
+                 CategoryCountry country,
+                 CategoryFood food) {
         this.foodName = foodName;
         this.price = price;
         this.salesTime = salesTime;
         this.soldOut = false;
+        this.country = country;
+        this.food = food;
     }
 
-    public static Menu create(FoodName foodName, Price price, Time salesTime){
-        return new Menu(foodName, price, salesTime);
+    public static Menu create(FoodName foodName,
+                              Price price,
+                              Time salesTime,
+                              CategoryCountry country,
+                              CategoryFood food){
+        return new Menu(foodName, price, salesTime, country, food);
     }
 
     public void LimitMenuSalePeriod(MonthDay period){
-        this.salesTime = Time.limit(this.salesTime.startTime, this.salesTime.endTime, period);
+        this.salesTime = Time.limit(this.salesTime.startTime,
+                this.salesTime.endTime,
+                period);
     }
 }
