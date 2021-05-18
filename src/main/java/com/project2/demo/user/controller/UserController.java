@@ -22,7 +22,7 @@ public class UserController {
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest){
         Token token = userService.login(loginRequest.to());
-        return LoginResponse(token);
+        return new LoginResponse(token);
 
     }
 
@@ -74,7 +74,9 @@ class SignUpRequest{
 
 @Value
 class LoginResponse{
-    Token token = null;
+    public Token token ;
 
-    pu
+    public LoginResponse(Token token) {
+        this.token = token;
+    }
 }
