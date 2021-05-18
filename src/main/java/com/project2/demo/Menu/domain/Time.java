@@ -37,7 +37,7 @@ public class Time {
     }
 
     public static Time limit(LocalTime startTime, LocalTime endTime, MonthDay limitPeriod){
-        return new Time(startTime, endTime);
+        return new Time(startTime, endTime, limitPeriod);
     }
 
 
