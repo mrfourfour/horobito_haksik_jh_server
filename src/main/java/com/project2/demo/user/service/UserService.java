@@ -25,6 +25,7 @@ public class UserService {
         TokenRequest tokenRequest
                 = TokenRequest.create(signUpParameter.getUsername(),
                 signUpParameter.getPassword());
+        tokenProvider.signUp(tokenRequest);
         return tokenProvider.issue(tokenRequest);
     }
 

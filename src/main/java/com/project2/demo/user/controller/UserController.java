@@ -58,7 +58,7 @@ class LoginRequest{
 
 @Value
 class RefreshTokenPayload{
-    String refreshToken;
+    public String refreshToken;
 }
 
 @Value
