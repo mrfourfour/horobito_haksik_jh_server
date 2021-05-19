@@ -1,6 +1,7 @@
 package com.project2.demo.Menu.domain;
 
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
@@ -9,6 +10,7 @@ import java.time.MonthDay;
 
 @Embeddable
 @NoArgsConstructor
+@Getter
 public class Time {
 
      MonthDay endDay;

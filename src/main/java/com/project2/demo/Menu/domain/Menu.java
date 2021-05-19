@@ -50,13 +50,28 @@ public class Menu {
                               Price price,
                               Time salesTime,
                               CategoryCountry country,
-                              CategoryFood food){
+                              CategoryFood food) {
         return new Menu(foodName, price, salesTime, country, food);
     }
 
-    public void LimitMenuSalePeriod(MonthDay period){
-        this.salesTime = Time.limit(this.salesTime.startTime,
+    public void limit(MonthDay limitedDay) {
+        this.salesTime
+                = Time.limit(
+                this.salesTime.startTime,
                 this.salesTime.endTime,
-                period);
+                limitedDay
+        );
     }
+
+    ;
+
+    public void unLimit() {
+        this.salesTime = Time.create(this.salesTime.startTime,
+                this.salesTime.endTime);
+    }
+
 }
+
+
+
+

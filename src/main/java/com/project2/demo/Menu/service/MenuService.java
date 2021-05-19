@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.MonthDay;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MenuService {
@@ -19,9 +22,23 @@ public class MenuService {
         Time time = getTime(menuParameter);
         Menu menu = getMenu(time, menuParameter);
         menuRepository.save(menu);
+    }
 
+    @Transactional
+    public void limitMenu(Long menuId, MonthDay limitDay){
+        Menu menu = menuRepository.findMenuById(menuId);
+        menu.limit(limitDay);
 
     }
+
+    @Transactional
+    public void unLimitMenu(Long menuId){
+        Menu menu = menuRepository.findMenuById(menuId);
+        menu.unLimit();
+
+    }
+
+
 
     private Menu getMenu(Time time, MenuParameter menuParameter) {
         Menu menu =Menu.create(
