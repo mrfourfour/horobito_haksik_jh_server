@@ -26,16 +26,28 @@ public class MenuService {
 
     @Transactional
     public void limitMenu(Long menuId, MonthDay limitDay){
-        Menu menu = menuRepository.findMenuById(menuId);
+        Menu menu = getMenuById(menuId);
         menu.limit(limitDay);
 
     }
 
     @Transactional
     public void unLimitMenu(Long menuId){
-        Menu menu = menuRepository.findMenuById(menuId);
+        Menu menu = getMenuById(menuId);
         menu.unLimit();
 
+    }
+
+    @Transactional
+    public void setSoldOut(Long menuId){
+        Menu menu = getMenuById(menuId);
+
+
+
+    }
+
+    private Menu getMenuById(Long menuId) {
+        return menuRepository.findMenuById(menuId);
     }
 
 
