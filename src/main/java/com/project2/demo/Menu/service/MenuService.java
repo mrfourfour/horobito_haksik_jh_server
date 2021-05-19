@@ -15,32 +15,39 @@ public class MenuService {
 
     @Transactional
     public void CreateMenu(MenuParameter menuParameter){
-        Time time;
+
+        Time time = getTime(menuParameter);
+        Menu menu = getMenu(time, menuParameter);
+        menuRepository.save(menu);
+
+
+    }
+
+    private Menu getMenu(Time time, MenuParameter menuParameter) {
+        Menu menu =Menu.create(
+                FoodName.create(menuParameter.getFoodName()
+                ),
+                Price.create(menuParameter.getPrice()),
+                time,
+                CategoryCountry.valueOf(menuParameter.getCountry()),
+                CategoryFood.valueOf(menuParameter.getFood())
+        );
+        return menu;
+    }
+
+    private Time getTime(MenuParameter menuParameter) {
         if (!menuParameter.getLimited()){
 
-            time = Time.create(
+            return Time.create(
                     menuParameter.getStartTime(),
                     menuParameter.getEndTime()
             );
         }else {
-            time = Time.limit(
+            return Time.limit(
                     menuParameter.getStartTime(),
                     menuParameter.getEndTime(),
                     menuParameter.getEndDay()
             );
         }
-
-
-
-        Menu menu =
-                Menu.create(
-                        FoodName.create(menuParameter.getFoodName()
-                        ),
-                        Price.create(menuParameter.getPrice()),
-                        time,
-                        CategoryCountry.valueOf(menuParameter.getCountry()),
-                        CategoryFood.valueOf(menuParameter.getFood())
-                );
-        menuRepository.save(menu);
     }
 }
