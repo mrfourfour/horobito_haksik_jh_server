@@ -41,8 +41,13 @@ public class MenuService {
     @Transactional
     public void setSoldOut(Long menuId){
         Menu menu = getMenuById(menuId);
+        menu.setSoldOut();
 
-
+    }
+    @Transactional
+    public void setUnSoldOut(Long menuId){
+        Menu menu = getMenuById(menuId);
+        menu.setUnSoldOut();
 
     }
 

@@ -26,7 +26,7 @@ public class Menu {
     private Time salesTime;
 
 
-    private Boolean soldOut;
+    private SoldOutFlag soldOut;
 
     private CategoryCountry country;
 
@@ -41,7 +41,7 @@ public class Menu {
         this.foodName = foodName;
         this.price = price;
         this.salesTime = salesTime;
-        this.soldOut = false;
+        this.soldOut = SoldOutFlag.create(false);
         this.country = country;
         this.food = food;
     }
@@ -69,6 +69,15 @@ public class Menu {
         this.salesTime = Time.create(this.salesTime.startTime,
                 this.salesTime.endTime);
     }
+
+    public void setSoldOut(){
+        this.soldOut =  SoldOutFlag.create(true);
+    }
+
+    public void setUnSoldOut(){
+        this.soldOut = SoldOutFlag.create(false);
+    }
+
 
 }
 
