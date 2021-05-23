@@ -38,8 +38,20 @@ public class MenuService {
     @Transactional
     public void unLimitMenu(Long menuId){
         Menu menu = getMenuById(menuId);
-        menu.unLimit();
+        checkExistence(menu);
 
+        if (menu.discriminateSoldOut()){
+            menu.unLimit();
+        }else {
+            throw new IllegalArgumentException();
+        }
+
+    }
+
+    private void checkExistence(Menu menu) {
+        if (menu==null){
+            throw new IllegalArgumentException();
+        }
     }
 
     @Transactional

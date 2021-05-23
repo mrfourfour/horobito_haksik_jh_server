@@ -1,12 +1,14 @@
 package com.project2.demo.Menu.domain;
 
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
 @NoArgsConstructor
+@Getter
 public class SoldOutFlag {
 
     Boolean soldout;

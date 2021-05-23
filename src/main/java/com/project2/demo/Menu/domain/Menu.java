@@ -78,6 +78,10 @@ public class Menu {
         this.soldOut = SoldOutFlag.create(false);
     }
 
+    public Boolean discriminateSoldOut(){
+        return this.soldOut.getSoldout();
+    }
+
 
 }
 
