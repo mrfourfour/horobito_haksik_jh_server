@@ -30,6 +30,8 @@ public class MenuService {
     public void limitMenu(Long menuId, LimitDayParameter limitDayParameter){
 
         Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+
         menu.limit(MonthDay.of(limitDayParameter.getLimitedMonth(),
                 limitDayParameter.getLimitedDayOfMonth()));
 
@@ -48,29 +50,33 @@ public class MenuService {
 
     }
 
+    @Transactional
+    public void setSoldOut(Long menuId){
+        Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+
+        menu.setSoldOut();
+
+    }
+
+    @Transactional
+    public void setUnSoldOut(Long menuId){
+        Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+
+        menu.setUnSoldOut();
+
+    }
+    private Menu getMenuById(Long menuId) {
+        return menuRepository.findMenuById(menuId);
+    }
+
+
     private void checkExistence(Menu menu) {
         if (menu==null){
             throw new IllegalArgumentException();
         }
     }
-
-    @Transactional
-    public void setSoldOut(Long menuId){
-        Menu menu = getMenuById(menuId);
-        menu.setSoldOut();
-
-    }
-    @Transactional
-    public void setUnSoldOut(Long menuId){
-        Menu menu = getMenuById(menuId);
-        menu.setUnSoldOut();
-
-    }
-
-    private Menu getMenuById(Long menuId) {
-        return menuRepository.findMenuById(menuId);
-    }
-
 
 
     private Menu getMenu(Time time, MenuParameter menuParameter) {
