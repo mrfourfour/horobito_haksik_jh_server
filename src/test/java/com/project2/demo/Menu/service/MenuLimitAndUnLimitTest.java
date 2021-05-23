@@ -10,6 +10,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 public class MenuLimitAndUnLimitTest {
 
@@ -32,8 +36,11 @@ public class MenuLimitAndUnLimitTest {
     public void test1(){
         MenuService sut
                 = new MenuService(menuRepository);
+        Long menuId = Long.parseLong("1");
 
-        when()
+        when(sut.getMenuById(menuId)).thenReturn(null);
+
+        assertThrows(IllegalArgumentException.class, ()->sut.limitMenu(menuId, limitDayParameter));
 
 
     }
