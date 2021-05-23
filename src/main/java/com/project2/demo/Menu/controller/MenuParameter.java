@@ -12,10 +12,14 @@ public class MenuParameter {
 
     int price;
 
-    LocalTime startTime;
-    LocalTime endTime;
+    int startHour;
+    int startMinute;
 
-    MonthDay endDay;
+    int endHour;
+    int endMinute;
+
+    int endMonth;
+    int endDayOfMonth;
 
     Boolean limited;
 
