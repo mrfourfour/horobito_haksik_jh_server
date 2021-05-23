@@ -25,7 +25,11 @@ public class MenuController {
 
     @GetMapping("/{menuId}")
     public void limitMenu(@PathVariable Long menuId, @RequestBody LimitDayParameter limitDayParameter){
-        menuService.limitMenu(menuId, limitDayParameter);
+        try {
+            menuService.limitMenu(menuId, limitDayParameter);
+        }catch (IllegalArgumentException argE){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{menuId}")

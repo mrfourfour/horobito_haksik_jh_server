@@ -30,11 +30,20 @@ public class MenuService {
     public void limitMenu(Long menuId, LimitDayParameter limitDayParameter){
 
         Menu menu = getMenuById(menuId);
+
         checkExistence(menu);
+
+        checkAlreadyLimited(menu);
 
         menu.limit(MonthDay.of(limitDayParameter.getLimitedMonth(),
                 limitDayParameter.getLimitedDayOfMonth()));
 
+    }
+
+    private void checkAlreadyLimited(Menu menu) {
+        if (menu.discriminateLimit()){
+            throw new IllegalArgumentException();
+        }
     }
 
     @Transactional

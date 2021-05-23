@@ -82,6 +82,10 @@ public class Menu {
         return this.soldOut.getSoldout();
     }
 
+    public Boolean discriminateLimit(){
+        return this.salesTime.limited;
+    }
+
 
 }
 
