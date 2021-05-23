@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -25,7 +26,7 @@ public class MenuLimitAndUnLimitTest {
             = new MenuParameter("pizza"
             , 50000,
             7,24, 8,30,
-            3,20,true, "KOREA","NOODLE"
+            3,20,false, "KOREA","NOODLE"
     );
     LimitDayParameter limitDayParameter
             = new LimitDayParameter(1, 1);
@@ -53,5 +54,20 @@ public class MenuLimitAndUnLimitTest {
         Long menuId = Long.parseLong("1");
         when(sut.getMenuById(menuId)).thenReturn(menu);
         assertThrows(IllegalArgumentException.class, ()->sut.limitMenu(menuId, limitDayParameter));
+    }
+
+    @DisplayName("기간한정 설정 테스트3, 기간 한정 설정 ")
+    @Test
+    public void test3(){
+        MenuService sut
+                = new MenuService(menuRepository);
+        Menu menu = sut.getMenu(sut.getTime(menuParameter), menuParameter);
+        Long menuId = Long.parseLong("1");
+        when(sut.getMenuById(menuId)).thenReturn(menu);
+        System.out.println("설정 전 : " + menu.discriminateLimit());
+        sut.limitMenu(menuId, limitDayParameter);
+
+        assertEquals(true, menu.discriminateLimit());
+        System.out.println("설정 후 : " + menu.discriminateLimit());
     }
 }
