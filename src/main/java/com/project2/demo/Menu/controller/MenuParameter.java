@@ -1,4 +1,4 @@
-package com.project2.demo.Menu.service;
+package com.project2.demo.Menu.controller;
 
 
 import lombok.Value;
