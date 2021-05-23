@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
 import java.time.MonthDay;
 
 @Service
@@ -17,7 +18,7 @@ public class MenuService {
 
 
     @Transactional
-    public void CreateMenu(MenuParameter menuParameter){
+    public void createMenu(MenuParameter menuParameter){
 
         Time time = getTime(menuParameter);
         Menu menu = getMenu(time, menuParameter);
@@ -73,14 +74,14 @@ public class MenuService {
         if (!menuParameter.getLimited()){
 
             return Time.create(
-                    menuParameter.getStartTime(),
-                    menuParameter.getEndTime()
+                    LocalTime.of(menuParameter.getStartHour(),  menuParameter.getStartMinute()),
+                    LocalTime.of(menuParameter.getEndHour(), menuParameter.getEndMinute())
             );
         }else {
             return Time.limit(
-                    menuParameter.getStartTime(),
-                    menuParameter.getEndTime(),
-                    menuParameter.getEndDay()
+                    LocalTime.of(menuParameter.getStartHour(),  menuParameter.getStartMinute()),
+                    LocalTime.of(menuParameter.getEndHour(), menuParameter.getEndMinute()),
+                    MonthDay.of(menuParameter.getEndMonth(), menuParameter.getEndDayOfMonth())
             );
         }
     }
