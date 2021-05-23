@@ -1,6 +1,7 @@
 package com.project2.demo.Menu.service;
 
 
+import com.project2.demo.Menu.controller.LimitDayParameter;
 import com.project2.demo.Menu.controller.MenuParameter;
 import com.project2.demo.Menu.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +27,11 @@ public class MenuService {
     }
 
     @Transactional
-    public void limitMenu(Long menuId, MonthDay limitDay){
+    public void limitMenu(Long menuId, LimitDayParameter limitDayParameter){
+
         Menu menu = getMenuById(menuId);
-        menu.limit(limitDay);
+        menu.limit(MonthDay.of(limitDayParameter.getLimitedMonth(),
+                limitDayParameter.getLimitedDayOfMonth()));
 
     }
 
