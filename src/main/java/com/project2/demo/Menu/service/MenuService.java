@@ -66,42 +66,42 @@ public class MenuService {
 
 
 
-    private void checkAlreadySoldOut(Menu menu) {
+    public void checkAlreadySoldOut(Menu menu) {
         if (menu.discriminateSoldOut()){
             throw new IllegalArgumentException();
         }
     }
-    private void checkAlreadyUnSoldOut(Menu menu) {
+    public void checkAlreadyUnSoldOut(Menu menu) {
         if (!menu.discriminateSoldOut()){
             throw new IllegalArgumentException();
         }
     }
 
 
-    private void checkAlreadyUnLimited(Menu menu) {
+    public void checkAlreadyUnLimited(Menu menu) {
         if (!menu.discriminateLimit()){
             throw new IllegalArgumentException();
         }
     }
 
-    private void checkAlreadyLimited(Menu menu) {
+    public void checkAlreadyLimited(Menu menu) {
         if (menu.discriminateLimit()){
             throw new IllegalArgumentException();
         }
     }
-    private Menu getMenuById(Long menuId) {
+    public Menu getMenuById(Long menuId) {
         return menuRepository.findMenuById(menuId);
     }
 
 
-    private void checkExistence(Menu menu) {
+    public void checkExistence(Menu menu) {
         if (menu==null){
             throw new IllegalArgumentException();
         }
     }
 
 
-    private Menu getMenu(Time time, MenuParameter menuParameter) {
+    public Menu getMenu(Time time, MenuParameter menuParameter) {
         Menu menu =Menu.create(
                 FoodName.create(menuParameter.getFoodName()
                 ),
@@ -113,7 +113,7 @@ public class MenuService {
         return menu;
     }
 
-    private Time getTime(MenuParameter menuParameter) {
+    public Time getTime(MenuParameter menuParameter) {
         if (!menuParameter.isLimited()){
 
             return Time.create(
