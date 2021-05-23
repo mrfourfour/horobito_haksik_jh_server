@@ -28,42 +28,27 @@ public class MenuService {
 
     @Transactional
     public void limitMenu(Long menuId, LimitDayParameter limitDayParameter){
-
         Menu menu = getMenuById(menuId);
-
         checkExistence(menu);
-
         checkAlreadyLimited(menu);
-
         menu.limit(MonthDay.of(limitDayParameter.getLimitedMonth(),
                 limitDayParameter.getLimitedDayOfMonth()));
 
-    }
-
-    private void checkAlreadyLimited(Menu menu) {
-        if (menu.discriminateLimit()){
-            throw new IllegalArgumentException();
-        }
     }
 
     @Transactional
     public void unLimitMenu(Long menuId){
         Menu menu = getMenuById(menuId);
         checkExistence(menu);
-
-        if (menu.discriminateSoldOut()){
-            menu.unLimit();
-        }else {
-            throw new IllegalArgumentException();
-        }
-
+        checkAlreadyUnLimited(menu);
+        menu.unLimit();
     }
 
     @Transactional
     public void setSoldOut(Long menuId){
         Menu menu = getMenuById(menuId);
         checkExistence(menu);
-
+        checkAlreadySoldOut(menu);
         menu.setSoldOut();
 
     }
@@ -72,9 +57,34 @@ public class MenuService {
     public void setUnSoldOut(Long menuId){
         Menu menu = getMenuById(menuId);
         checkExistence(menu);
-
+        checkAlreadyUnSoldOut(menu);
         menu.setUnSoldOut();
+    }
 
+
+
+    private void checkAlreadySoldOut(Menu menu) {
+        if (menu.discriminateSoldOut()){
+            throw new IllegalArgumentException();
+        }
+    }
+    private void checkAlreadyUnSoldOut(Menu menu) {
+        if (!menu.discriminateSoldOut()){
+            throw new IllegalArgumentException();
+        }
+    }
+
+
+    private void checkAlreadyUnLimited(Menu menu) {
+        if (!menu.discriminateLimit()){
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void checkAlreadyLimited(Menu menu) {
+        if (menu.discriminateLimit()){
+            throw new IllegalArgumentException();
+        }
     }
     private Menu getMenuById(Long menuId) {
         return menuRepository.findMenuById(menuId);
