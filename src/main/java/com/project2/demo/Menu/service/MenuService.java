@@ -21,7 +21,6 @@ public class MenuService {
     @Transactional
     public void createMenu(MenuParameter menuParameter){
 
-
         Time time = getTime(menuParameter);
         Menu menu = getMenu(time, menuParameter);
         menuRepository.save(menu);

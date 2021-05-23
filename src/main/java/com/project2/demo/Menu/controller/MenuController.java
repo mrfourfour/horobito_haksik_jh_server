@@ -27,7 +27,7 @@ public class MenuController {
             checkTimeValidity(menuParameter);
             menuService.createMenu(menuParameter);
         }catch (DateTimeException de){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST);
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
         }
     }
 
@@ -37,7 +37,9 @@ public class MenuController {
         try {
             checkTimeValidity(limitDayParameter);
             menuService.limitMenu(menuId, limitDayParameter);
-        }catch (DateTimeException | IllegalArgumentException de){
+        }catch (DateTimeException de){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
+        }catch (IllegalArgumentException argE ){
             ResponseEntity.status(HttpStatus.BAD_REQUEST);
         }
     }
