@@ -9,6 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 public class MenuCreateTest {
 
@@ -26,9 +28,12 @@ public class MenuCreateTest {
         MenuParameter menuParameter
                 = new MenuParameter("pizza"
                 , 50000,
-                20,
-
+                7,24, 8,30,
+                0,0,false, "KOREA","NOODLE"
                 );
+
+        sut.createMenu(menuParameter);
+        verify(menuRepository, times(1)).save(any());
 
     }
 }

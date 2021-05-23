@@ -1,12 +1,14 @@
 package com.project2.demo.Menu.controller;
 
 
+import lombok.Getter;
 import lombok.Value;
 
 import java.time.LocalTime;
 import java.time.MonthDay;
 
 @Value
+@Getter
 public class MenuParameter {
     String foodName;
 
@@ -21,7 +23,7 @@ public class MenuParameter {
     int endMonth;
     int endDayOfMonth;
 
-    Boolean limited;
+    boolean limited;
 
     String country;
     String food;

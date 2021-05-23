@@ -114,7 +114,7 @@ public class MenuService {
     }
 
     private Time getTime(MenuParameter menuParameter) {
-        if (!menuParameter.getLimited()){
+        if (!menuParameter.isLimited()){
 
             return Time.create(
                     LocalTime.of(menuParameter.getStartHour(),  menuParameter.getStartMinute()),
