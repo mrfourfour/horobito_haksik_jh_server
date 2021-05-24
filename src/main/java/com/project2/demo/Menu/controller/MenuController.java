@@ -44,6 +44,11 @@ public class MenuController {
         }
     }
 
+    @DeleteMapping("/menu/{menuId}/delete")
+    private void deleteMenu(@PathVariable Long menuId){
+        menuService.deleteMenu(menuId);
+    }
+
     private void checkTimeValidity(MenuParameter menuParameter) {
         try {
             LocalTime.of(menuParameter.getStartHour(),  menuParameter.getStartMinute());

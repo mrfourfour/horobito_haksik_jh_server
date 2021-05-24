@@ -26,6 +26,13 @@ public class MenuService {
         menuRepository.save(menu);
     }
 
+    @Transactional
+    public void deleteMenu(Long menuId){
+        Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+        menu.delete();
+    }
+
 
 
 
@@ -90,7 +97,7 @@ public class MenuService {
         }
     }
     public Menu getMenuById(Long menuId) {
-        return menuRepository.findMenuById(menuId);
+        return menuRepository.findMenuByIdAndDeleted(menuId, false);
     }
 
 

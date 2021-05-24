@@ -32,6 +32,8 @@ public class Menu {
 
     private CategoryFood food;
 
+    private boolean deleted;
+
 
     private Menu(FoodName foodName,
                  Price price,
@@ -44,6 +46,7 @@ public class Menu {
         this.soldOut = SoldOutFlag.create(false);
         this.country = country;
         this.food = food;
+        this.deleted = false;
     }
 
     public static Menu create(FoodName foodName,
@@ -84,6 +87,10 @@ public class Menu {
 
     public Boolean discriminateLimit(){
         return this.salesTime.limited;
+    }
+
+    public void delete(){
+        this.deleted = true;
     }
 
 
