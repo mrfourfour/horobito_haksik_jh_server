@@ -1,4 +1,4 @@
-package com.project2.demo.Menu.domain;
+package com.project2.demo.Menu.menu.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

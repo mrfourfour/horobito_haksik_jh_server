@@ -1,4 +1,4 @@
-package com.project2.demo.Menu.controller;
+package com.project2.demo.Menu.menu.controller;
 
 
 import lombok.Getter;

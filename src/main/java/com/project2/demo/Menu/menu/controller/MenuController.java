@@ -1,10 +1,8 @@
-package com.project2.demo.Menu.controller;
+package com.project2.demo.Menu.menu.controller;
 
 
-import com.project2.demo.Menu.service.MenuService;
-import com.project2.demo.user.service.UserService;
+import com.project2.demo.Menu.menu.service.MenuService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

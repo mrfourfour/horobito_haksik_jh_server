@@ -1,10 +1,10 @@
-package com.project2.demo.Menu.service;
+package com.project2.demo.Menu.menu.service;
 
 
-import com.project2.demo.Menu.controller.LimitDayParameter;
-import com.project2.demo.Menu.controller.MenuParameter;
-import com.project2.demo.Menu.domain.Menu;
-import com.project2.demo.Menu.domain.MenuRepository;
+import com.project2.demo.Menu.menu.controller.LimitDayParameter;
+import com.project2.demo.Menu.menu.controller.MenuParameter;
+import com.project2.demo.Menu.menu.domain.Menu;
+import com.project2.demo.Menu.menu.domain.MenuRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

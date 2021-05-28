@@ -1,4 +1,4 @@
-package com.project2.demo.Menu.domain;
+package com.project2.demo.Menu.menu.domain;
 
 
 import lombok.NoArgsConstructor;
