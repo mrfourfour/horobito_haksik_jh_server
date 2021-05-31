@@ -20,6 +20,9 @@ public class Category {
     @Embedded
     private CategoryName categoryName;
 
+    @Embedded
+    private Description description;
+
     @ElementCollection
     @CollectionTable(
             name = "foodo_id",
