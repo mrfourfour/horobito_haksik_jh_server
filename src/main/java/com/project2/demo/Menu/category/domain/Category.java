@@ -4,7 +4,7 @@ package com.project2.demo.Menu.category.domain;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -31,4 +31,14 @@ public class Category {
     private Set<FoodId> foodIds;
 
 
+    private Category(CategoryName categoryName, Description description) {
+        this.categoryName = categoryName;
+        this.description = description;
+        this.foodIds = new HashSet<>();
+    }
+
+    public static Category create(CategoryName categoryName,
+                                  Description description){
+        return new Category(categoryName, description);
+    }
 }
