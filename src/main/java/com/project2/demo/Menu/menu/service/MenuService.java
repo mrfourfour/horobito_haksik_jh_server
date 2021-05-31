@@ -32,6 +32,7 @@ public class MenuService {
 
         Time time = getTime(limitedMenuParameter);
         Menu menu = getMenu(time, limitedMenuParameter);
+        menuRepository.save(menu);
     }
 
     @Transactional
@@ -84,8 +85,27 @@ public class MenuService {
     public void buy(Long menuId, int purchaseQuantity) {
         // 유저 관련 기능 아직 추가 안함
         Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+        checkAlreadySoldOut(menu);
         menu.decreaseAmountOfFoodLeft(purchaseQuantity);
         menu.checkSoldOut();
+    }
+
+    @Transactional
+    public void modifyAmount(Long menuId, int amount, String request) {
+        Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+        changeAmount(menu, amount, request);
+    }
+
+    @Transactional
+    public void changeAmount(Menu menu, int amount, String request) {
+        if (request.equals("minus")){
+            menu.increaseAmountOfFoodLeft(amount);
+            menu.checkSoldOut();
+        }else {
+            menu.decreaseAmountOfFoodLeft(amount);
+        }
     }
 
     public void checkAlreadySoldOut(Menu menu) {
@@ -125,25 +145,21 @@ public class MenuService {
 
 
     public Menu getMenu(Time time, MenuParameter menuParameter) {
-        Menu menu =Menu.create(
-                FoodName.create(menuParameter.getFoodName()
-                ),
+        return Menu.create(
+                FoodName.create(menuParameter.getFoodName()),
                 Price.create(menuParameter.getPrice()),
                 time,
                 AmountOfFoodLeft.create(menuParameter.getAmount())
         );
-        return menu;
     }
 
     public Menu getMenu(Time time, LimitedMenuParameter limitedMenuParameter) {
-        Menu menu =Menu.create(
-                FoodName.create(limitedMenuParameter.getFoodName()
-                ),
+        return Menu.create(
+                FoodName.create(limitedMenuParameter.getFoodName()),
                 Price.create(limitedMenuParameter.getPrice()),
                 time,
                 AmountOfFoodLeft.create(limitedMenuParameter.getAmount())
         );
-        return menu;
     }
 
     public Time getTime(MenuParameter menuParameter) {

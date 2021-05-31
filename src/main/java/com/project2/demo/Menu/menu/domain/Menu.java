@@ -28,6 +28,7 @@ public class Menu {
     @Embedded
     private AmountOfFoodLeft amountOfFoodLeft;
 
+    @Embedded
     private SoldOutFlag soldOut;
 
     private boolean deleted;
@@ -36,7 +37,8 @@ public class Menu {
     private Menu(FoodName foodName,
                  Price price,
                  Time salesTime,
-                 AmountOfFoodLeft amount) {
+                 AmountOfFoodLeft amount
+                ) {
         this.foodName = foodName;
         this.price = price;
         this.salesTime = salesTime;
@@ -49,7 +51,8 @@ public class Menu {
     public static Menu create(FoodName foodName,
                               Price price,
                               Time salesTime,
-                              AmountOfFoodLeft amount) {
+                              AmountOfFoodLeft amount
+                              ) {
         return new Menu(foodName, price, salesTime, amount);
     }
 
@@ -106,6 +109,8 @@ public class Menu {
             this.soldOut = SoldOutFlag.create(true);
         }
     }
+
+
 }
 
 

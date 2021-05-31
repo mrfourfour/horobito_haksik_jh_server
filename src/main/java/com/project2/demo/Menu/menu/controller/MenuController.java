@@ -40,6 +40,13 @@ public class MenuController {
         }
     }
 
+    @PostMapping("/{menuId}/amount/change/{amount}/{request}")
+    public void modifyAmount(@PathVariable Long menuId,
+                             @PathVariable int amount,
+                             @PathVariable String request){
+        menuService.modifyAmount(menuId, amount, request);
+    }
+
 
     @PostMapping("/{menuId}/buy/{purchaseQuantity}")
     public ResponseEntity<Void> buyMenus(@PathVariable Long menuId,
