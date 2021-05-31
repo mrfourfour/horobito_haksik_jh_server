@@ -11,10 +11,10 @@ import javax.persistence.Embeddable;
 @Getter
 public class SoldOutFlag {
 
-    Boolean soldout;
+    Boolean soldOut;
 
-    private SoldOutFlag(Boolean falseOrTrue) {
-        this.soldout = falseOrTrue;
+    private SoldOutFlag(Boolean soldOut) {
+        this.soldOut = soldOut;
     }
 
     public static SoldOutFlag create(Boolean falseOrTrue){

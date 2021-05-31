@@ -3,6 +3,7 @@ package com.project2.demo.Menu.menu.controller;
 
 import com.project2.demo.Menu.menu.service.MenuService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +13,14 @@ import java.time.LocalTime;
 import java.time.MonthDay;
 
 @RestController
-@RequestMapping("/menu")
-@AllArgsConstructor
+@RequestMapping("/menus")
+@RequiredArgsConstructor
 public class MenuController {
 
     private final MenuService menuService;
 
 
-    @GetMapping
+    @PostMapping
     public void createMenu(@RequestBody MenuParameter menuParameter){
         try {
             checkTimeValidity(menuParameter);
@@ -31,7 +32,7 @@ public class MenuController {
 
 
     @GetMapping("/{menuId}")
-    public void limitMenu(@PathVariable Long menuId, @RequestBody LimitDayParameter limitDayParameter){
+    public void setMenuLimited(@PathVariable Long menuId, @RequestBody LimitDayParameter limitDayParameter){
         try {
             checkTimeValidity(limitDayParameter);
             menuService.limitMenu(menuId, limitDayParameter);
@@ -42,7 +43,7 @@ public class MenuController {
         }
     }
 
-    @DeleteMapping("/menu/{menuId}/delete")
+    @DeleteMapping("/{menuId}")
     private void deleteMenu(@PathVariable Long menuId){
         menuService.deleteMenu(menuId);
     }
