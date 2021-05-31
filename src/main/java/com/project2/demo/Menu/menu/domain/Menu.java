@@ -35,19 +35,22 @@ public class Menu {
 
     private Menu(FoodName foodName,
                  Price price,
-                 Time salesTime) {
+                 Time salesTime,
+                 AmountOfFoodLeft amount) {
         this.foodName = foodName;
         this.price = price;
         this.salesTime = salesTime;
         this.soldOut = SoldOutFlag.create(false);
         this.deleted = false;
+        this.amountOfFoodLeft = amount;
     }
 
 
     public static Menu create(FoodName foodName,
                               Price price,
-                              Time salesTime) {
-        return new Menu(foodName, price, salesTime);
+                              Time salesTime,
+                              AmountOfFoodLeft amount) {
+        return new Menu(foodName, price, salesTime, amount);
     }
 
     public void increaseAmountOfFoodLeft(int amountForAdd){
@@ -86,7 +89,7 @@ public class Menu {
     }
 
     public Boolean discriminateSoldOut() {
-        return this.soldOut.getSoldout();
+        return this.soldOut.getSoldOut();
     }
 
     public Boolean discriminateLimit() {

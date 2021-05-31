@@ -10,4 +10,5 @@ public class LimitDayParameter {
     int limitedMonth;
     int limitedDayOfMonth;
 
+
 }

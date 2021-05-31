@@ -1,11 +1,11 @@
 package com.project2.demo.Menu.menu.controller;
 
 
-import lombok.Getter;
 import lombok.Value;
 
 @Value
-public class MenuParameter {
+public class LimitedMenuParameter {
+
     String foodName;
 
     int price;
@@ -19,10 +19,12 @@ public class MenuParameter {
     int endMonth;
     int endDayOfMonth;
 
+    int limitedMonth;
+    int limitedDayOfMonth;
+
     boolean limited;
 
     int amount;
-
 
 
 }

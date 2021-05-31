@@ -2,6 +2,7 @@ package com.project2.demo.Menu.menu.service;
 
 
 import com.project2.demo.Menu.menu.controller.LimitDayParameter;
+import com.project2.demo.Menu.menu.controller.LimitedMenuParameter;
 import com.project2.demo.Menu.menu.controller.MenuParameter;
 import com.project2.demo.Menu.menu.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,18 @@ public class MenuService {
 
 
     @Transactional
-    public void createMenu(MenuParameter menuParameter){
+    public void createDefaultMenu(MenuParameter menuParameter){
 
         Time time = getTime(menuParameter);
         Menu menu = getMenu(time, menuParameter);
         menuRepository.save(menu);
+    }
+
+    @Transactional
+    public void createLimitedMenu(LimitedMenuParameter limitedMenuParameter) {
+
+        Time time = getTime(limitedMenuParameter);
+        Menu menu = getMenu(time, limitedMenuParameter);
     }
 
     @Transactional
@@ -72,13 +80,13 @@ public class MenuService {
     }
 
 
-
     @Transactional
     public void buy(Long menuId, int purchaseQuantity) {
         // 유저 관련 기능 아직 추가 안함
         Menu menu = getMenuById(menuId);
         menu.decreaseAmountOfFoodLeft(purchaseQuantity);
     }
+
     public void checkAlreadySoldOut(Menu menu) {
         if (menu.discriminateSoldOut()){
             throw new IllegalArgumentException();
@@ -91,12 +99,12 @@ public class MenuService {
         }
     }
 
-
     public void checkAlreadyUnLimited(Menu menu) {
         if (!menu.discriminateLimit()){
             throw new IllegalArgumentException();
         }
     }
+
     public void checkAlreadyLimited(Menu menu) {
         if (menu.discriminateLimit()){
             throw new IllegalArgumentException();
@@ -120,24 +128,39 @@ public class MenuService {
                 FoodName.create(menuParameter.getFoodName()
                 ),
                 Price.create(menuParameter.getPrice()),
-                time
+                time,
+                AmountOfFoodLeft.create(menuParameter.getAmount())
+        );
+        return menu;
+    }
+
+    public Menu getMenu(Time time, LimitedMenuParameter limitedMenuParameter) {
+        Menu menu =Menu.create(
+                FoodName.create(limitedMenuParameter.getFoodName()
+                ),
+                Price.create(limitedMenuParameter.getPrice()),
+                time,
+                AmountOfFoodLeft.create(limitedMenuParameter.getAmount())
         );
         return menu;
     }
 
     public Time getTime(MenuParameter menuParameter) {
-        if (!menuParameter.isLimited()){
 
             return Time.create(
                     LocalTime.of(menuParameter.getStartHour(),  menuParameter.getStartMinute()),
                     LocalTime.of(menuParameter.getEndHour(), menuParameter.getEndMinute())
             );
-        }else {
+
+    }
+
+    public Time getTime(LimitedMenuParameter limitedMenuParameter ){
+
             return Time.limit(
-                    LocalTime.of(menuParameter.getStartHour(),  menuParameter.getStartMinute()),
-                    LocalTime.of(menuParameter.getEndHour(), menuParameter.getEndMinute()),
-                    MonthDay.of(menuParameter.getEndMonth(), menuParameter.getEndDayOfMonth())
+                    LocalTime.of(limitedMenuParameter.getStartHour(),  limitedMenuParameter.getStartMinute()),
+                    LocalTime.of(limitedMenuParameter.getEndHour(), limitedMenuParameter.getEndMinute()),
+                    MonthDay.of(limitedMenuParameter.getEndMonth(), limitedMenuParameter.getEndDayOfMonth())
             );
-        }
+
     }
 }

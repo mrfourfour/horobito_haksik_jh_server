@@ -20,15 +20,26 @@ public class MenuController {
     private final MenuService menuService;
 
 
-    @PostMapping
-    public void createMenu(@RequestBody MenuParameter menuParameter){
+    @PostMapping("/make/default")
+    public void createDefaultMenu(@RequestBody MenuParameter menuParameter){
         try {
             checkTimeValidity(menuParameter);
-            menuService.createMenu(menuParameter);
+            menuService.createDefaultMenu(menuParameter);
         }catch (DateTimeException de){
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
         }
     }
+
+    @PostMapping("/make/limited")
+    public void createLimitedMenu(@RequestBody LimitedMenuParameter limitedMenuParameter){
+        try {
+            checkTimeValidity(limitedMenuParameter);
+            menuService.createLimitedMenu(limitedMenuParameter);
+        }catch (DateTimeException de){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
+        }
+    }
+
 
     @PostMapping("/{menuId}/buy/{purchaseQuantity}")
     public ResponseEntity<Void> buyMenus(@PathVariable Long menuId,
@@ -76,6 +87,16 @@ public class MenuController {
             throw new IllegalArgumentException();
         }
     }
+
+    private void checkTimeValidity(LimitedMenuParameter limitedMenuParameter) {
+        try {
+            MonthDay.of(limitedMenuParameter.getLimitedMonth(),
+                    limitedMenuParameter.getLimitedDayOfMonth());
+        }catch (DateTimeException de){
+            throw new IllegalArgumentException();
+        }
+    }
+
 
     @GetMapping("/{menuId}")
     public ResponseEntity<Void> unLimitMenu(@PathVariable Long menuId){
