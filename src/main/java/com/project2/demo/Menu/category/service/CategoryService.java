@@ -1,10 +1,9 @@
 package com.project2.demo.Menu.category.service;
 
 import com.project2.demo.Menu.category.controller.CategoryParameter;
-import com.project2.demo.Menu.category.domain.Category;
-import com.project2.demo.Menu.category.domain.CategoryName;
-import com.project2.demo.Menu.category.domain.CategoryRepository;
-import com.project2.demo.Menu.category.domain.Description;
+import com.project2.demo.Menu.category.domain.*;
+import com.project2.demo.Menu.menu.domain.MenuRepository;
+import com.project2.demo.Menu.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final MenuRepository menuRepository;
+    private final MenuService menuService;
 
 
     @Transactional
@@ -22,6 +23,20 @@ public class CategoryService {
         Category category = getCategory(categoryParameter);
         categoryRepository.save(category);
     }
+
+
+    @Transactional
+    public void addFood(Long categoryId, Long menuId) {
+        menuService.checkExistence(menuRepository.findMenuById(menuId));
+        Category category = getCategoryById(categoryId);
+        checkExistence(category);
+        category.addMenu(FoodId.create(menuId));
+    }
+
+
+
+
+
 
     private Category getCategory(CategoryParameter categoryParameter) {
         return Category.create(
@@ -31,7 +46,15 @@ public class CategoryService {
     }
 
 
-    @
-    public void addFood() {
+
+
+    private void checkExistence(Category category) {
+        if (category==null){
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private Category getCategoryById(Long categoryId) {
+        return categoryRepository.findCategoryById(categoryId);
     }
 }

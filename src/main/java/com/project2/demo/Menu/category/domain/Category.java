@@ -41,4 +41,9 @@ public class Category {
                                   Description description){
         return new Category(categoryName, description);
     }
+
+    public void addMenu(FoodId foodId) {
+
+        this.foodIds.add(foodId);
+    }
 }

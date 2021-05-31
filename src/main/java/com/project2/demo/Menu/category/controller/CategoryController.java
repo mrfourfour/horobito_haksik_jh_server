@@ -17,9 +17,9 @@ public class CategoryController {
         categoryService.create(categoryParameter);
     }
 
-    @PostMapping("/{categoryId}/add/{foodId}")
+    @PostMapping("/{categoryId}/add/{menuId}")
     public void addFood(@PathVariable Long categoryId,
-                            @PathVariable Long foodId){
-        categoryService.addFood();
+                            @PathVariable Long menuId){
+        categoryService.addFood(categoryId, menuId);
     }
 }
