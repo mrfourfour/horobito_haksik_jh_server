@@ -113,9 +113,7 @@ public class MenuService {
                 FoodName.create(menuParameter.getFoodName()
                 ),
                 Price.create(menuParameter.getPrice()),
-                time,
-                CategoryCountry.valueOf(menuParameter.getCountry()),
-                CategoryFood.valueOf(menuParameter.getFood())
+                time
         );
         return menu;
     }

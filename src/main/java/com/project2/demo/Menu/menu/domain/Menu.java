@@ -25,36 +25,40 @@ public class Menu {
     @Embedded
     private Time salesTime;
 
+    @Embedded
+    private AmountOfFoodLeft amountOfFoodLeft;
 
     private SoldOutFlag soldOut;
-
-    private CategoryCountry country;
-
-    private CategoryFood food;
 
     private boolean deleted;
 
 
     private Menu(FoodName foodName,
                  Price price,
-                 Time salesTime,
-                 CategoryCountry country,
-                 CategoryFood food) {
+                 Time salesTime) {
         this.foodName = foodName;
         this.price = price;
         this.salesTime = salesTime;
         this.soldOut = SoldOutFlag.create(false);
-        this.country = country;
-        this.food = food;
         this.deleted = false;
     }
 
+
     public static Menu create(FoodName foodName,
                               Price price,
-                              Time salesTime,
-                              CategoryCountry country,
-                              CategoryFood food) {
-        return new Menu(foodName, price, salesTime, country, food);
+                              Time salesTime) {
+        return new Menu(foodName, price, salesTime);
+    }
+
+    public void increaseAmountOfFoodLeft(int amountForAdd){
+        this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() + amountForAdd);
+    }
+
+    public void decreaseAmountOfFoodLeft(int amountForAdd){
+        if (amountForAdd>this.amountOfFoodLeft.returnFoodLeft()){
+            throw new IllegalArgumentException();
+        }
+        this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() - amountForAdd);
     }
 
     public void limit(MonthDay limitedDay) {
@@ -73,23 +77,23 @@ public class Menu {
                 this.salesTime.endTime);
     }
 
-    public void setSoldOut(){
-        this.soldOut =  SoldOutFlag.create(true);
+    public void setSoldOut() {
+        this.soldOut = SoldOutFlag.create(true);
     }
 
-    public void setUnSoldOut(){
+    public void setUnSoldOut() {
         this.soldOut = SoldOutFlag.create(false);
     }
 
-    public Boolean discriminateSoldOut(){
+    public Boolean discriminateSoldOut() {
         return this.soldOut.getSoldout();
     }
 
-    public Boolean discriminateLimit(){
+    public Boolean discriminateLimit() {
         return this.salesTime.limited;
     }
 
-    public void delete(){
+    public void delete() {
         this.deleted = true;
     }
 
