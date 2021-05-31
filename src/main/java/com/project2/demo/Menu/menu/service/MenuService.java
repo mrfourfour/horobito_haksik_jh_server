@@ -73,11 +73,17 @@ public class MenuService {
 
 
 
+    @Transactional
+    public void buy(Long menuId, int purchaseQuantity) {
+        Menu menu = getMenuById(menuId);
+        menu.decreaseAmountOfFoodLeft(purchaseQuantity);
+    }
     public void checkAlreadySoldOut(Menu menu) {
         if (menu.discriminateSoldOut()){
             throw new IllegalArgumentException();
         }
     }
+
     public void checkAlreadyUnSoldOut(Menu menu) {
         if (!menu.discriminateSoldOut()){
             throw new IllegalArgumentException();
@@ -90,12 +96,12 @@ public class MenuService {
             throw new IllegalArgumentException();
         }
     }
-
     public void checkAlreadyLimited(Menu menu) {
         if (menu.discriminateLimit()){
             throw new IllegalArgumentException();
         }
     }
+
     public Menu getMenuById(Long menuId) {
         return menuRepository.findMenuByIdAndDeleted(menuId, false);
     }

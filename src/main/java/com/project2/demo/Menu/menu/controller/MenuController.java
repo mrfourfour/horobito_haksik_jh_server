@@ -30,6 +30,17 @@ public class MenuController {
         }
     }
 
+    @PostMapping("/{menuId}/buy/{purchaseQuantity}")
+    public ResponseEntity<Void> buyMenus(@PathVariable Long menuId,
+                         @PathVariable int purchaseQuantity){
+        try {
+            menuService.buy(menuId, purchaseQuantity);
+            return ResponseEntity.ok().build();
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
 
     @GetMapping("/{menuId}")
     public void setMenuLimited(@PathVariable Long menuId, @RequestBody LimitDayParameter limitDayParameter){
@@ -67,11 +78,12 @@ public class MenuController {
     }
 
     @GetMapping("/{menuId}")
-    public void unLimitMenu(@PathVariable Long menuId){
+    public ResponseEntity<Void> unLimitMenu(@PathVariable Long menuId){
         try {
             menuService.unLimitMenu(menuId);
+            return ResponseEntity.ok().build();
         }catch (IllegalArgumentException argE){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
