@@ -101,6 +101,11 @@ public class Menu {
     }
 
 
+    public void checkSoldOut() {
+        if (this.amountOfFoodLeft.soldOut()){
+            this.soldOut = SoldOutFlag.create(true);
+        }
+    }
 }
 
 

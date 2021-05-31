@@ -24,4 +24,7 @@ public class AmountOfFoodLeft {
         return this.amountOfFoodLeft;
     }
 
+    public boolean soldOut() {
+        return this.amountOfFoodLeft == 0;
+    }
 }

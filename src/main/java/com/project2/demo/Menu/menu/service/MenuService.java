@@ -85,6 +85,7 @@ public class MenuService {
         // 유저 관련 기능 아직 추가 안함
         Menu menu = getMenuById(menuId);
         menu.decreaseAmountOfFoodLeft(purchaseQuantity);
+        menu.checkSoldOut();
     }
 
     public void checkAlreadySoldOut(Menu menu) {
