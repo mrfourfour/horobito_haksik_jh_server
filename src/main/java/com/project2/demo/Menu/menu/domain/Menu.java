@@ -111,6 +111,12 @@ public class Menu {
     }
 
 
+    public void changeAmount(int amount) {
+        if (amount<0){
+            throw  new IllegalArgumentException();
+        }
+        this.amountOfFoodLeft = AmountOfFoodLeft.create(amount);
+    }
 }
 
 

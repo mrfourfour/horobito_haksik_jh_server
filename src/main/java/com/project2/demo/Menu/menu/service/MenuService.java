@@ -91,20 +91,30 @@ public class MenuService {
     }
 
     @Transactional
-    public void modifyAmount(Long menuId, int amount, String request) {
+    public void modifyAmount(Long menuId, int amount) {
         Menu menu = getMenuById(menuId);
         checkExistence(menu);
-        changeAmount(menu, amount, request);
+        changeAmount(menu, amount);
     }
 
     @Transactional
-    public void changeAmount(Menu menu, int amount, String request) {
-        if (request.equals("minus")){
-            menu.increaseAmountOfFoodLeft(amount);
-            menu.checkSoldOut();
-        }else {
-            menu.decreaseAmountOfFoodLeft(amount);
-        }
+    public void addAmount(Long menuId, int amount) {
+        Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+        menu.increaseAmountOfFoodLeft(amount);
+    }
+
+    @Transactional
+    public void subtractAmount(Long menuId, int amount) {
+        Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+        menu.decreaseAmountOfFoodLeft(amount);
+        menu.checkSoldOut();
+    }
+
+
+    public void changeAmount(Menu menu, int amount) {
+        menu.changeAmount(amount);
     }
 
     public void checkAlreadySoldOut(Menu menu) {

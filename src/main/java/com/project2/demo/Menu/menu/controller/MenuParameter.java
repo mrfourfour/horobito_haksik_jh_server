@@ -22,7 +22,6 @@ public class MenuParameter {
     int limitedMonth;
     int limitedDayOfMonth;
 
-    boolean limited;
 
     int amount;
 

@@ -40,12 +40,28 @@ public class MenuController {
         }
     }
 
-    @PostMapping("/{menuId}/amount/change/{amount}/{request}")
-    public void modifyAmount(@PathVariable Long menuId,
-                             @PathVariable int amount,
-                             @PathVariable String request){
-        menuService.modifyAmount(menuId, amount, request);
+    @PutMapping("/{menuId}/add/{amount}/")
+    public void addAmount(@PathVariable Long menuId,
+                             @PathVariable int amount)
+                             {
+        menuService.addAmount(menuId, amount);
     }
+
+    @PutMapping("/{menuId}/subtract/{amount}/")
+    public void subtractAmount(@PathVariable Long menuId,
+                             @PathVariable int amount
+                             ){
+        menuService.subtractAmount(menuId, amount);
+    }
+
+    @PutMapping("/{menuId}/amount/modify/{amount}/")
+    public void modifyAmount(@PathVariable Long menuId,
+                               @PathVariable int amount
+    ){
+        menuService.modifyAmount(menuId, amount);
+    }
+
+
 
 
     @PostMapping("/{menuId}/buy/{purchaseQuantity}")
