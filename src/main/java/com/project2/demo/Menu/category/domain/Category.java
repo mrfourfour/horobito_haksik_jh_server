@@ -56,4 +56,16 @@ public class Category {
     public void deleteFoodIdInCategory(FoodId foodId) {
         this.foodIds.remove(foodId);
     }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getCategoryName() {
+        return this.categoryName.getCategoryName();
+    }
+
+    public String  getDescription() {
+        return this.description.getDescription();
+    }
 }

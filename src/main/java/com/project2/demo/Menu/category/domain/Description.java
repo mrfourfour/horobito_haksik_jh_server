@@ -1,12 +1,14 @@
 package com.project2.demo.Menu.category.domain;
 
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
 @Embeddable
+@Getter
 @NoArgsConstructor
 public class Description {
 

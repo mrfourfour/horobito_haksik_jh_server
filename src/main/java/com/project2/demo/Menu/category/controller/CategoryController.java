@@ -1,6 +1,7 @@
 package com.project2.demo.Menu.category.controller;
 
 
+import com.project2.demo.Menu.category.service.CategoryDto;
 import com.project2.demo.Menu.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,15 @@ public class CategoryController {
     public void addFood(@PathVariable Long categoryId,
                             @PathVariable Long menuId){
         categoryService.addFood(categoryId, menuId);
+    }
+
+    @GetMapping("/{categoryId}}")
+    public ResponseEntity<CategoryDto> getCategoryInfo(@PathVariable Long categoryId){
+        try {
+            return ResponseEntity.ok(categoryService.getCategoryInfo(categoryId));
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @DeleteMapping("/{categoryId}/{menuId}")

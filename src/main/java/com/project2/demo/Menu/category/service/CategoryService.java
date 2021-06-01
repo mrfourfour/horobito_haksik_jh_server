@@ -53,6 +53,18 @@ public class CategoryService {
         categoryRepository.delete(category);
     }
 
+    public CategoryDto getCategoryInfo(Long categoryId) {
+        Category category = getCategoryById(categoryId);
+        checkExistence(category);
+        return getCategoryDto(category);
+    }
+
+    private CategoryDto getCategoryDto(Category category) {
+        return new CategoryDto(
+                category.getId(),
+                category.getCategoryName(),
+                category.getDescription());
+    }
 
 
     private Category getCategory(CategoryParameter categoryParameter) {
