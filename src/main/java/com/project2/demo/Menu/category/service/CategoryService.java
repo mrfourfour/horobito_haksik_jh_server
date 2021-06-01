@@ -33,7 +33,14 @@ public class CategoryService {
         category.addMenu(FoodId.create(menuId));
     }
 
-
+    @Transactional
+    public void deleteMenuInCategory(Long categoryId, Long menuId) {
+        Category category = getCategoryById(categoryId);
+        checkExistence(category);
+        FoodId foodId = FoodId.create(menuId);
+        checkExistence(category, foodId);
+        category.deleteFoodIdInCategory(foodId);
+    }
 
 
 
@@ -54,7 +61,12 @@ public class CategoryService {
         }
     }
 
+    private void checkExistence(Category category, FoodId foodId) {
+        category.findFoodId(foodId);
+    }
+
     private Category getCategoryById(Long categoryId) {
         return categoryRepository.findCategoryById(categoryId);
     }
+
 }

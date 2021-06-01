@@ -55,10 +55,15 @@ public class MenuController {
     }
 
     @PutMapping("/{menuId}/amount/modify/{amount}/")
-    public void modifyAmount(@PathVariable Long menuId,
+    public ResponseEntity<Void> modifyAmount(@PathVariable Long menuId,
                                @PathVariable int amount
     ){
-        menuService.modifyAmount(menuId, amount);
+        try {
+            menuService.modifyAmount(menuId, amount);
+            return ResponseEntity.ok().build();
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
 

@@ -46,4 +46,14 @@ public class Category {
 
         this.foodIds.add(foodId);
     }
+
+    public void findFoodId(FoodId foodId) {
+        if (!this.foodIds.contains(foodId)){
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public void deleteFoodIdInCategory(FoodId foodId) {
+        this.foodIds.remove(foodId);
+    }
 }
