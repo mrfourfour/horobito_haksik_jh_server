@@ -31,10 +31,10 @@ public class MenuController {
     }
 
     @PostMapping("/make/limited")
-    public void createLimitedMenu(@RequestBody LimitedMenuParameter limitedMenuParameter){
+    public void createLimitedMenu(@RequestBody MenuParameter menuParameter){
         try {
-            checkTimeValidity(limitedMenuParameter);
-            menuService.createLimitedMenu(limitedMenuParameter);
+            checkTimeValidity(menuParameter);
+            menuService.createLimitedMenu(menuParameter);
         }catch (DateTimeException de){
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
         }
@@ -95,14 +95,6 @@ public class MenuController {
         }
     }
 
-    private void checkTimeValidity(LimitedMenuParameter limitedMenuParameter) {
-        try {
-            MonthDay.of(limitedMenuParameter.getLimitedMonth(),
-                    limitedMenuParameter.getLimitedDayOfMonth());
-        }catch (DateTimeException de){
-            throw new IllegalArgumentException();
-        }
-    }
 
 
     @GetMapping("/{menuId}")

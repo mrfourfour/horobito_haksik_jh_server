@@ -19,6 +19,9 @@ public class MenuParameter {
     int endMonth;
     int endDayOfMonth;
 
+    int limitedMonth;
+    int limitedDayOfMonth;
+
     boolean limited;
 
     int amount;

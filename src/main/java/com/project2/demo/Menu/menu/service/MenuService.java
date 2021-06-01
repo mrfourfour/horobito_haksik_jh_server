@@ -2,7 +2,6 @@ package com.project2.demo.Menu.menu.service;
 
 
 import com.project2.demo.Menu.menu.controller.LimitDayParameter;
-import com.project2.demo.Menu.menu.controller.LimitedMenuParameter;
 import com.project2.demo.Menu.menu.controller.MenuParameter;
 import com.project2.demo.Menu.menu.domain.*;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +27,10 @@ public class MenuService {
     }
 
     @Transactional
-    public void createLimitedMenu(LimitedMenuParameter limitedMenuParameter) {
+    public void createLimitedMenu(MenuParameter menuParameter) {
 
-        Time time = getTime(limitedMenuParameter);
-        Menu menu = getMenu(time, limitedMenuParameter);
+        Time time = getTimeLimited(menuParameter);
+        Menu menu = getMenuLimited(time, menuParameter);
         menuRepository.save(menu);
     }
 
@@ -153,12 +152,12 @@ public class MenuService {
         );
     }
 
-    public Menu getMenu(Time time, LimitedMenuParameter limitedMenuParameter) {
+    public Menu getMenuLimited(Time time, MenuParameter menuParameter) {
         return Menu.create(
-                FoodName.create(limitedMenuParameter.getFoodName()),
-                Price.create(limitedMenuParameter.getPrice()),
+                FoodName.create(menuParameter.getFoodName()),
+                Price.create(menuParameter.getPrice()),
                 time,
-                AmountOfFoodLeft.create(limitedMenuParameter.getAmount())
+                AmountOfFoodLeft.create(menuParameter.getAmount())
         );
     }
 
@@ -171,12 +170,12 @@ public class MenuService {
 
     }
 
-    public Time getTime(LimitedMenuParameter limitedMenuParameter ){
+    public Time getTimeLimited(MenuParameter menuParameter ){
 
             return Time.limit(
-                    LocalTime.of(limitedMenuParameter.getStartHour(),  limitedMenuParameter.getStartMinute()),
-                    LocalTime.of(limitedMenuParameter.getEndHour(), limitedMenuParameter.getEndMinute()),
-                    MonthDay.of(limitedMenuParameter.getEndMonth(), limitedMenuParameter.getEndDayOfMonth())
+                    LocalTime.of(menuParameter.getStartHour(),  menuParameter.getStartMinute()),
+                    LocalTime.of(menuParameter.getEndHour(), menuParameter.getEndMinute()),
+                    MonthDay.of(menuParameter.getEndMonth(), menuParameter.getEndDayOfMonth())
             );
 
     }
