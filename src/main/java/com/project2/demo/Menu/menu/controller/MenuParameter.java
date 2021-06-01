@@ -10,6 +10,8 @@ public class MenuParameter {
 
     int price;
 
+    String description;
+
     int startHour;
     int startMinute;
 
@@ -24,6 +26,8 @@ public class MenuParameter {
 
 
     int amount;
+
+    String imageURL;
 
 
 

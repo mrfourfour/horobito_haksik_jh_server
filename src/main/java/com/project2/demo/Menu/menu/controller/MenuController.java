@@ -1,8 +1,8 @@
 package com.project2.demo.Menu.menu.controller;
 
 
+import com.project2.demo.Menu.menu.service.MenuDto;
 import com.project2.demo.Menu.menu.service.MenuService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +37,14 @@ public class MenuController {
             menuService.createLimitedMenu(menuParameter);
         }catch (DateTimeException de){
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
+        }
+    }
+    @GetMapping("/{menuId}")
+    public ResponseEntity<MenuDto> getMenuInfo(@PathVariable Long menuId){
+        try {
+            return ResponseEntity.ok(menuService.getMenuInfo(menuId));
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 

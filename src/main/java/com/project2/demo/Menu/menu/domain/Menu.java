@@ -1,6 +1,7 @@
 package com.project2.demo.Menu.menu.domain;
 
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.time.MonthDay;
 
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Menu {
 
@@ -22,11 +24,18 @@ public class Menu {
     @Embedded
     private Price price;
 
+
+    @Embedded
+    private MenuDescription menuDescription;
+
     @Embedded
     private Time salesTime;
 
     @Embedded
     private AmountOfFoodLeft amountOfFoodLeft;
+
+    @Embedded
+    private ImageURL imageURL;
 
     @Embedded
     private SoldOutFlag soldOut;
@@ -36,24 +45,30 @@ public class Menu {
 
     private Menu(FoodName foodName,
                  Price price,
+                 MenuDescription menuDescription,
                  Time salesTime,
-                 AmountOfFoodLeft amount
+                 AmountOfFoodLeft amount,
+                 ImageURL imageURL
                 ) {
         this.foodName = foodName;
         this.price = price;
+        this.menuDescription = menuDescription;
         this.salesTime = salesTime;
         this.soldOut = SoldOutFlag.create(false);
         this.deleted = false;
         this.amountOfFoodLeft = amount;
+        this.imageURL = imageURL;
     }
 
 
     public static Menu create(FoodName foodName,
                               Price price,
+                              MenuDescription menuDescription,
                               Time salesTime,
-                              AmountOfFoodLeft amount
+                              AmountOfFoodLeft amount,
+                              ImageURL imageURL
                               ) {
-        return new Menu(foodName, price, salesTime, amount);
+        return new Menu(foodName, price, menuDescription, salesTime, amount, imageURL);
     }
 
     public void increaseAmountOfFoodLeft(int amountForAdd){
@@ -116,6 +131,26 @@ public class Menu {
             throw  new IllegalArgumentException();
         }
         this.amountOfFoodLeft = AmountOfFoodLeft.create(amount);
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getFoodName() {
+        return this.foodName.getFoodName();
+    }
+
+    public int getPrice() {
+        return this.price.getPrioce();
+    }
+
+    public String  getMenuDescription() {
+        return menuDescription.getMenuDescription();
+    }
+
+    public String  getImageURL() {
+        return imageURL.getImageURL();
     }
 }
 

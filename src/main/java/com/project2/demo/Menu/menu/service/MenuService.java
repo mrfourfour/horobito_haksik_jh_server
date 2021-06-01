@@ -34,6 +34,8 @@ public class MenuService {
         menuRepository.save(menu);
     }
 
+
+
     @Transactional
     public void deleteMenu(Long menuId){
         Menu menu = getMenuById(menuId);
@@ -157,8 +159,10 @@ public class MenuService {
         return Menu.create(
                 FoodName.create(menuParameter.getFoodName()),
                 Price.create(menuParameter.getPrice()),
+                MenuDescription.create(menuParameter.getDescription()),
                 time,
-                AmountOfFoodLeft.create(menuParameter.getAmount())
+                AmountOfFoodLeft.create(menuParameter.getAmount()),
+                ImageURL.create(menuParameter.getImageURL())
         );
     }
 
@@ -166,8 +170,10 @@ public class MenuService {
         return Menu.create(
                 FoodName.create(menuParameter.getFoodName()),
                 Price.create(menuParameter.getPrice()),
+                MenuDescription.create(menuParameter.getDescription()),
                 time,
-                AmountOfFoodLeft.create(menuParameter.getAmount())
+                AmountOfFoodLeft.create(menuParameter.getAmount()),
+                ImageURL.create(menuParameter.getImageURL())
         );
     }
 
@@ -188,5 +194,19 @@ public class MenuService {
                     MonthDay.of(menuParameter.getEndMonth(), menuParameter.getEndDayOfMonth())
             );
 
+    }
+
+    public MenuDto getMenuInfo(Long menuId) {
+        Menu menu = getMenuById(menuId);
+        return getMenuDto(menu);
+    }
+
+    private MenuDto getMenuDto(Menu menu) {
+        return new MenuDto(
+                menu.getId(),
+                menu.getFoodName(),
+                menu.getMenuDescription(),
+                menu.getImageURL(),
+                menu.getPrice());
     }
 }
