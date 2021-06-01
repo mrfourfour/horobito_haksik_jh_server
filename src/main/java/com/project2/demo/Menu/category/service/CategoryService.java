@@ -43,6 +43,13 @@ public class CategoryService {
     }
 
 
+    @Transactional
+    public void deleteCategory(Long categoryId) {
+        Category category = getCategoryById(categoryId);
+        checkExistence(category);
+        categoryRepository.delete(category);
+    }
+
 
 
     private Category getCategory(CategoryParameter categoryParameter) {
@@ -68,5 +75,4 @@ public class CategoryService {
     private Category getCategoryById(Long categoryId) {
         return categoryRepository.findCategoryById(categoryId);
     }
-
 }
