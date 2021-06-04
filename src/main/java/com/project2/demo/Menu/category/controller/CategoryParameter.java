@@ -6,7 +6,7 @@ import lombok.Value;
 @Value
 public class CategoryParameter {
 
-    String categoryName;
+    String category;
 
     String description;
 }

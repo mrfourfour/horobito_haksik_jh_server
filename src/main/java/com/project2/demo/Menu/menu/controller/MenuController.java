@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DateTimeException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.MonthDay;
 
@@ -23,7 +24,6 @@ public class MenuController {
     @PostMapping("/make/default")
     public void createDefaultMenu(@RequestBody MenuParameter menuParameter){
         try {
-            checkTimeValidity(menuParameter);
             menuService.createDefaultMenu(menuParameter);
         }catch (DateTimeException de){
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
@@ -33,7 +33,6 @@ public class MenuController {
     @PostMapping("/make/limited")
     public void createLimitedMenu(@RequestBody MenuParameter menuParameter){
         try {
-            checkTimeValidity(menuParameter);
             menuService.createLimitedMenu(menuParameter);
         }catch (DateTimeException de){
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
@@ -89,10 +88,9 @@ public class MenuController {
     }
 
 
-    @GetMapping("/{menuId}")
+    @PutMapping("/{menuId}/limit")
     public void setMenuLimited(@PathVariable Long menuId, @RequestBody LimitDayParameter limitDayParameter){
         try {
-            checkTimeValidity(limitDayParameter);
             menuService.limitMenu(menuId, limitDayParameter);
         }catch (DateTimeException de){
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
@@ -104,24 +102,6 @@ public class MenuController {
     @DeleteMapping("/{menuId}")
     private void deleteMenu(@PathVariable Long menuId){
         menuService.deleteMenu(menuId);
-    }
-
-    private void checkTimeValidity(MenuParameter menuParameter) {
-        try {
-            LocalTime.of(menuParameter.getStartHour(),  menuParameter.getStartMinute());
-            LocalTime.of(menuParameter.getEndHour(), menuParameter.getEndMinute());
-        }catch (DateTimeException de){
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private void checkTimeValidity(LimitDayParameter limitDayParameter) {
-        try {
-            MonthDay.of(limitDayParameter.getLimitedMonth(),
-                    limitDayParameter.getLimitedDayOfMonth());
-        }catch (DateTimeException de){
-            throw new IllegalArgumentException();
-        }
     }
 
 

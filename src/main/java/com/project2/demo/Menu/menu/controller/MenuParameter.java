@@ -1,34 +1,34 @@
 package com.project2.demo.Menu.menu.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Value;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
 
 @Value
 public class MenuParameter {
-    String foodName;
+    String title;
 
     int price;
 
     String description;
 
-    int startHour;
-    int startMinute;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    LocalDateTime startTime;
 
-    int endHour;
-    int endMinute;
-
-    int endMonth;
-    int endDayOfMonth;
-
-    int limitedMonth;
-    int limitedDayOfMonth;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    LocalDateTime endTime;
 
     int amount;
 
     String imageURL;
 
+    int limitedMonth;
+    int limitedDayOfMonth;
 
 
 }
