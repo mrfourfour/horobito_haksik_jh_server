@@ -145,16 +145,6 @@ public class MenuService {
         );
     }
 
-    public Menu getMenuLimited(Time time, MenuParameter menuParameter) {
-        return Menu.create(
-                FoodName.create(menuParameter.getTitle()),
-                Price.create(menuParameter.getPrice()),
-                MenuDescription.create(menuParameter.getDescription()),
-                time,
-                AmountOfFoodLeft.create(menuParameter.getAmount()),
-                ImageURL.create(menuParameter.getImageURL())
-        );
-    }
 
     public Time getTime(MenuParameter menuParameter) {
 
