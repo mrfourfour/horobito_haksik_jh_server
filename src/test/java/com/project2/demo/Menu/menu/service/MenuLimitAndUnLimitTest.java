@@ -1,7 +1,6 @@
 package com.project2.demo.Menu.menu.service;
 
 
-import com.project2.demo.Menu.menu.controller.LimitDayParameter;
 import com.project2.demo.Menu.menu.controller.MenuParameter;
 import com.project2.demo.Menu.menu.domain.Menu;
 import com.project2.demo.Menu.menu.domain.MenuRepository;
@@ -25,8 +24,8 @@ public class MenuLimitAndUnLimitTest {
     MenuParameter menuParameter
             = new MenuParameter("pizza"
             , 50000,
-            7,24, 8,30,
-            3,20,false, "KOREA","NOODLE"
+            "hahahaha","08:55:00", "20:00:00",30,
+            "url",20,false
     );
     LimitDayParameter limitDayParameter
             = new LimitDayParameter(1, 1);
@@ -41,7 +40,7 @@ public class MenuLimitAndUnLimitTest {
                 = new MenuService(menuRepository);
         Long menuId = Long.parseLong("1");
         when(sut.getMenuById(menuId)).thenReturn(null);
-        assertThrows(IllegalArgumentException.class, ()->sut.limitMenu(menuId, limitDayParameter));
+        assertThrows(IllegalArgumentException.class, ()->sut.limitMenu(menuId));
 
     }
 
@@ -53,7 +52,7 @@ public class MenuLimitAndUnLimitTest {
         Menu menu = sut.getMenu(sut.getTime(menuParameter), menuParameter);
         Long menuId = Long.parseLong("1");
         when(sut.getMenuById(menuId)).thenReturn(menu);
-        assertThrows(IllegalArgumentException.class, ()->sut.limitMenu(menuId, limitDayParameter));
+        assertThrows(IllegalArgumentException.class, ()->sut.limitMenu(menuId));
     }
 
     @DisplayName("기간한정 설정 테스트3, 기간 한정 설정 ")
@@ -65,7 +64,7 @@ public class MenuLimitAndUnLimitTest {
         Long menuId = Long.parseLong("1");
         when(sut.getMenuById(menuId)).thenReturn(menu);
         System.out.println("설정 전 : " + menu.discriminateLimit());
-        sut.limitMenu(menuId, limitDayParameter);
+        sut.limitMenu(menuId);
 
         assertEquals(true, menu.discriminateLimit());
         System.out.println("설정 후 : " + menu.discriminateLimit());

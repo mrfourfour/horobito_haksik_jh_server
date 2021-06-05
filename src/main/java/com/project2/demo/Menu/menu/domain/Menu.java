@@ -82,12 +82,10 @@ public class Menu {
         this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() - amountForAdd);
     }
 
-    public void limit(MonthDay limitedDay) {
+    public void limit() {
         this.salesTime
-                = Time.limit(
-                this.salesTime.startTime,
-                this.salesTime.endTime,
-                limitedDay
+                = Time.limit(this.salesTime.startTime, this.salesTime.endTime
+
         );
     }
 

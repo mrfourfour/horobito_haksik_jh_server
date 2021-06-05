@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.MonthDay;
 
@@ -13,33 +14,32 @@ import java.time.MonthDay;
 @Getter
 public class Time {
 
-     MonthDay endDay;
 
      Boolean limited;
 
-     LocalTime startTime;
-     LocalTime endTime;
+     LocalDateTime startTime;
+     LocalDateTime endTime;
 
-    private Time(LocalTime startTime, LocalTime endTime) {
-        this.endDay = null;
-        this.limited = false;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
 
-    private Time(LocalTime startTime, LocalTime endTime, MonthDay limitPeriod) {
-        this.endDay = limitPeriod;
+
+    private Time(LocalDateTime startTime, LocalDateTime endTime, boolean limit) {
         this.limited = true;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public static Time create(LocalTime startTime, LocalTime endTime){
+    private Time(LocalDateTime startTime, LocalDateTime endTime) {
+        this.limited = true;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public static Time create(LocalDateTime startTime, LocalDateTime endTime){
         return new Time(startTime, endTime);
     }
 
-    public static Time limit(LocalTime startTime, LocalTime endTime, MonthDay limitPeriod){
-        return new Time(startTime, endTime, limitPeriod);
+    public  static Time limit(LocalDateTime startTime, LocalDateTime endTime) {
+        return new Time(startTime, endTime,true);
     }
 
 

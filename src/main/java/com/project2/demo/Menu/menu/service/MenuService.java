@@ -1,15 +1,12 @@
 package com.project2.demo.Menu.menu.service;
 
 
-import com.project2.demo.Menu.menu.controller.LimitDayParameter;
 import com.project2.demo.Menu.menu.controller.MenuParameter;
 import com.project2.demo.Menu.menu.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalTime;
-import java.time.MonthDay;
 
 @Service
 @RequiredArgsConstructor
@@ -19,20 +16,13 @@ public class MenuService {
 
 
     @Transactional
-    public void createDefaultMenu(MenuParameter menuParameter){
+    public void createMenu(MenuParameter menuParameter){
 
         Time time = getTime(menuParameter);
         Menu menu = getMenu(time, menuParameter);
         menuRepository.save(menu);
     }
 
-    @Transactional
-    public void createLimitedMenu(MenuParameter menuParameter) {
-
-        Time time = getTimeLimited(menuParameter);
-        Menu menu = getMenuLimited(time, menuParameter);
-        menuRepository.save(menu);
-    }
 
 
 
@@ -47,12 +37,11 @@ public class MenuService {
 
 
     @Transactional
-    public void limitMenu(Long menuId, LimitDayParameter limitDayParameter){
+    public void limitMenu(Long menuId){
         Menu menu = getMenuById(menuId);
         checkExistence(menu);
         checkAlreadyLimited(menu);
-        menu.limit(MonthDay.of(limitDayParameter.getLimitedMonth(),
-                limitDayParameter.getLimitedDayOfMonth()));
+        menu.limit();
 
     }
 
@@ -81,16 +70,6 @@ public class MenuService {
         menu.setUnSoldOut();
     }
 
-
-    @Transactional
-    public void buy(Long menuId, int purchaseQuantity) {
-        // 유저 관련 기능 아직 추가 안함
-        Menu menu = getMenuById(menuId);
-        checkExistence(menu);
-        checkAlreadySoldOut(menu);
-        menu.decreaseAmountOfFoodLeft(purchaseQuantity);
-        menu.checkSoldOut();
-    }
 
     @Transactional
     public void modifyAmount(Long menuId, int amount) {
@@ -157,7 +136,7 @@ public class MenuService {
 
     public Menu getMenu(Time time, MenuParameter menuParameter) {
         return Menu.create(
-                FoodName.create(menuParameter.getFoodName()),
+                FoodName.create(menuParameter.getTitle()),
                 Price.create(menuParameter.getPrice()),
                 MenuDescription.create(menuParameter.getDescription()),
                 time,
@@ -168,7 +147,7 @@ public class MenuService {
 
     public Menu getMenuLimited(Time time, MenuParameter menuParameter) {
         return Menu.create(
-                FoodName.create(menuParameter.getFoodName()),
+                FoodName.create(menuParameter.getTitle()),
                 Price.create(menuParameter.getPrice()),
                 MenuDescription.create(menuParameter.getDescription()),
                 time,
@@ -180,21 +159,12 @@ public class MenuService {
     public Time getTime(MenuParameter menuParameter) {
 
             return Time.create(
-                    LocalTime.of(menuParameter.getStartHour(),  menuParameter.getStartMinute()),
-                    LocalTime.of(menuParameter.getEndHour(), menuParameter.getEndMinute())
+                    menuParameter.getStartTime(),
+                    menuParameter.getEndTime()
             );
 
     }
 
-    public Time getTimeLimited(MenuParameter menuParameter ){
-
-            return Time.limit(
-                    LocalTime.of(menuParameter.getStartHour(),  menuParameter.getStartMinute()),
-                    LocalTime.of(menuParameter.getEndHour(), menuParameter.getEndMinute()),
-                    MonthDay.of(menuParameter.getEndMonth(), menuParameter.getEndDayOfMonth())
-            );
-
-    }
 
     public MenuDto getMenuInfo(Long menuId) {
         Menu menu = getMenuById(menuId);
@@ -207,6 +177,8 @@ public class MenuService {
                 menu.getFoodName(),
                 menu.getMenuDescription(),
                 menu.getImageURL(),
-                menu.getPrice());
+                menu.getPrice(),
+        menu.getSalesTime().getStartTime(),
+        menu.getSalesTime().getEndTime());
     }
 }

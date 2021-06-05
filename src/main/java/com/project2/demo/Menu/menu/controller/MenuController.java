@@ -9,9 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DateTimeException;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.MonthDay;
 
 @RestController
 @RequestMapping("/menus")
@@ -22,28 +19,31 @@ public class MenuController {
 
 
     @PostMapping("/make/default")
-    public void createDefaultMenu(@RequestBody MenuParameter menuParameter){
+    public void createMenu(@RequestBody MenuParameter menuParameter){
         try {
-            menuService.createDefaultMenu(menuParameter);
+            menuService.createMenu(menuParameter);
         }catch (DateTimeException de){
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
         }
     }
 
-    @PostMapping("/make/limited")
-    public void createLimitedMenu(@RequestBody MenuParameter menuParameter){
-        try {
-            menuService.createLimitedMenu(menuParameter);
-        }catch (DateTimeException de){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
-        }
-    }
     @GetMapping("/{menuId}")
     public ResponseEntity<MenuDto> getMenuInfo(@PathVariable Long menuId){
         try {
             return ResponseEntity.ok(menuService.getMenuInfo(menuId));
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @PutMapping("/{menuId}/limit")
+    public void setMenuLimited(@PathVariable Long menuId){
+        try {
+            menuService.limitMenu(menuId);
+        }catch (DateTimeException de){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
+        }catch (IllegalArgumentException argE ){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -74,31 +74,6 @@ public class MenuController {
     }
 
 
-
-
-    @PostMapping("/{menuId}/buy/{purchaseQuantity}")
-    public ResponseEntity<Void> buyMenus(@PathVariable Long menuId,
-                         @PathVariable int purchaseQuantity){
-        try {
-            menuService.buy(menuId, purchaseQuantity);
-            return ResponseEntity.ok().build();
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
-
-    @PutMapping("/{menuId}/limit")
-    public void setMenuLimited(@PathVariable Long menuId, @RequestBody LimitDayParameter limitDayParameter){
-        try {
-            menuService.limitMenu(menuId, limitDayParameter);
-        }catch (DateTimeException de){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
-        }catch (IllegalArgumentException argE ){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @DeleteMapping("/{menuId}")
     private void deleteMenu(@PathVariable Long menuId){
         menuService.deleteMenu(menuId);
@@ -106,7 +81,7 @@ public class MenuController {
 
 
 
-    @GetMapping("/{menuId}")
+    @PutMapping("/{menuId}")
     public ResponseEntity<Void> unLimitMenu(@PathVariable Long menuId){
         try {
             menuService.unLimitMenu(menuId);
