@@ -4,6 +4,7 @@ package com.project2.demo.order.domain;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -27,8 +28,16 @@ public class Order {
     private List<OrderLine> orderLines = new ArrayList<>();
 
 
+    private Order(OrdererId ordererId) {
+        this.ordererId = ordererId;
+        this.orderTime = OrderTime.create(LocalDateTime.now());
+    }
 
+    private void addOrderLine(OrderLine orderLine){
+        this.orderLines.add(orderLine);
+    }
 
-
-
+    public static Order create(OrdererId ordererId){
+        return new Order(ordererId);
+    }
 }
