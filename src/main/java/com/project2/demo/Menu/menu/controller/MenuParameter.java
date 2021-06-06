@@ -27,8 +27,6 @@ public class MenuParameter {
 
     String imageURL;
 
-    int limitedMonth;
-    int limitedDayOfMonth;
 
 
 }
