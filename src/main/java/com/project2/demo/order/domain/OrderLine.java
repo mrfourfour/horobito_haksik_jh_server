@@ -2,11 +2,15 @@ package com.project2.demo.order.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 
 @Entity
+@NoArgsConstructor
+@Getter
 public class OrderLine {
 
     @Id

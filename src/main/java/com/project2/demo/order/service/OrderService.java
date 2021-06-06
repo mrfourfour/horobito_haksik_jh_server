@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -38,9 +40,22 @@ public class OrderService {
                 order.getId(),
                 order.getOrdererId(),
                 order.getOrderTime(),
-                order.getOrderLines(),
+                order.getOrderLines().stream()
+                        .map(this::toOrderLineDto)
+                        .collect(Collectors.toList()),
                 order.getTotalPrice()
-        )
+        );
+    }
+
+    private OrderLineDto  toOrderLineDto(OrderLine orderLine) {
+        return new OrderLineDto(
+                orderLine.getOrderLineId(),
+                orderLine.getOrderedMenuInfo().getMenuId(),
+                orderLine.getOrderedMenuInfo().getMenuName(),
+                orderLine.getOrderedMenuInfo().getPrice(),
+                orderLine.getCount().getCount(),
+                orderLine.getTotalPrice().getTotalPrice()
+        );
     }
 
     private void addOrderLines(Order order, OrderParameter orderParameter) {

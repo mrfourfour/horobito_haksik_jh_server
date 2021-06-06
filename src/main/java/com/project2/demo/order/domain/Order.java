@@ -25,6 +25,9 @@ public class Order {
     @Embedded
     private OrderTime orderTime;
 
+    @Embedded
+    private TotalPrice totalPrice;
+
 
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST})
     private List<OrderLine> orderLines = new ArrayList<>();
@@ -33,10 +36,15 @@ public class Order {
     private Order(OrdererId ordererId) {
         this.ordererId = ordererId;
         this.orderTime = OrderTime.create(LocalDateTime.now());
+        this.totalPrice = TotalPrice.create(0);
     }
 
-    public void addOrderLine(OrderLine orderLine){
+    public void addOrderLine(OrderLine orderLine) {
         this.orderLines.add(orderLine);
+        this.totalPrice = TotalPrice.create(
+                this.totalPrice.getTotalPrice()
+                +orderLine.getTotalPrice().getTotalPrice()
+        );
     }
 
     public static Order create(OrdererId ordererId){
@@ -52,6 +60,6 @@ public class Order {
     }
 
     public int getTotalPrice(){
-        return 0;
+        return this.totalPrice.getTotalPrice();
     }
 }

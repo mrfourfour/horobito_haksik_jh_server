@@ -1,10 +1,12 @@
 package com.project2.demo.order.domain;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
+@Getter
 @NoArgsConstructor
 public class TotalPrice {
 
