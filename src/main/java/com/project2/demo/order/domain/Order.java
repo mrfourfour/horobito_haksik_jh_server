@@ -1,6 +1,7 @@
 package com.project2.demo.order.domain;
 
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Order {
 
@@ -33,11 +35,23 @@ public class Order {
         this.orderTime = OrderTime.create(LocalDateTime.now());
     }
 
-    private void addOrderLine(OrderLine orderLine){
+    public void addOrderLine(OrderLine orderLine){
         this.orderLines.add(orderLine);
     }
 
     public static Order create(OrdererId ordererId){
         return new Order(ordererId);
+    }
+
+    public Long getOrdererId() {
+        return ordererId.getId();
+    }
+
+    public LocalDateTime getOrderTime() {
+        return orderTime.getOrderTime();
+    }
+
+    public int getTotalPrice(){
+        return 0;
     }
 }

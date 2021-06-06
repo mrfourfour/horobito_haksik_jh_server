@@ -29,11 +29,8 @@ public class OrderLine {
 
 
     private OrderLine(
-            Order order,
             OrderedMenuInfo orderedMenuInfo,
-            Count count,
-            TotalPrice totalPrice) {
-        this.order = order;
+            Count count) {
         this.orderedMenuInfo = orderedMenuInfo;
         this.count = count;
         this.totalPrice = getTotalPrice(count, orderedMenuInfo);
@@ -41,5 +38,13 @@ public class OrderLine {
 
     private TotalPrice getTotalPrice(Count count, OrderedMenuInfo orderedMenuInfo) {
         return TotalPrice.create(count.getCount() * orderedMenuInfo.getPrice());
+
+    }
+
+    public static OrderLine create(
+            OrderedMenuInfo orderedMenuInfo,
+            Count count
+    ){
+        return new OrderLine(orderedMenuInfo, count);
     }
 }

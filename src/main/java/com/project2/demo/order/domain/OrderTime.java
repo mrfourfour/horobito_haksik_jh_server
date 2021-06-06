@@ -1,6 +1,7 @@
 package com.project2.demo.order.domain;
 
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Embeddable
 @NoArgsConstructor
+@Getter
 public class OrderTime {
 
     private LocalDateTime orderTime;
