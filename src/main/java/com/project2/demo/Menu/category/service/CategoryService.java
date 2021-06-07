@@ -69,7 +69,7 @@ public class CategoryService {
 
     private Category getCategory(CategoryParameter categoryParameter) {
         return Category.create(
-                CategoryName.create(categoryParameter.getCategoryName()),
+                CategoryName.create(categoryParameter.getCategory()),
                 Description.create(categoryParameter.getDescription())
         );
     }

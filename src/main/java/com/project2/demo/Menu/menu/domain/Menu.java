@@ -3,13 +3,14 @@ package com.project2.demo.Menu.menu.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.MonthDay;
 
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Menu {
 
@@ -19,7 +20,7 @@ public class Menu {
 
 
     @Embedded
-    private FoodName foodName;
+    private Title title;
 
     @Embedded
     private Price price;
@@ -43,14 +44,14 @@ public class Menu {
     private boolean deleted;
 
 
-    private Menu(FoodName foodName,
+    private Menu(Title title,
                  Price price,
                  MenuDescription menuDescription,
                  Time salesTime,
                  AmountOfFoodLeft amount,
                  ImageURL imageURL
                 ) {
-        this.foodName = foodName;
+        this.title = title;
         this.price = price;
         this.menuDescription = menuDescription;
         this.salesTime = salesTime;
@@ -61,25 +62,31 @@ public class Menu {
     }
 
 
-    public static Menu create(FoodName foodName,
+    public static Menu create(Title title,
                               Price price,
                               MenuDescription menuDescription,
                               Time salesTime,
                               AmountOfFoodLeft amount,
                               ImageURL imageURL
                               ) {
-        return new Menu(foodName, price, menuDescription, salesTime, amount, imageURL);
+        return new Menu(title, price, menuDescription, salesTime, amount, imageURL);
     }
 
     public void increaseAmountOfFoodLeft(int amountForAdd){
-        this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() + amountForAdd);
-    }
-
-    public void decreaseAmountOfFoodLeft(int amountForAdd){
-        if (amountForAdd>this.amountOfFoodLeft.returnFoodLeft()){
+        if (amountForAdd<0){
             throw new IllegalArgumentException();
         }
-        this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() - amountForAdd);
+        this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() + amountForAdd);
+        if (this.soldOut.soldOut && amountForAdd>0){
+            this.soldOut = SoldOutFlag.create(false);
+        }
+    }
+
+    public void decreaseAmountOfFoodLeft(int amountForSubtract){
+        if (amountForSubtract>this.amountOfFoodLeft.returnFoodLeft() || amountForSubtract<0){
+            throw new IllegalArgumentException();
+        }
+        this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() - amountForSubtract);
     }
 
     public void limit() {
@@ -135,8 +142,8 @@ public class Menu {
         return this.id;
     }
 
-    public String getFoodName() {
-        return this.foodName.getFoodName();
+    public String getTitle() {
+        return this.title.getTitle();
     }
 
     public int getPrice() {
