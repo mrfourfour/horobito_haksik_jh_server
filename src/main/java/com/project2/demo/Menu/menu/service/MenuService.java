@@ -17,14 +17,40 @@ public class MenuService {
 
     @Transactional
     public void createMenu(MenuParameter menuParameter){
-
+        checkAlreadyExistence(menuParameter);
         Time time = getTime(menuParameter);
         Menu menu = getMenu(time, menuParameter);
         menuRepository.save(menu);
     }
 
+    public MenuDto getMenuInfo(Long menuId) {
+        Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+        return getMenuDto(menu);
+    }
+
+    @Transactional
+    public void addAmount(Long menuId, int amount) {
+        Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+        menu.increaseAmountOfFoodLeft(amount);
+    }
 
 
+    @Transactional
+    public void subtractAmount(Long menuId, int amount) {
+        Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+        menu.decreaseAmountOfFoodLeft(amount);
+        menu.checkSoldOut();
+    }
+
+    @Transactional
+    public void modifyAmount(Long menuId, int amount) {
+        Menu menu = getMenuById(menuId);
+        checkExistence(menu);
+        changeAmount(menu, amount);
+    }
 
     @Transactional
     public void deleteMenu(Long menuId){
@@ -71,28 +97,12 @@ public class MenuService {
     }
 
 
-    @Transactional
-    public void modifyAmount(Long menuId, int amount) {
-        Menu menu = getMenuById(menuId);
-        checkExistence(menu);
-        changeAmount(menu, amount);
-    }
 
-    @Transactional
-    public void addAmount(Long menuId, int amount) {
-        Menu menu = getMenuById(menuId);
-        checkExistence(menu);
-        menu.increaseAmountOfFoodLeft(amount);
+    private void checkAlreadyExistence(MenuParameter menuParameter) {
+        if (menuRepository.findMenuByTitle(Title.create(menuParameter.getTitle()))!=null){
+            throw new IllegalArgumentException();
+        };
     }
-
-    @Transactional
-    public void subtractAmount(Long menuId, int amount) {
-        Menu menu = getMenuById(menuId);
-        checkExistence(menu);
-        menu.decreaseAmountOfFoodLeft(amount);
-        menu.checkSoldOut();
-    }
-
 
     public void changeAmount(Menu menu, int amount) {
         menu.changeAmount(amount);
@@ -136,7 +146,7 @@ public class MenuService {
 
     public Menu getMenu(Time time, MenuParameter menuParameter) {
         return Menu.create(
-                FoodName.create(menuParameter.getTitle()),
+                Title.create(menuParameter.getTitle()),
                 Price.create(menuParameter.getPrice()),
                 MenuDescription.create(menuParameter.getDescription()),
                 time,
@@ -156,15 +166,10 @@ public class MenuService {
     }
 
 
-    public MenuDto getMenuInfo(Long menuId) {
-        Menu menu = getMenuById(menuId);
-        return getMenuDto(menu);
-    }
-
     private MenuDto getMenuDto(Menu menu) {
         return new MenuDto(
                 menu.getId(),
-                menu.getFoodName(),
+                menu.getTitle(),
                 menu.getMenuDescription(),
                 menu.getImageURL(),
                 menu.getPrice(),

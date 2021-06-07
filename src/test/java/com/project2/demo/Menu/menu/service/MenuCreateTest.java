@@ -24,7 +24,7 @@ public class MenuCreateTest {
     MenuRepository menuRepository;
 
 
-    @DisplayName("1. 메뉴 만들기")
+    @DisplayName("1. 정상적인 메뉴 만들기")
     @Test
     void createMenu1(){
 

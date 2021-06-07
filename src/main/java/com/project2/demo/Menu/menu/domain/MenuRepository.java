@@ -6,4 +6,6 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     Menu findMenuById(Long id);
 
     Menu findMenuByIdAndDeleted(Long id, boolean deleted);
+
+    Menu findMenuByTitle(Title title);
 }
