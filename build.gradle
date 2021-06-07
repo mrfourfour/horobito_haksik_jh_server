@@ -1,6 +1,7 @@
+
 plugins {
     id 'org.springframework.boot' version '2.4.5'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+   id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
 
@@ -8,24 +9,76 @@ group = 'com.project2'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+dependencyManagement {
+    imports {
+        mavenBom "org.keycloak.bom:keycloak-adapter-bom:12.0.1"
+    }
+}
+
 configurations {
+
+
     compileOnly {
         extendsFrom annotationProcessor
     }
+
+
 }
+
+apply {
+    plugin("org.springframework.boot")
+    plugin("io.spring.dependency-management")
+}
+
 
 repositories {
     mavenCentral()
 }
 
+
+
 dependencies {
+    // keycloak
+    compile 'org.keycloak:keycloak-spring-boot-adapter:2.5.1.Final'
+    compile 'org.keycloak:keycloak-tomcat8-adapter:2.5.1.Final'
+    implementation 'org.keycloak:keycloak-spring-boot-starter'
+
+    implementation 'org.flywaydb:flyway-core'
+    runtime 'org.postgresql:postgresql'
+
+
+
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
     compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
-    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // spring security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    implementation group: 'com.google.guava', name: 'guava', version: '11.0.2'
+
+    //2차
+
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    // junit
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.7.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.7.1")
 }
 
 test {
