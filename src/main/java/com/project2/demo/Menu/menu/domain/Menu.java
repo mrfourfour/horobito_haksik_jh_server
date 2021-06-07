@@ -72,14 +72,17 @@ public class Menu {
     }
 
     public void increaseAmountOfFoodLeft(int amountForAdd){
+        if (amountForAdd<0){
+            throw new IllegalArgumentException();
+        }
         this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() + amountForAdd);
     }
 
-    public void decreaseAmountOfFoodLeft(int amountForAdd){
-        if (amountForAdd>this.amountOfFoodLeft.returnFoodLeft()){
+    public void decreaseAmountOfFoodLeft(int amountForSubtract){
+        if (amountForSubtract>this.amountOfFoodLeft.returnFoodLeft() || amountForSubtract<0){
             throw new IllegalArgumentException();
         }
-        this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() - amountForAdd);
+        this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() - amountForSubtract);
     }
 
     public void limit() {
