@@ -26,14 +26,19 @@ public class OrderService {
 
     @Transactional
     public OrderDTO createOrder(OrderParameter orderParameter){
-        OrdererId ordererId
-                = OrdererId.create(userService.findLoggedUser().getUserId());
+        OrdererId ordererId = OrdererId.create(userService.findLoggedUser().getUserId());
         Order order = Order.create(ordererId);
         addOrderLines(order, orderParameter);
         orderRepository.save(order);
-
         return getOrderDto(order);
     }
+
+
+
+
+
+
+
 
     private OrderDTO getOrderDto(Order order) {
         return new OrderDTO(
