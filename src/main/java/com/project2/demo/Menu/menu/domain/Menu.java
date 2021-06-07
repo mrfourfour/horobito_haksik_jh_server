@@ -77,6 +77,9 @@ public class Menu {
             throw new IllegalArgumentException();
         }
         this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() + amountForAdd);
+        if (this.soldOut.soldOut && amountForAdd>0){
+            this.soldOut = SoldOutFlag.create(false);
+        }
     }
 
     public void decreaseAmountOfFoodLeft(int amountForSubtract){

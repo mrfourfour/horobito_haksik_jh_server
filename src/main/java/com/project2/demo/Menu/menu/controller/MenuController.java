@@ -108,24 +108,4 @@ public class MenuController {
 
 
 
-    @GetMapping("/{menuId}")
-    public void setSoldOut(@PathVariable Long menuId){
-        try {
-            menuService.setSoldOut(menuId);
-        }catch (IllegalArgumentException argE){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @GetMapping("/{menuId}")
-    public void setUnSoldOut(@PathVariable Long menuId){
-        try {
-            menuService.setUnSoldOut(menuId);
-        }catch (IllegalArgumentException argE){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST);
-        }
-        menuService.setUnSoldOut(menuId);
-    }
-
-
 }
