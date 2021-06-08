@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
 public class KeyCloakTokenProvider {
@@ -31,7 +32,7 @@ class keyCloakWebClientConfig{
     public WebClient keycloakWebClient(KeycloakSpringBootProperties properties){
 
         String baseUrl = getBaseUrl(properties);
-        return WebClient.builder().baseUrl(baseUrl).buld();
+        return WebClient.builder().baseUrl(baseUrl).build();
     }
 
     private String getBaseUrl(KeycloakSpringBootProperties properties) {
