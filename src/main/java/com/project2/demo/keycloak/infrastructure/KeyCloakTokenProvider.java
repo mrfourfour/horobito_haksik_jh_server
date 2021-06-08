@@ -2,6 +2,7 @@ package com.project2.demo.keycloak.infrastructure;
 
 
 import com.project2.demo.keycloak.service.Token;
+import com.project2.demo.keycloak.service.TokenProvider;
 import com.project2.demo.keycloak.service.TokenRequest;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
@@ -14,11 +15,22 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
 @RequiredArgsConstructor
-public class KeyCloakTokenProvider {
+public class KeyCloakTokenProvider implements TokenProvider {
 
     private final WebClient webClient;
     private final KeycloakSpringBootProperties properties;
     private final KeycloakAdminClient keycloak;
+
+    @Override
+    public Token issue(TokenRequest tokenRequest){
+        String username = tokenRequest.getUsername();
+        String password = tokenRequest.getPassword();
+        String resource = properties.getResource();
+        String clientSecret = properties.getCredentials().toString();
+        String formData = createFormData(resource, clientSecret, username, password);
+        return fetchResouce(formData);
+
+    }
 
 
 
