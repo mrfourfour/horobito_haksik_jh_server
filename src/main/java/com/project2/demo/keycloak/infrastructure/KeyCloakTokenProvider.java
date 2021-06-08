@@ -1,6 +1,9 @@
 package com.project2.demo.keycloak.infrastructure;
 
 
+import com.project2.demo.keycloak.service.Token;
+import com.project2.demo.keycloak.service.TokenRequest;
+import lombok.RequiredArgsConstructor;
 import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +13,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
+@RequiredArgsConstructor
 public class KeyCloakTokenProvider {
+
+    private final WebClient webClient;
+    private final KeycloakSpringBootProperties properties;
+    private final KeycloakAdminClient keycloak;
+
+
 
 }
 
