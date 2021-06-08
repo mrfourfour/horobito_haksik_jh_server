@@ -49,7 +49,9 @@ dependencies {
 
     compile('org.keycloak:keycloak-spring-boot-starter')
     compile("org.keycloak:keycloak-admin-client:13.0.0")
+    compile group: 'org.springframework', name: 'spring-webflux', version: '5.0.2.RELEASE'
 
+    
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
