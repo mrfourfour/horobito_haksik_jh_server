@@ -32,6 +32,15 @@ public class KeyCloakTokenProvider implements TokenProvider {
 
     }
 
+    @Override
+    public Token refresh(String refreshToken) {
+        return null;
+    }
+
+    @Override
+    public void signUp(TokenRequest tokenRequest) {
+
+    }
 
 
 }
