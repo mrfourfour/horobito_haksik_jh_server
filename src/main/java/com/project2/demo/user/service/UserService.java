@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
+    /*
+    TokenProvider 는 Interface
+     */
     private final TokenProvider tokenProvider;
 
 
