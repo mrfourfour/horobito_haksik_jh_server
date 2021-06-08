@@ -26,4 +26,16 @@ class keyCloakWebClientConfig{
                 .grantType("client_credentials")
                 .build();
     }
+
+    @Bean
+    public WebClient keycloakWebClient(KeycloakSpringBootProperties properties){
+
+        String baseUrl = getBaseUrl(properties);
+        return WebClient.builder().baseUrl(baseUrl).buld();
+    }
+
+    private String getBaseUrl(KeycloakSpringBootProperties properties) {
+        return "@{properties.authServiceUrl}/realms/" +
+                "${properties.realm}/protocol/openid-connect";
+    }
 }
