@@ -17,14 +17,13 @@ public class KeyCloakTokenProvider {
 class keyCloakWebClientConfig{
 
     @Bean
-    public void keyCloakAdminClient(KeycloakSpringBootProperties properties) {
-        KeyCloak keyCloak =
-                KeyClockBuilder.build()
-                        .serverUrl(properties.authServerUrl)
-                        .realm(properties.realm)
-                        .clientId(properties.resource)
-                        .clientSecret(properties.credentials["secret"] as? String)
-                        .grantType("client_credentials")
-                        .build();
+    public Keycloak keyCloakAdminClient(KeycloakSpringBootProperties properties) {
+        return KeycloakBuilder.builder()
+                .serverUrl(properties.getAuthServerUrl())
+                .realm(properties.getRealm())
+                .clientId(properties.getResource())
+                .clientSecret(properties.getCredentials().toString())
+                .grantType("client_credentials")
+                .build();
     }
 }
