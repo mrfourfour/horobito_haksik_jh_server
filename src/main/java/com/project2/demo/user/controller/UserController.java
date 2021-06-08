@@ -19,6 +19,11 @@ public class UserController {
 
     private final TokenProvider tokenProvider;
 
+
+    /*
+    핵심
+    로그인을 했을 때 토큰을 준다.
+     */
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest){
         Token token = userService.login(loginRequest.to());
@@ -27,6 +32,11 @@ public class UserController {
     }
 
 
+    /*
+     용도
+    자동 로그인 + 15분 지났을 때 재인증
+
+     */
     @PostMapping("/token/refresh")
     public Token refreshToken(@RequestBody RefreshTokenPayload refreshTokenPayload){
         return refresh(refreshTokenPayload);
