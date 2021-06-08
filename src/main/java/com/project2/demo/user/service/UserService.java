@@ -14,6 +14,11 @@ public class UserService {
     private final TokenProvider tokenProvider;
 
 
+    /*
+    기능
+    토큰 공급자로부터 토큰을 요청하고,
+    받은 토큰을 발급하라
+     */
     public Token login(LoginParameter loginParameter){
         TokenRequest tokenRequest
                 = TokenRequest.create(loginParameter.getUsername()
