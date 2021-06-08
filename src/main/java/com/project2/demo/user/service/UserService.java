@@ -13,6 +13,8 @@ public class UserService {
 
     /*
     TokenProvider 는 Interface
+    이 인터페이스는 KeyCloak 패키지의
+    인프라 층의 KeyCloakTokenProvider 라는 구현체에서 구현
      */
     private final TokenProvider tokenProvider;
 
