@@ -57,6 +57,12 @@ public class KeyCloakTokenProvider implements TokenProvider {
 
 
 
+    /*
+    역할
+    자원을 본격적으로 받아오는 것
+    keyCloak도 RestApi를 지원하기때문에,
+    이렇게 자원을 요청하는 것
+     */
     private Token fetchResouce(BodyInserters.FormInserter<String> formData) {
         return webClient.post()
                 .uri(uriBuilder -> uriBuilder.pathSegment("token").build())
