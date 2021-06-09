@@ -7,6 +7,8 @@ import com.project2.demo.keycloak.service.TokenProvider;
 import com.project2.demo.keycloak.service.TokenRequest;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
+import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -22,6 +24,9 @@ import reactor.core.publisher.Mono;
 
 import javax.ws.rs.core.Response;
 import java.net.http.HttpHeaders;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -32,8 +37,6 @@ public class KeyCloakTokenProvider implements TokenProvider {
 
     private final KeycloakSpringBootProperties properties;
     private final Keycloak keycloakAdminClient ;
-
-
 
 
     /*
@@ -74,7 +77,7 @@ public class KeyCloakTokenProvider implements TokenProvider {
                 .header(HttpHeaders.CONTENT_TYPE, mediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .body(formData)
                 .retrieve()
-                .onStatus(stataus -> stataus.is4xxClientError())
+                .onStatus()
                 .onStatus()
                 .bodyToMono(Token::new).block();
     }
@@ -111,6 +114,23 @@ public class KeyCloakTokenProvider implements TokenProvider {
         if (statusInfo.equals(Response.Status.FORBIDDEN)){
             throw new IllegalArgumentException("keycloak configuration");
         }
+    }
+
+    private UserRepresentation getUserRepresentation(TokenRequest tokenRequest) {
+        CredentialRepresentation credential = new CredentialRepresentation();
+        credential.setType(CredentialRepresentation.PASSWORD);
+        credential.setValue(tokenRequest.getPassword());
+        credential.setTemporary(false);
+
+        UserRepresentation userRepresentation = new UserRepresentation();
+        userRepresentation.setEnabled(true);
+        userRepresentation.setEmail(tokenRequest.getEmail());
+        userRepresentation.setUsername(tokenRequest.getUsername());
+        userRepresentation.setCredentials(Collections.singletonList(credential));
+        userRepresentation.setRealmRoles(Collections.singletonList("USER_ROLE"));
+
+        return userRepresentation;
+
     }
 
 
