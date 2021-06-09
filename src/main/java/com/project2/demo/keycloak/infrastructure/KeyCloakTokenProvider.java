@@ -9,14 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
-import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
-import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,9 +23,7 @@ import reactor.core.publisher.Mono;
 
 import javax.ws.rs.core.Response;
 import java.net.http.HttpHeaders;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -49,7 +46,7 @@ public class KeyCloakTokenProvider implements TokenProvider {
         String resource = properties.getResource();
         String clientSecret = properties.getCredentials().toString();
         BodyInserters.FormInserter<String> formData = createFormData(resource, clientSecret, username, password);
-        return fetchResouce(formData);
+        return fetchResource(formData);
 
     }
 
@@ -71,14 +68,18 @@ public class KeyCloakTokenProvider implements TokenProvider {
     keyCloak도 RestApi를 지원하기때문에,
     이렇게 자원을 요청하는 것
      */
-    private Token fetchResouce(BodyInserters.FormInserter<String> formData) {
+    private Token fetchResource(BodyInserters.FormInserter<String> formData) {
         return webClient.post()
                 .uri(uriBuilder -> uriBuilder.pathSegment("token").build())
                 .header(HttpHeaders.CONTENT_TYPE, mediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .body(formData)
                 .retrieve()
-                .onStatus()
-                .onStatus()
+                .onStatus(HttpStatus::is4xxClientError,
+                        clientResponse -> Mono.error(
+                                new IllegalArgumentException("Not authorized")))
+                .onStatus(HttpStatus::is5xxServerError,
+                        clientResponse -> Mono.error(
+                                new IllegalArgumentException("keycloak Server error")))
                 .bodyToMono(Token::new).block();
     }
 
