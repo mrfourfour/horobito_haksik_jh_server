@@ -55,6 +55,8 @@ public class KeyCloakTokenProvider implements TokenProvider {
         return null;
     }
 
+
+
     private Token fetchResouce(BodyInserters.FormInserter<String> formData) {
         return webClient.post()
                 .uri(uriBuilder -> uriBuilder.pathSegment("token").build())
@@ -64,6 +66,14 @@ public class KeyCloakTokenProvider implements TokenProvider {
                 .onStatus(stataus -> stataus.is4xxClientError())
                 .onStatus()
                 .bodyToMono(Token::new).block();
+    }
+
+    private BodyInserters.FormInserter<String> createFormData(
+            String resource, String clientSecret, String refreshToken) {
+        return BodyInserters.fromFormData("refresh_token", refreshToken)
+                .with("client_id", resource)
+                .with("client_secret", clientSecret)
+                .with("grant_type", "refresh_token");
     }
 
     private BodyInserters.FormInserter<String> createFormData(String resource, String clientSecret, String username, String password) {
