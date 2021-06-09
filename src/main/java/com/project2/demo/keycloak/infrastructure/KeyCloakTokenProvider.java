@@ -6,6 +6,7 @@ import com.project2.demo.keycloak.service.TokenProvider;
 import com.project2.demo.keycloak.service.TokenRequest;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.keycloak.admin.client.Keycloak;
@@ -21,9 +22,14 @@ import java.net.http.HttpHeaders;
 @RequiredArgsConstructor
 public class KeyCloakTokenProvider implements TokenProvider {
 
+    @Qualifier("keycloakWebClient")
     private final WebClient webClient;
+
     private final KeycloakSpringBootProperties properties;
     private final KeycloakAdminClient keycloak;
+
+
+
 
     @Override
     public Token issue(TokenRequest tokenRequest){
@@ -37,7 +43,7 @@ public class KeyCloakTokenProvider implements TokenProvider {
     }
 
     private Token fetchResouce(BodyInserters.FormInserter<String> formData) {
-        webClient.post()
+        return webClient.post()
                 .uri(uriBuilder -> uriBuilder.pathSegment("token").build())
                 .header(HttpHeaders.CONTENT_TYPE, mediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .body(formData)
