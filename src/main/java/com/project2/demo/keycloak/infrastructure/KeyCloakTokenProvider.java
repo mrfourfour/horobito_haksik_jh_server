@@ -6,6 +6,7 @@ import com.project2.demo.keycloak.service.Token;
 import com.project2.demo.keycloak.service.TokenProvider;
 import com.project2.demo.keycloak.service.TokenRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.HttpHeaders;
 import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -16,13 +17,13 @@ import org.springframework.context.annotation.Configuration;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import javax.ws.rs.core.Response;
-import java.net.http.HttpHeaders;
 import java.util.Collections;
 
 @Component
@@ -71,7 +72,7 @@ public class KeyCloakTokenProvider implements TokenProvider {
     private Token fetchResource(BodyInserters.FormInserter<String> formData) {
         return webClient.post()
                 .uri(uriBuilder -> uriBuilder.pathSegment("token").build())
-                .header(HttpHeaders.CONTENT_TYPE, mediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .body(formData)
                 .retrieve()
                 .onStatus(HttpStatus::is4xxClientError,
@@ -80,7 +81,7 @@ public class KeyCloakTokenProvider implements TokenProvider {
                 .onStatus(HttpStatus::is5xxServerError,
                         clientResponse -> Mono.error(
                                 new IllegalArgumentException("keycloak Server error")))
-                .bodyToMono(Token::new).block();
+                .bodyToMono(Token.class).block();
     }
 
     private BodyInserters.FormInserter<String> createFormData(
@@ -125,7 +126,6 @@ public class KeyCloakTokenProvider implements TokenProvider {
 
         UserRepresentation userRepresentation = new UserRepresentation();
         userRepresentation.setEnabled(true);
-        userRepresentation.setEmail(tokenRequest.getEmail());
         userRepresentation.setUsername(tokenRequest.getUsername());
         userRepresentation.setCredentials(Collections.singletonList(credential));
         userRepresentation.setRealmRoles(Collections.singletonList("USER_ROLE"));
