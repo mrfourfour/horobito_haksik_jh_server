@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
@@ -30,6 +31,14 @@ public class KeyCloakTokenProvider implements TokenProvider {
         String formData = createFormData(resource, clientSecret, username, password);
         return fetchResouce(formData);
 
+    }
+
+    private BodyInserters.FormInserter<String> createFormData(String resource, String clientSecret, String username, String password) {
+        return BodyInserters.fromFormData("client_id", resource)
+                .with("grant_type", "password")
+                .with("client_secret", clientSecret)
+                .with("usernane", username)
+                .with("password", password);
     }
 
     @Override
