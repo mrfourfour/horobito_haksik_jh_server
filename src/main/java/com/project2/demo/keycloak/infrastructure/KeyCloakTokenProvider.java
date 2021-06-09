@@ -45,6 +45,16 @@ public class KeyCloakTokenProvider implements TokenProvider {
 
     }
 
+
+    @Override
+    public Token refresh(String refreshToken) {
+        String resource = properties.getResource();
+        String clientSecret =properties.getCredentials().toString();
+        BodyInserters.FormInserter<String> formData
+                = createFormData(resource, clientSecret, refreshToken);
+        return null;
+    }
+
     private Token fetchResouce(BodyInserters.FormInserter<String> formData) {
         return webClient.post()
                 .uri(uriBuilder -> uriBuilder.pathSegment("token").build())
@@ -62,11 +72,6 @@ public class KeyCloakTokenProvider implements TokenProvider {
                 .with("client_secret", clientSecret)
                 .with("usernane", username)
                 .with("password", password);
-    }
-
-    @Override
-    public Token refresh(String refreshToken) {
-        return null;
     }
 
     @Override
