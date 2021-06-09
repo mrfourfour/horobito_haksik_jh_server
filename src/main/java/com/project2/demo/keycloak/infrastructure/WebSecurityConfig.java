@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
 @KeycloakConfiguration
+// 서버 안에어 security 관련 처리 용도
 public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     @Override
