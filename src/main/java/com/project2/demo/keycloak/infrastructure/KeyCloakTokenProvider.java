@@ -88,6 +88,9 @@ class keyCloakWebClientConfig{
                 .build();
     }
 
+    /*
+    keycloak 에 연결을 하고자 하는 곳으로 연결이 되어 있다.
+     */
     @Bean
     public WebClient keycloakWebClient(KeycloakSpringBootProperties properties){
 
