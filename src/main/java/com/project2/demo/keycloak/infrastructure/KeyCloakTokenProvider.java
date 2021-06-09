@@ -13,6 +13,9 @@ import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+
+import java.net.http.HttpHeaders;
 
 @Component
 @RequiredArgsConstructor
@@ -31,6 +34,17 @@ public class KeyCloakTokenProvider implements TokenProvider {
         BodyInserters.FormInserter<String> formData = createFormData(resource, clientSecret, username, password);
         return fetchResouce(formData);
 
+    }
+
+    private Token fetchResouce(BodyInserters.FormInserter<String> formData) {
+        webClient.post()
+                .uri(uriBuilder -> uriBuilder.pathSegment("token").build())
+                .header(HttpHeaders.CONTENT_TYPE, mediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .body(formData)
+                .retrieve()
+                .onStatus(stataus -> stataus.is4xxClientError())
+                .onStatus()
+                .bodyToMono(Token::new).block();
     }
 
     private BodyInserters.FormInserter<String> createFormData(String resource, String clientSecret, String username, String password) {
