@@ -1,11 +1,15 @@
 package com.project2.demo.keycloak.infrastructure;
 
 
+import com.project2.demo.keycloak.service.DuplicateUserSignUpException;
 import com.project2.demo.keycloak.service.Token;
 import com.project2.demo.keycloak.service.TokenProvider;
 import com.project2.demo.keycloak.service.TokenRequest;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.adapters.springboot.KeycloakSpringBootProperties;
+import org.keycloak.admin.client.resource.UserResource;
+import org.keycloak.admin.client.resource.UsersResource;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +20,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import javax.ws.rs.core.Response;
 import java.net.http.HttpHeaders;
 
 @Component
@@ -26,7 +31,7 @@ public class KeyCloakTokenProvider implements TokenProvider {
     private final WebClient webClient;
 
     private final KeycloakSpringBootProperties properties;
-    private final KeycloakAdminClient keycloak;
+    private final Keycloak keycloakAdminClient ;
 
 
 
@@ -92,7 +97,20 @@ public class KeyCloakTokenProvider implements TokenProvider {
 
     @Override
     public void signUp(TokenRequest tokenRequest) {
-
+        UsersResource userResources = keycloakAdminClient
+                .realm(properties.getRealm())
+                .users();
+        UserRepresentation userRepresentation
+                = getUserRepresentation(tokenRequest);
+        Response createUserResponse = userResources
+                .create(userRepresentation);
+        Response.StatusType statusInfo = createUserResponse.getStatusInfo();
+        if (statusInfo.equals(Response.Status.CONFLICT)) {
+            throw new DuplicateUserSignUpException();
+        }
+        if (statusInfo.equals(Response.Status.FORBIDDEN)){
+            throw new IllegalArgumentException("keycloak configuration");
+        }
     }
 
 
