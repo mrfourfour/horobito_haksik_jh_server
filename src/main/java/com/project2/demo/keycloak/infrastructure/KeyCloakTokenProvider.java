@@ -28,7 +28,7 @@ public class KeyCloakTokenProvider implements TokenProvider {
         String password = tokenRequest.getPassword();
         String resource = properties.getResource();
         String clientSecret = properties.getCredentials().toString();
-        String formData = createFormData(resource, clientSecret, username, password);
+        BodyInserters.FormInserter<String> formData = createFormData(resource, clientSecret, username, password);
         return fetchResouce(formData);
 
     }
