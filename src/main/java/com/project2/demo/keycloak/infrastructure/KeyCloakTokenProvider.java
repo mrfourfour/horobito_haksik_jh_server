@@ -77,6 +77,9 @@ public class KeyCloakTokenProvider implements TokenProvider {
 @Configuration
 class keyCloakWebClientConfig{
 
+    /*
+    회원가입에 사용되는 녀석, AdminClietn
+     */
     @Bean
     public Keycloak keyCloakAdminClient(KeycloakSpringBootProperties properties) {
         return KeycloakBuilder.builder()
