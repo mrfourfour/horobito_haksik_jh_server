@@ -1,9 +1,11 @@
 package com.project2.demo.keycloak.infrastructure;
 
 
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -24,7 +26,11 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         super.configure(http);
         http
                 .csrf().disable()
-                .authorizeRequests();
+                .authorizeRequests()
+                .antMatchers("/user/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated();
     }
 
     /*
@@ -39,6 +45,14 @@ public class WebSecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     }
+
+
+
+    @Bean
+    public KeycloakSpringBootConfigResolver keycloakConfigResolver() {
+        return new KeycloakSpringBootConfigResolver();
+    }
+
 
 
 }
