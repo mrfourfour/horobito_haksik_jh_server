@@ -31,6 +31,9 @@ public class KeyCloakTokenProvider implements TokenProvider {
 
 
 
+    /*
+    발급용 1
+     */
     @Override
     public Token issue(TokenRequest tokenRequest){
         String username = tokenRequest.getUsername();
