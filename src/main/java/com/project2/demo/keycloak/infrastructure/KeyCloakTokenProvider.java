@@ -45,7 +45,7 @@ public class KeyCloakTokenProvider implements TokenProvider {
         String username = tokenRequest.getUsername();
         String password = tokenRequest.getPassword();
         String resource = properties.getResource();
-        String clientSecret = properties.getCredentials().toString();
+        String clientSecret = properties.getCredentials().get("secret").toString();
         BodyInserters.FormInserter<String> formData = createFormData(resource, clientSecret, username, password);
         return fetchResource(formData);
 
@@ -55,10 +55,10 @@ public class KeyCloakTokenProvider implements TokenProvider {
     @Override
     public Token refresh(String refreshToken) {
         String resource = properties.getResource();
-        String clientSecret =properties.getCredentials().toString();
+        String clientSecret =properties.getCredentials().get("secret").toString();
         BodyInserters.FormInserter<String> formData
                 = createFormData(resource, clientSecret, refreshToken);
-        return null;
+        return fetchResource(formData);
     }
 
 
@@ -96,7 +96,7 @@ public class KeyCloakTokenProvider implements TokenProvider {
         return BodyInserters.fromFormData("client_id", resource)
                 .with("grant_type", "password")
                 .with("client_secret", clientSecret)
-                .with("usernane", username)
+                .with("username", username)
                 .with("password", password);
     }
 
