@@ -1,8 +1,4 @@
-buildscript {
-    dependencies {
-        classpath 'com.h2database:h2:1.4.197'
-    }
-}
+
 
 
 plugins {
@@ -10,13 +6,10 @@ plugins {
    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'com.google.cloud.tools.jib' version '3.1.0'
-    id "org.flywaydb.flyway" version "7.10.0"
 }
 
-flyway {
-    url = 'jdbc:h2:file:./target/foobar'
-    user = 'sa'
-}
+
+
 
 group = 'com.project2'
 version = '0.0.1-SNAPSHOT'
