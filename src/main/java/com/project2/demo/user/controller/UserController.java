@@ -56,7 +56,7 @@ public class UserController {
 
 
 }
-
+@Value
 class LoginRequest{
     String username;
     String password;
