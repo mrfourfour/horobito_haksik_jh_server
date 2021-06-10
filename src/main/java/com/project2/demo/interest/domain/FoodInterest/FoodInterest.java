@@ -17,8 +17,8 @@ public class FoodInterest {
     @Embedded
     private PreferredId preferredId;
 
-    @Embedded
-    @Convert(converter = FoodPreference.class)
+    @Column(name = "food_preference")
+    @Convert(converter = FoodPreferenceConverter.class)
     private FoodPreference foodPreference;
 
 
