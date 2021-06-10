@@ -149,7 +149,7 @@ class keyCloakWebClientConfig{
                 .serverUrl(properties.getAuthServerUrl())
                 .realm(properties.getRealm())
                 .clientId(properties.getResource())
-                .clientSecret(properties.getCredentials().toString())
+                .clientSecret(properties.getCredentials().get("secret").toString())
                 .grantType("client_credentials")
                 .build();
     }
@@ -165,7 +165,7 @@ class keyCloakWebClientConfig{
     }
 
     private String getBaseUrl(KeycloakSpringBootProperties properties) {
-        return "@{properties.authServiceUrl}/realms/" +
+        return "${properties.authServerUrl}/realms/" +
                 "${properties.realm}/protocol/openid-connect";
     }
 }
