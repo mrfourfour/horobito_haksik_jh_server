@@ -25,6 +25,7 @@ import reactor.core.publisher.Mono;
 
 import javax.ws.rs.core.Response;
 import java.util.Collections;
+import java.util.HashMap;
 
 @Component
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class KeyCloakTokenProvider implements TokenProvider {
      */
     @Override
     public Token issue(TokenRequest tokenRequest){
-        String username = tokenRequest.getUsername();
+        String username = tokenRequest.getEmail();
         String password = tokenRequest.getPassword();
         String resource = properties.getResource();
         String clientSecret = properties.getCredentials().get("secret").toString();
@@ -125,10 +126,13 @@ public class KeyCloakTokenProvider implements TokenProvider {
         credential.setTemporary(false);
 
         UserRepresentation userRepresentation = new UserRepresentation();
+        userRepresentation.setEmail(tokenRequest.getEmail());
         userRepresentation.setEnabled(true);
-        userRepresentation.setUsername(tokenRequest.getUsername());
+        userRepresentation.setUsername(tokenRequest.getEmail());
+        userRepresentation.setClientRoles(new HashMap<>() {{
+            put(properties.getResource(), Collections.singletonList("role_ichi_user"));
+        }});
         userRepresentation.setCredentials(Collections.singletonList(credential));
-        userRepresentation.setRealmRoles(Collections.singletonList("USER_ROLE"));
 
         return userRepresentation;
 
@@ -165,7 +169,7 @@ class keyCloakWebClientConfig{
     }
 
     private String getBaseUrl(KeycloakSpringBootProperties properties) {
-        return "${properties.authServerUrl}/realms/" +
-                "${properties.realm}/protocol/openid-connect";
+        return properties.getAuthServerUrl() + "/realms/" +
+                properties.getRealm() + "/protocol/openid-connect";
     }
 }

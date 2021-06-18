@@ -4,11 +4,11 @@ import lombok.Value;
 
 @Value
 public class TokenRequest {
-    String username;
+    String email;
     String password;
 
-    public static TokenRequest create(String username, String password){
-        return new TokenRequest(username, password);
+    public static TokenRequest create(String email, String password){
+        return new TokenRequest(email, password);
     }
 
 
