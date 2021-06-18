@@ -49,6 +49,11 @@ public class UserService {
         return new UserDto(user.getId(), user.getUsername());
     }
 
+    public UserDto findLoggedUser(Long userId){
+        User user = userRepository.findUserById(userId);
+        return new UserDto(user.getId(), user.getUsername());
+    }
+
     @Transactional
     public void save(String username) {
         userRepository.save(User.create(Username.create(username)));
