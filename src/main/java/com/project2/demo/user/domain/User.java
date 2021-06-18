@@ -26,4 +26,8 @@ public class User {
     public static User create(Username username) {
         return new User(username);
     }
+
+    public String getUsername(){
+        return this.username.getUsername();
+    }
 }
