@@ -1,11 +1,13 @@
 package com.project2.demo.user.domain;
 
 import com.project2.demo.order.domain.Order;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class User {
 
