@@ -65,7 +65,6 @@ class LoginRequest{
         return new LoginParameter(username, password);
     }
 
-
 }
 
 @Value
