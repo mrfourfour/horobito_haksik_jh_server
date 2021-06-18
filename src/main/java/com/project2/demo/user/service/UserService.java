@@ -46,7 +46,7 @@ public class UserService {
 
     public UserDto findLoggedUser(String username){
         User user = userRepository.findUserByUsername(Username.create(username));
-        UserDto userDto = UserDto.create(user);
+        UserDto userDto = UserDto.create(user.getId, user.getUsername);
         return userDto;
     }
 
