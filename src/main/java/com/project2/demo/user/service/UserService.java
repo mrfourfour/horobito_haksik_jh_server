@@ -44,9 +44,9 @@ public class UserService {
         return tokenProvider.issue(tokenRequest);
     }
 
-    public UserDto findLoggedUser(){
-        UserDto userDto = null;
-
+    public UserDto findLoggedUser(String username){
+        User user = userRepository.findUserByUsername(Username.create(username));
+        UserDto userDto = UserDto.create(user);
         return userDto;
     }
 
