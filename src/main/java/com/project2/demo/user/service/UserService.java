@@ -4,8 +4,12 @@ package com.project2.demo.user.service;
 import com.project2.demo.keycloak.service.Token;
 import com.project2.demo.keycloak.service.TokenProvider;
 import com.project2.demo.keycloak.service.TokenRequest;
+import com.project2.demo.user.domain.User;
+import com.project2.demo.user.domain.UserRepository;
+import com.project2.demo.user.domain.Username;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +21,7 @@ public class UserService {
     인프라 층의 KeyCloakTokenProvider 라는 구현체에서 구현
      */
     private final TokenProvider tokenProvider;
+    private final UserRepository userRepository;
 
 
     /*
@@ -43,5 +48,10 @@ public class UserService {
         UserDto userDto = null;
 
         return userDto;
+    }
+
+    @Transactional
+    public void save(String username) {
+        userRepository.save(User.create(Username.create(username)));
     }
 }
