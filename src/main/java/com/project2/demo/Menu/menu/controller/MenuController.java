@@ -61,10 +61,15 @@ public class MenuController {
     }
 
     @PutMapping("/{menuId}/subtract/{amount}/")
-    public void subtractAmount(@PathVariable Long menuId,
-                             @PathVariable int amount
-                             ){
-        menuService.subtractAmount(menuId, amount);
+    public ResponseEntity<Void> subtractAmount(@PathVariable Long menuId,
+                                               @PathVariable int amount
+    ){
+        try {
+            menuService.subtractAmount(menuId, amount);
+            return ResponseEntity.ok().build();
+        }catch (IllegalArgumentException ie){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/{menuId}/amount/modify/{amount}/")
