@@ -136,7 +136,7 @@ public class MenuService {
 
     public Menu getMenu(Time time, MenuParameter menuParameter) {
         return Menu.create(
-                FoodName.create(menuParameter.getTitle()),
+                Title.create(menuParameter.getTitle()),
                 Price.create(menuParameter.getPrice()),
                 MenuDescription.create(menuParameter.getDescription()),
                 time,
@@ -164,7 +164,7 @@ public class MenuService {
     private MenuDto getMenuDto(Menu menu) {
         return new MenuDto(
                 menu.getId(),
-                menu.getFoodName(),
+                menu.getTitle(),
                 menu.getMenuDescription(),
                 menu.getImageURL(),
                 menu.getPrice(),
