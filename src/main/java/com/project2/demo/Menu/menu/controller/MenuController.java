@@ -19,11 +19,12 @@ public class MenuController {
 
 
     @PostMapping("/make/default")
-    public void createMenu(@RequestBody MenuParameter menuParameter){
+    public ResponseEntity<Void> createMenu(@RequestBody MenuParameter menuParameter){
         try {
             menuService.createMenu(menuParameter);
+            return ResponseEntity.ok().build();
         }catch (DateTimeException de){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
+            return ResponseEntity.badRequest().build();
         }
     }
 
