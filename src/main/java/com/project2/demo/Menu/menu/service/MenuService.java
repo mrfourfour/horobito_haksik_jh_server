@@ -30,6 +30,8 @@ public class MenuService {
     }
 
 
+
+
     @Transactional
     public void deleteMenu(Long menuId){
         Menu menu = getMenuById(menuId);
@@ -86,17 +88,7 @@ public class MenuService {
         menu.changeAmount(amount);
     }
 
-    public void checkAlreadySoldOut(Menu menu) {
-        if (menu.discriminateSoldOut()){
-            throw new IllegalArgumentException();
-        }
-    }
 
-    public void checkAlreadyUnSoldOut(Menu menu) {
-        if (!menu.discriminateSoldOut()){
-            throw new IllegalArgumentException();
-        }
-    }
 
     public void checkAlreadyUnLimited(Menu menu) {
         if (!menu.discriminateLimit()){
