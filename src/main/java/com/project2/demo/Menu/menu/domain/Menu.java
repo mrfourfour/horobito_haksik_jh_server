@@ -72,7 +72,15 @@ public class Menu {
     }
 
     public void increaseAmountOfFoodLeft(int amountForAdd){
-        this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() + amountForAdd);
+        if (amountForAdd<=0){
+            throw new IllegalArgumentException();
+        }
+        this.amountOfFoodLeft
+                = AmountOfFoodLeft.create(
+                        this.amountOfFoodLeft.returnFoodLeft() + amountForAdd);
+        if (this.soldOut.soldOut){
+            this.soldOut = SoldOutFlag.create(false);
+        }
     }
 
     public void decreaseAmountOfFoodLeft(int amountForAdd){
