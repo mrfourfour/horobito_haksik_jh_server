@@ -98,10 +98,9 @@ public class MenuController {
             menuService.unLimitMenu(menuId);
             return ResponseEntity.ok().build();
         }catch (IllegalArgumentException argE){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.badRequest().build();
         }
     }
-
 
 
     @PutMapping("/{menuId}/soldout")
