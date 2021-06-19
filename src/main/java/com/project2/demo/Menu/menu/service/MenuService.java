@@ -17,13 +17,17 @@ public class MenuService {
 
     @Transactional
     public void createMenu(MenuParameter menuParameter){
-
+        checkAlreadyExistence(menuParameter);
         Time time = getTime(menuParameter);
         Menu menu = getMenu(time, menuParameter);
         menuRepository.save(menu);
     }
 
-
+    private void checkAlreadyExistence(MenuParameter menuParameter) {
+        if (menuRepository.findMenuByTitle(Title.create(menuParameter.getTitle()))!=null){
+            throw new IllegalArgumentException();
+        };
+    }
 
 
     @Transactional
