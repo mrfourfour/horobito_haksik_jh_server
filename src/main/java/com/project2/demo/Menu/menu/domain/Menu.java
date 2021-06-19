@@ -3,6 +3,7 @@ package com.project2.demo.Menu.menu.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.MonthDay;
@@ -10,6 +11,7 @@ import java.time.MonthDay;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Menu {
 
