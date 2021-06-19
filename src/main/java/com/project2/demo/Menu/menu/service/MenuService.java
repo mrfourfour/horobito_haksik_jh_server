@@ -57,22 +57,6 @@ public class MenuService {
         menu.unLimit();
     }
 
-    @Transactional
-    public void setSoldOut(Long menuId){
-        Menu menu = getMenuById(menuId);
-        checkExistence(menu);
-        checkAlreadySoldOut(menu);
-        menu.setSoldOut();
-
-    }
-
-    @Transactional
-    public void setUnSoldOut(Long menuId){
-        Menu menu = getMenuById(menuId);
-        checkExistence(menu);
-        checkAlreadyUnSoldOut(menu);
-        menu.setUnSoldOut();
-    }
 
 
     @Transactional
