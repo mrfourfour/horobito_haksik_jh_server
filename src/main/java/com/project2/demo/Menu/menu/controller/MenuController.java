@@ -86,8 +86,13 @@ public class MenuController {
 
 
     @DeleteMapping("/{menuId}")
-    private void deleteMenu(@PathVariable Long menuId){
-        menuService.deleteMenu(menuId);
+    private ResponseEntity<Void> deleteMenu(@PathVariable Long menuId){
+        try {
+            menuService.deleteMenu(menuId);
+            return ResponseEntity.ok().build();
+        }catch (IllegalArgumentException ie){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 
