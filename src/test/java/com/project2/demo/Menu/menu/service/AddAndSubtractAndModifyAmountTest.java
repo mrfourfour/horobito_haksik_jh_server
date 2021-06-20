@@ -174,4 +174,24 @@ public class AddAndSubtractAndModifyAmountTest {
 
 
     }
+
+
+    @DisplayName("4. 비정상적인 뺄셈 (1), 기존 값보다 더 많은 양 차감 시도   ")
+    @Test
+    void subtractMenu4(){
+
+        MenuService sut
+                = new MenuService(menuRepository);
+
+        int originAmount = menu.getAmountOfFoodLeft().returnFoodLeft();
+        int forSubtract =  menu.getAmountOfFoodLeft().returnFoodLeft()+3;
+        Long id = Long.parseLong("1");
+
+        when(menuRepository.findMenuByIdAndDeleted(anyLong(), anyBoolean())).thenReturn(menu);
+
+        assertThrows(IllegalArgumentException.class, ()->sut.subtractAmount(id, forSubtract));
+
+
+    }
+
 }
