@@ -63,4 +63,33 @@ public class AddAndSubtractAndModifyAmountTest {
 
 
     }
+
+    @DisplayName("2. 정상적인 덧셈 - SoldOut 상태 변경 확인 ")
+    @Test
+    void addMenu(){
+
+        MenuService sut
+                = new MenuService(menuRepository);
+
+
+        Long id = Long.parseLong("1");
+
+        int originAmount = menu.getAmountOfFoodLeft().returnFoodLeft();
+        int forAdd = 3;
+
+        int forSubtract = menu.getAmountOfFoodLeft().returnFoodLeft();
+        System.out.println("처음 상태 : " + menu.getSoldOut().getSoldOut());
+
+        when(menuRepository.findMenuByIdAndDeleted(anyLong(), anyBoolean())).thenReturn(menu);
+
+        sut.subtractAmount(id, forSubtract);
+        System.out.println("차감한 후의 상태 : " + menu.getSoldOut().getSoldOut());
+        sut.addAmount(id, forAdd);
+
+        assertEquals(forAdd, menu.getAmountOfFoodLeft().returnFoodLeft());
+        System.out.println("덧셈 한 후의 상태 : " + menu.getSoldOut().getSoldOut());
+
+
+
+    }
 }
