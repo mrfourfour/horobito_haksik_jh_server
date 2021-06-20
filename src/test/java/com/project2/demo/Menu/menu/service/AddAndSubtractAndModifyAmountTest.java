@@ -109,4 +109,25 @@ public class AddAndSubtractAndModifyAmountTest {
 
 
     }
+
+    @DisplayName("1. 정상적인 뺄셈 ")
+    @Test
+    void subtractMenu1(){
+        MenuService sut
+                = new MenuService(menuRepository);
+
+        int originAmount = menu.getAmountOfFoodLeft().returnFoodLeft();
+        int forSubtract = 3;
+        Long id = Long.parseLong("1");
+
+        when(menuRepository.findMenuByIdAndDeleted(anyLong(), anyBoolean())).thenReturn(menu);
+
+        sut.subtractAmount(id, forSubtract);
+
+        assertEquals(originAmount-forSubtract, menu.getAmountOfFoodLeft().returnFoodLeft());
+
+
+
+
+    }
 }
