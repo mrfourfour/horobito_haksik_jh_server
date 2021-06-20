@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Value;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Value
 public class MenuDto {
@@ -18,7 +19,7 @@ public class MenuDto {
     int price;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
-    LocalDateTime startTime;
+    LocalTime startTime;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
-    LocalDateTime endTime;
+    LocalTime endTime;
 }
