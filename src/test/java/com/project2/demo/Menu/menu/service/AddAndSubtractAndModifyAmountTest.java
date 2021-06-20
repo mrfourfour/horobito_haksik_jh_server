@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
@@ -36,7 +37,7 @@ public class AddAndSubtractAndModifyAmountTest {
             Title.create("testFood"),
             Price.create(10000),
             MenuDescription.create("for Test"),
-            Time.create(LocalDateTime.parse("08:00:00", fmt), LocalDateTime.parse("20:00:00", fmt)),
+            Time.create(LocalTime.parse("08:00:00", fmt), LocalTime.parse("20:00:00", fmt)),
             AmountOfFoodLeft.create(10),
             ImageURL.create("testURL")
     );
