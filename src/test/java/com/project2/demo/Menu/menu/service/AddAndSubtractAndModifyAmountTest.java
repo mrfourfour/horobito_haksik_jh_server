@@ -215,4 +215,24 @@ public class AddAndSubtractAndModifyAmountTest {
 
     }
 
+    @DisplayName("2. 비정상적인 수정 - 음수로 수정 시도 ")
+    @Test
+    void ModifyMenu2(){
+
+        MenuService sut
+                = new MenuService(menuRepository);
+
+        int originAmount = menu.getAmountOfFoodLeft().returnFoodLeft();
+        int forModify =  -1;
+        Long id = Long.parseLong("1");
+        System.out.println( menu.getAmountOfFoodLeft().returnFoodLeft());
+
+        when(menuRepository.findMenuByIdAndDeleted(anyLong(), anyBoolean())).thenReturn(menu);
+
+        assertThrows(IllegalArgumentException.class, ()->sut.modifyAmount(id, forModify));
+        System.out.println( menu.getAmountOfFoodLeft().returnFoodLeft());
+
+
+    }
+
 }
