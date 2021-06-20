@@ -8,11 +8,11 @@ import javax.persistence.Embeddable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Embeddable
+
 @Getter
 @NoArgsConstructor
-@Converter()
 public class FoodPreference {
+
 
     Set<FoodName> preferredFoods = new HashSet<>();
 

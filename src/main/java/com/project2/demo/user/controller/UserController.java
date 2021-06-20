@@ -10,15 +10,22 @@ import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
     private final TokenProvider tokenProvider;
 
+
+    /*
+    핵심
+    로그인을 했을 때 토큰을 준다.
+     */
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest){
         Token token = userService.login(loginRequest.to());
@@ -27,6 +34,11 @@ public class UserController {
     }
 
 
+    /*
+     용도
+    자동 로그인 + 15분 지났을 때 재인증
+
+     */
     @PostMapping("/token/refresh")
     public Token refreshToken(@RequestBody RefreshTokenPayload refreshTokenPayload){
         return refresh(refreshTokenPayload);
@@ -39,12 +51,13 @@ public class UserController {
     @PostMapping("/sign-up")
     public LoginResponse signUp(@RequestBody SignUpRequest signUpRequest){
         Token token = userService.signUp(signUpRequest.to());
+        userService.save(signUpRequest.getUsername());
         return new LoginResponse(token);
     }
 
 
 }
-
+@Value
 class LoginRequest{
     String username;
     String password;
@@ -52,7 +65,6 @@ class LoginRequest{
     LoginParameter to(){
         return new LoginParameter(username, password);
     }
-
 
 }
 

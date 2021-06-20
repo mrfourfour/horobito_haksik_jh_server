@@ -93,7 +93,7 @@ public class MenuController {
 
 
 
-    @GetMapping("/{menuId}")
+    @PutMapping("/{menuId}/soldout")
     public void setSoldOut(@PathVariable Long menuId){
         try {
             menuService.setSoldOut(menuId);
@@ -102,7 +102,7 @@ public class MenuController {
         }
     }
 
-    @GetMapping("/{menuId}")
+    @PutMapping("/{menuId}/unsoldout")
     public void setUnSoldOut(@PathVariable Long menuId){
         try {
             menuService.setUnSoldOut(menuId);
