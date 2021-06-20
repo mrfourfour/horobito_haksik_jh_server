@@ -86,7 +86,7 @@ public class Menu {
     }
 
     public void decreaseAmountOfFoodLeft(int amountForAdd){
-        if (amountForAdd>this.amountOfFoodLeft.returnFoodLeft()){
+        if (amountForAdd>this.amountOfFoodLeft.returnFoodLeft() || amountForAdd<0){
             throw new IllegalArgumentException();
         }
         this.amountOfFoodLeft = AmountOfFoodLeft.create(this.amountOfFoodLeft.returnFoodLeft() - amountForAdd);
