@@ -17,28 +17,28 @@ public class Time {
 
      Boolean limited;
 
-     LocalDateTime startTime;
-     LocalDateTime endTime;
+     LocalTime startTime;
+     LocalTime endTime;
 
 
 
-    private Time(LocalDateTime startTime, LocalDateTime endTime, boolean limit) {
+    private Time(LocalTime startTime, LocalTime endTime, boolean limit) {
         this.limited = true;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    private Time(LocalDateTime startTime, LocalDateTime endTime) {
+    private Time(LocalTime startTime, LocalTime endTime) {
         this.limited = true;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public static Time create(LocalDateTime startTime, LocalDateTime endTime){
+    public static Time create(LocalTime startTime, LocalTime endTime){
         return new Time(startTime, endTime);
     }
 
-    public  static Time limit(LocalDateTime startTime, LocalDateTime endTime) {
+    public  static Time limit(LocalTime startTime, LocalTime endTime) {
         return new Time(startTime, endTime,true);
     }
 
