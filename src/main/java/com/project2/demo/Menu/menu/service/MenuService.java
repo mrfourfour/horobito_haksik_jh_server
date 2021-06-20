@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
+
 
 @Service
 @RequiredArgsConstructor
@@ -127,12 +129,18 @@ public class MenuService {
 
 
     public Time getTime(MenuParameter menuParameter) {
-
+        checkTimeSequence(menuParameter.getStartTime(), menuParameter.getEndTime());
             return Time.create(
                     menuParameter.getStartTime(),
                     menuParameter.getEndTime()
             );
 
+    }
+
+    private void checkTimeSequence(LocalTime startTime, LocalTime endTime) {
+        if (startTime.isAfter(endTime)){
+            throw new IllegalArgumentException();
+        }
     }
 
 
