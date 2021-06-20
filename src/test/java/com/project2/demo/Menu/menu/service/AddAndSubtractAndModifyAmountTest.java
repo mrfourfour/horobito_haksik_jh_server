@@ -27,17 +27,16 @@ public class AddAndSubtractAndModifyAmountTest {
     @Mock
     MenuRepository menuRepository;
 
-    DateTimeFormatter fmt = new DateTimeFormatterBuilder()
-            .append(DateTimeFormatter.ISO_LOCAL_TIME)
-            .parseDefaulting(ChronoField.EPOCH_DAY, 0)
-            .toFormatter();
+
 
     Menu menu = MenuHelper.create(
             Long.parseLong("1"),
             Title.create("testFood"),
             Price.create(10000),
             MenuDescription.create("for Test"),
-            Time.create(LocalTime.parse("08:00:00", fmt), LocalTime.parse("20:00:00", fmt)),
+            Time.create(LocalTime.parse("08:00:00", DateTimeFormatter.ofPattern("HH:mm:ss")),
+                    LocalTime.parse("20:00:00", DateTimeFormatter.ofPattern("HH:mm:ss"))
+                    ),
             AmountOfFoodLeft.create(10),
             ImageURL.create("testURL")
     );
