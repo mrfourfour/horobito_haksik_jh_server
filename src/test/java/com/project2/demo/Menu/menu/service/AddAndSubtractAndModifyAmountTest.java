@@ -89,6 +89,23 @@ public class AddAndSubtractAndModifyAmountTest {
         assertEquals(forAdd, menu.getAmountOfFoodLeft().returnFoodLeft());
         System.out.println("덧셈 한 후의 상태 : " + menu.getSoldOut().getSoldOut());
 
+    }
+
+    @DisplayName("3. 비정상적인 덧셈 ")
+    @Test
+    void addMenu2(){
+        MenuService sut
+                = new MenuService(menuRepository);
+
+
+        int originAmount = menu.getAmountOfFoodLeft().returnFoodLeft();
+        int forAdd = -3;
+        Long id = Long.parseLong("1");
+
+        when(menuRepository.findMenuByIdAndDeleted(anyLong(), anyBoolean())).thenReturn(menu);
+
+        assertThrows(IllegalArgumentException.class, ()->{sut.addAmount(id, forAdd);});
+
 
 
     }
