@@ -130,4 +130,30 @@ public class AddAndSubtractAndModifyAmountTest {
 
 
     }
+
+    @DisplayName("2. 정상적인 뺄셈 (2). SoldOut 테스트  ")
+    @Test
+    void subtractMenu2(){
+
+        MenuService sut
+                = new MenuService(menuRepository);
+
+        int originAmount = menu.getAmountOfFoodLeft().returnFoodLeft();
+        int forSubtract = menu.getAmountOfFoodLeft().returnFoodLeft();
+        Long id = Long.parseLong("1");
+
+        when(menuRepository.findMenuByIdAndDeleted(anyLong(), anyBoolean())).thenReturn(menu);
+        System.out.println(menu.getSoldOut().getSoldOut());
+
+        sut.subtractAmount(id, forSubtract);
+
+        assertEquals(originAmount-forSubtract, menu.getAmountOfFoodLeft().returnFoodLeft());
+
+        assertEquals(true, menu.getSoldOut().getSoldOut());
+        System.out.println(menu.getSoldOut().getSoldOut());
+
+
+
+
+    }
 }
