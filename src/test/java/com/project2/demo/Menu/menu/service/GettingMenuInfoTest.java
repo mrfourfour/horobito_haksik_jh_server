@@ -61,4 +61,18 @@ public class GettingMenuInfoTest {
 
 
     }
+
+    @DisplayName("2. 존재하지 않은 메뉴 조회")
+    @Test
+    void getMenuInfoTest2(){
+        MenuService sut
+                = new MenuService(menuRepository);
+
+
+        ;
+
+        assertThrows(IllegalArgumentException.class, ()->sut.getMenuInfo(Long.parseLong("1") ));
+
+
+    }
 }

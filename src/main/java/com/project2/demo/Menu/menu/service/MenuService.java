@@ -138,6 +138,7 @@ public class MenuService {
 
     public MenuDto getMenuInfo(Long menuId) {
         Menu menu = getMenuById(menuId);
+        checkExistence(menu);
         return getMenuDto(menu);
     }
 
