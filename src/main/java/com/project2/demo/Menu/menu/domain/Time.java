@@ -23,13 +23,13 @@ public class Time {
 
 
     private Time(LocalTime startTime, LocalTime endTime, boolean limit) {
-        this.limited = true;
+        this.limited = limit;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
     private Time(LocalTime startTime, LocalTime endTime) {
-        this.limited = true;
+        this.limited = false;
         this.startTime = startTime;
         this.endTime = endTime;
     }
