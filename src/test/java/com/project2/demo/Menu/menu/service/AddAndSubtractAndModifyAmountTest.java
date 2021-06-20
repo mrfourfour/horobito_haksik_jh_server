@@ -194,4 +194,25 @@ public class AddAndSubtractAndModifyAmountTest {
 
     }
 
+    @DisplayName("1. 정상적인 수정 ")
+    @Test
+    void ModifyMenu1(){
+
+        MenuService sut
+                = new MenuService(menuRepository);
+
+        int originAmount = menu.getAmountOfFoodLeft().returnFoodLeft();
+        int forModify =  menu.getAmountOfFoodLeft().returnFoodLeft()+3;
+        Long id = Long.parseLong("1");
+        System.out.println( menu.getAmountOfFoodLeft().returnFoodLeft());
+
+        when(menuRepository.findMenuByIdAndDeleted(anyLong(), anyBoolean())).thenReturn(menu);
+        sut.modifyAmount(id, forModify);
+
+        assertEquals(forModify, menu.getAmountOfFoodLeft().returnFoodLeft());
+        System.out.println( menu.getAmountOfFoodLeft().returnFoodLeft());
+
+
+    }
+
 }
