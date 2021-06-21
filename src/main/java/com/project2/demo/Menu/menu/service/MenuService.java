@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
+
 
 @Service
 @RequiredArgsConstructor
@@ -17,10 +19,16 @@ public class MenuService {
 
     @Transactional
     public void createMenu(MenuParameter menuParameter){
-
+        checkAlreadyExistence(menuParameter);
         Time time = getTime(menuParameter);
         Menu menu = getMenu(time, menuParameter);
         menuRepository.save(menu);
+    }
+
+    private void checkAlreadyExistence(MenuParameter menuParameter) {
+        if (menuRepository.findMenuByTitle(Title.create(menuParameter.getTitle()))!=null){
+            throw new IllegalArgumentException();
+        };
     }
 
 
@@ -53,22 +61,6 @@ public class MenuService {
         menu.unLimit();
     }
 
-    @Transactional
-    public void setSoldOut(Long menuId){
-        Menu menu = getMenuById(menuId);
-        checkExistence(menu);
-        checkAlreadySoldOut(menu);
-        menu.setSoldOut();
-
-    }
-
-    @Transactional
-    public void setUnSoldOut(Long menuId){
-        Menu menu = getMenuById(menuId);
-        checkExistence(menu);
-        checkAlreadyUnSoldOut(menu);
-        menu.setUnSoldOut();
-    }
 
 
     @Transactional
@@ -98,17 +90,7 @@ public class MenuService {
         menu.changeAmount(amount);
     }
 
-    public void checkAlreadySoldOut(Menu menu) {
-        if (menu.discriminateSoldOut()){
-            throw new IllegalArgumentException();
-        }
-    }
 
-    public void checkAlreadyUnSoldOut(Menu menu) {
-        if (!menu.discriminateSoldOut()){
-            throw new IllegalArgumentException();
-        }
-    }
 
     public void checkAlreadyUnLimited(Menu menu) {
         if (!menu.discriminateLimit()){
@@ -136,7 +118,7 @@ public class MenuService {
 
     public Menu getMenu(Time time, MenuParameter menuParameter) {
         return Menu.create(
-                FoodName.create(menuParameter.getTitle()),
+                Title.create(menuParameter.getTitle()),
                 Price.create(menuParameter.getPrice()),
                 MenuDescription.create(menuParameter.getDescription()),
                 time,
@@ -147,7 +129,7 @@ public class MenuService {
 
 
     public Time getTime(MenuParameter menuParameter) {
-
+        checkTimeSequence(menuParameter.getStartTime(), menuParameter.getEndTime());
             return Time.create(
                     menuParameter.getStartTime(),
                     menuParameter.getEndTime()
@@ -155,16 +137,23 @@ public class MenuService {
 
     }
 
+    private void checkTimeSequence(LocalTime startTime, LocalTime endTime) {
+        if (startTime.isAfter(endTime)){
+            throw new IllegalArgumentException();
+        }
+    }
+
 
     public MenuDto getMenuInfo(Long menuId) {
         Menu menu = getMenuById(menuId);
+        checkExistence(menu);
         return getMenuDto(menu);
     }
 
     private MenuDto getMenuDto(Menu menu) {
         return new MenuDto(
                 menu.getId(),
-                menu.getFoodName(),
+                menu.getTitle(),
                 menu.getMenuDescription(),
                 menu.getImageURL(),
                 menu.getPrice(),

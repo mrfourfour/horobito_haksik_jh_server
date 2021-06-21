@@ -19,11 +19,12 @@ public class MenuController {
 
 
     @PostMapping("/make/default")
-    public void createMenu(@RequestBody MenuParameter menuParameter){
+    public ResponseEntity<Void> createMenu(@RequestBody MenuParameter menuParameter){
         try {
             menuService.createMenu(menuParameter);
+            return ResponseEntity.ok().build();
         }catch (DateTimeException de){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Time error");
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -48,17 +49,27 @@ public class MenuController {
     }
 
     @PutMapping("/{menuId}/add/{amount}/")
-    public void addAmount(@PathVariable Long menuId,
+    public ResponseEntity<Void> addAmount(@PathVariable Long menuId,
                              @PathVariable int amount)
                              {
-        menuService.addAmount(menuId, amount);
+        try {
+            menuService.addAmount(menuId, amount);
+            return ResponseEntity.ok().build();
+        }catch (IllegalArgumentException ie){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/{menuId}/subtract/{amount}/")
-    public void subtractAmount(@PathVariable Long menuId,
-                             @PathVariable int amount
-                             ){
-        menuService.subtractAmount(menuId, amount);
+    public ResponseEntity<Void> subtractAmount(@PathVariable Long menuId,
+                                               @PathVariable int amount
+    ){
+        try {
+            menuService.subtractAmount(menuId, amount);
+            return ResponseEntity.ok().build();
+        }catch (IllegalArgumentException ie){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/{menuId}/amount/modify/{amount}/")
@@ -75,8 +86,13 @@ public class MenuController {
 
 
     @DeleteMapping("/{menuId}")
-    private void deleteMenu(@PathVariable Long menuId){
-        menuService.deleteMenu(menuId);
+    private ResponseEntity<Void> deleteMenu(@PathVariable Long menuId){
+        try {
+            menuService.deleteMenu(menuId);
+            return ResponseEntity.ok().build();
+        }catch (IllegalArgumentException ie){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 
@@ -87,30 +103,12 @@ public class MenuController {
             menuService.unLimitMenu(menuId);
             return ResponseEntity.ok().build();
         }catch (IllegalArgumentException argE){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
 
 
-    @PutMapping("/{menuId}/soldout")
-    public void setSoldOut(@PathVariable Long menuId){
-        try {
-            menuService.setSoldOut(menuId);
-        }catch (IllegalArgumentException argE){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PutMapping("/{menuId}/unsoldout")
-    public void setUnSoldOut(@PathVariable Long menuId){
-        try {
-            menuService.setUnSoldOut(menuId);
-        }catch (IllegalArgumentException argE){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST);
-        }
-        menuService.setUnSoldOut(menuId);
-    }
 
 
 }

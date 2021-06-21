@@ -8,6 +8,7 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Value
 public class MenuParameter {
@@ -18,17 +19,13 @@ public class MenuParameter {
     String description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
-    LocalDateTime startTime;
+    LocalTime startTime;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
-    LocalDateTime endTime;
+    LocalTime endTime;
 
     int amount;
 
     String imageURL;
-
-    int limitedMonth;
-    int limitedDayOfMonth;
-
 
 }
