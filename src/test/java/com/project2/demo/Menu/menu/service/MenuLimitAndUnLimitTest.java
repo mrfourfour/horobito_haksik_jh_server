@@ -52,6 +52,7 @@ public class MenuLimitAndUnLimitTest {
         MenuService sut
                 = new MenuService(menuRepository);
         Menu menu = sut.getMenu(sut.getTime(menuParameter), menuParameter);
+        menu.limit();
         Long menuId = Long.parseLong("1");
         when(sut.getMenuById(menuId)).thenReturn(menu);
         assertThrows(IllegalArgumentException.class, ()->sut.limitMenu(menuId));
