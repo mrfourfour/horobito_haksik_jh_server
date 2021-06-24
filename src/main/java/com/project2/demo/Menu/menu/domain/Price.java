@@ -11,10 +11,10 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class Price {
 
-    private int prioce ;
+    private int price ;
 
-    private Price(int prioce) {
-        this.prioce = prioce;
+    private Price(int price) {
+        this.price = price;
     }
 
     public static Price create(int price){
