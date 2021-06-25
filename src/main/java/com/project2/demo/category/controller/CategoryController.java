@@ -42,7 +42,7 @@ public class CategoryController {
                               @PathVariable Long menuId){
 
         try {
-            categoryService.deleteMenuInCategory(categoryId, menuId);
+            categorizedFoodService.deleteMenuInCategory(categoryId, menuId);
             return ResponseEntity.ok().build();
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
