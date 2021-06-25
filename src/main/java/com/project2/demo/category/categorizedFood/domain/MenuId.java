@@ -7,15 +7,15 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 @NoArgsConstructor
-public class FoodId {
+public class MenuId {
 
     private Long foodId;
 
-    private FoodId(Long foodId) {
+    private MenuId(Long foodId) {
         this.foodId = foodId;
     }
 
-    public static FoodId create(Long foodId){
-        return new FoodId(foodId);
+    public static MenuId create(Long foodId){
+        return new MenuId(foodId);
     }
 }
