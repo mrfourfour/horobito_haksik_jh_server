@@ -116,6 +116,12 @@ public class MenuService {
     }
 
 
+    public void checkExistence(Long menuId) {
+        if (menuRepository.findMenuById(menuId)==null){
+            throw new IllegalArgumentException();
+        }
+    }
+
     public Menu getMenu(Time time, MenuParameter menuParameter) {
         return Menu.create(
                 Title.create(menuParameter.getTitle()),
