@@ -24,13 +24,24 @@ public class CategorizedFoodService {
 
     @Transactional
     public void addFoodInCategory(Long categoryId, Long menuId) {
-        checkAlreadyExistence(categoryId, menuId);
         menuService.checkExistence(menuId);
         categoryService.checkExistence(categoryId);
+        checkAlreadyExistence(categoryId, menuId);
         CategorizedFood categorizedFood = CategorizedFood.create(
                 CategoryId.create(categoryId), MenuId.create(menuId)
         );
         categorizedFoodRepository.save(categorizedFood);
+    }
+
+    @Transactional
+    public void deleteMenuInCategory(Long categoryId, Long menuId) {
+        menuService.checkExistence(menuId);
+        categoryService.checkExistence(categoryId);
+        checkAlreadyExistence(categoryId, menuId);
+        CategorizedFood categorizedFood =
+                categorizedFoodRepository.findByCategoryIdAndMenuId(CategoryId.create(categoryId), MenuId.create(menuId));
+        categorizedFood.delete();
+
     }
 
     private void checkAlreadyExistence(Long categoryId, Long menuId) {
@@ -39,14 +50,6 @@ public class CategorizedFoodService {
         }
     }
 
-//    @Transactional
-//    public void deleteMenuInCategory(Long categoryId, Long menuId) {
-//        Category category = categoryService.getCategoryById(categoryId);
-//        checkExistence(category);
-//        FoodId foodId = FoodId.create(menuId);
-//        checkExistence(category, foodId);
-//        category.deleteFoodIdInCategory(foodId);
-//    }
 //
 //
 //    private void checkExistence(Category category, FoodId foodId) {
