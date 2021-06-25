@@ -1,6 +1,7 @@
 package com.project2.demo.category.controller;
 
 
+import com.project2.demo.category.categorizedFood.service.CategorizedFoodService;
 import com.project2.demo.category.category.service.CategoryDto;
 import com.project2.demo.category.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final CategorizedFoodService categorizedFoodService;
 
     @PostMapping
     public void createCategory(@RequestBody CategoryParameter categoryParameter){
@@ -23,7 +25,7 @@ public class CategoryController {
     @PostMapping("/{categoryId}/add/{menuId}")
     public void addFood(@PathVariable Long categoryId,
                             @PathVariable Long menuId){
-        categoryService.addFood(categoryId, menuId);
+        categorizedFoodService.addFoodInCategory(categoryId, menuId);
     }
 
     @GetMapping("/{categoryId}}")
