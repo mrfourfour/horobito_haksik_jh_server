@@ -34,7 +34,7 @@ public class CategorizedFoodService {
     }
 
     private void checkAlreadyExistence(Long categoryId, Long menuId) {
-        if (categorizedFoodRepository.findByIdAndMenuId(CategoryId.create(categoryId), MenuId.create(menuId))!=null){
+        if (categorizedFoodRepository.findByCategoryIdAndMenuId(CategoryId.create(categoryId), MenuId.create(menuId))!=null){
             throw new IllegalArgumentException();
         }
     }
