@@ -64,6 +64,12 @@ public class CategoryService {
         }
     }
 
+    public void checkExistence(Long categoryId) {
+        if (categoryRepository.findCategoryById(categoryId)==null){
+            throw new IllegalArgumentException();
+        }
+    }
+
 
     private Category getCategoryById(Long categoryId) {
         return categoryRepository.findCategoryById(categoryId);
