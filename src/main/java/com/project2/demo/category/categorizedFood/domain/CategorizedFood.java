@@ -2,7 +2,6 @@ package com.project2.demo.category.categorizedFood.domain;
 
 
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 
@@ -18,15 +17,15 @@ public class CategorizedFood {
     private CategoryId categoryId;
 
     @Embedded
-    private FoodId foodId;
+    private MenuId menuId;
 
 
-    private CategorizedFood(CategoryId categoryId, FoodId foodId) {
+    private CategorizedFood(CategoryId categoryId, MenuId menuId) {
         this.categoryId = categoryId;
-        this.foodId = foodId;
+        this.menuId = menuId;
     }
 
-    public static CategorizedFood create(CategoryId categoryId, FoodId foodId){
-        return new CategorizedFood(categoryId, foodId);
+    public static CategorizedFood create(CategoryId categoryId, MenuId menuId){
+        return new CategorizedFood(categoryId, menuId);
     }
 }
