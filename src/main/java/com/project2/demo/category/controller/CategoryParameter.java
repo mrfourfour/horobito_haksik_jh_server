@@ -1,4 +1,4 @@
-package com.project2.demo.category.category.controller;
+package com.project2.demo.category.controller;
 
 
 import lombok.Value;

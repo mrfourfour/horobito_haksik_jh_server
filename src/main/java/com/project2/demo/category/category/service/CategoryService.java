@@ -1,6 +1,6 @@
 package com.project2.demo.category.category.service;
 
-import com.project2.demo.category.category.controller.CategoryParameter;
+import com.project2.demo.category.controller.CategoryParameter;
 import com.project2.demo.category.category.domain.*;
 import com.project2.demo.Menu.menu.domain.MenuRepository;
 import com.project2.demo.Menu.menu.service.MenuService;
