@@ -19,6 +19,8 @@ public class CategorizedFood {
     @Embedded
     private MenuId menuId;
 
+    private boolean deleted;
+
 
     private CategorizedFood(CategoryId categoryId, MenuId menuId) {
         this.categoryId = categoryId;
@@ -27,5 +29,9 @@ public class CategorizedFood {
 
     public static CategorizedFood create(CategoryId categoryId, MenuId menuId){
         return new CategorizedFood(categoryId, menuId);
+    }
+
+    public void delete(){
+        this.deleted = true;
     }
 }
