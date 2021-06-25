@@ -1,13 +1,12 @@
-package com.project2.demo.Menu.category.service;
+package com.project2.demo.category.category.service;
 
-import com.project2.demo.Menu.category.controller.CategoryParameter;
-import com.project2.demo.Menu.category.domain.*;
+import com.project2.demo.category.category.controller.CategoryParameter;
+import com.project2.demo.category.category.domain.*;
 import com.project2.demo.Menu.menu.domain.MenuRepository;
 import com.project2.demo.Menu.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 @Service
@@ -28,22 +27,22 @@ public class CategoryService {
 
 
 
-    @Transactional
-    public void addFood(Long categoryId, Long menuId) {
-        menuService.checkExistence(menuRepository.findMenuById(menuId));
-        Category category = getCategoryById(categoryId);
-        checkExistence(category);
-        category.addMenu(FoodId.create(menuId));
-    }
-
-    @Transactional
-    public void deleteMenuInCategory(Long categoryId, Long menuId) {
-        Category category = getCategoryById(categoryId);
-        checkExistence(category);
-        FoodId foodId = FoodId.create(menuId);
-        checkExistence(category, foodId);
-        category.deleteFoodIdInCategory(foodId);
-    }
+//    @Transactional
+//    public void addFood(Long categoryId, Long menuId) {
+//        menuService.checkExistence(menuRepository.findMenuById(menuId));
+//        Category category = getCategoryById(categoryId);
+//        checkExistence(category);
+//        category.addMenu(FoodId.create(menuId));
+//    }
+//
+//    @Transactional
+//    public void deleteMenuInCategory(Long categoryId, Long menuId) {
+//        Category category = getCategoryById(categoryId);
+//        checkExistence(category);
+//        FoodId foodId = FoodId.create(menuId);
+//        checkExistence(category, foodId);
+//        category.deleteFoodIdInCategory(foodId);
+//    }
 
 
     @Transactional
@@ -83,9 +82,9 @@ public class CategoryService {
         }
     }
 
-    private void checkExistence(Category category, FoodId foodId) {
-        category.findFoodId(foodId);
-    }
+//    private void checkExistence(Category category, FoodId foodId) {
+//        category.findFoodId(foodId);
+//    }
 
     private Category getCategoryById(Long categoryId) {
         return categoryRepository.findCategoryById(categoryId);

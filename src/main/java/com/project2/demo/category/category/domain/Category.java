@@ -1,4 +1,4 @@
-package com.project2.demo.Menu.category.domain;
+package com.project2.demo.category.category.domain;
 
 
 import lombok.NoArgsConstructor;
@@ -23,18 +23,18 @@ public class Category {
     @Embedded
     private Description description;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "foodo_id",
-            joinColumns = @JoinColumn(name = "category_id")
-    )
-    private Set<FoodId> foodIds;
+//    @ElementCollection
+//    @CollectionTable(
+//            name = "foodo_id",
+//            joinColumns = @JoinColumn(name = "category_id")
+//    )
+//    private Set<FoodId> foodIds;
 
 
     private Category(CategoryName categoryName, Description description) {
         this.categoryName = categoryName;
         this.description = description;
-        this.foodIds = new HashSet<>();
+//        this.foodIds = new HashSet<>();
     }
 
     public static Category create(CategoryName categoryName,
@@ -42,20 +42,20 @@ public class Category {
         return new Category(categoryName, description);
     }
 
-    public void addMenu(FoodId foodId) {
+//    public void addMenu(FoodId foodId) {
+//
+//        this.foodIds.add(foodId);
+//    }
 
-        this.foodIds.add(foodId);
-    }
+//    public void findFoodId(FoodId foodId) {
+//        if (!this.foodIds.contains(foodId)){
+//            throw new IllegalArgumentException();
+//        }
+//    }
 
-    public void findFoodId(FoodId foodId) {
-        if (!this.foodIds.contains(foodId)){
-            throw new IllegalArgumentException();
-        }
-    }
-
-    public void deleteFoodIdInCategory(FoodId foodId) {
-        this.foodIds.remove(foodId);
-    }
+//    public void deleteFoodIdInCategory(FoodId foodId) {
+//        this.foodIds.remove(foodId);
+//    }
 
     public Long getId() {
         return this.id;

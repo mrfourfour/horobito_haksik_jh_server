@@ -1,8 +1,8 @@
-package com.project2.demo.Menu.category.controller;
+package com.project2.demo.category.category.controller;
 
 
-import com.project2.demo.Menu.category.service.CategoryDto;
-import com.project2.demo.Menu.category.service.CategoryService;
+import com.project2.demo.category.category.service.CategoryDto;
+import com.project2.demo.category.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

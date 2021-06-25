@@ -1,4 +1,4 @@
-package com.project2.demo.Menu.category.service;
+package com.project2.demo.category.category.service;
 
 
 import lombok.Value;
