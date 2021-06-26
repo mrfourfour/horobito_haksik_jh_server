@@ -2,6 +2,7 @@ package com.project2.demo.category.category.service;
 
 import com.project2.demo.Menu.menu.domain.Menu;
 import com.project2.demo.Menu.menu.service.MenuDto;
+import com.project2.demo.category.categorizedFood.domain.CategorizedFood;
 import com.project2.demo.category.categorizedFood.domain.CategorizedFoodRepository;
 import com.project2.demo.category.categorizedFood.domain.CategoryId;
 import com.project2.demo.category.controller.CategoryParameter;
@@ -56,8 +57,7 @@ public class CategoryService {
 
     public CursoredCategoryDetailDto getDetailInfo(Long categoryId, Long cursor, Pageable page) {
         checkExistence(categoryId);
-        List<MenuDto> menuList = getMenus(categoryId, cursor,  page)
-                .stream().map(this::getMenuDto).collect(Collectors.toList());
+        List<MenuDto> menuList = getMenus(categoryId, cursor,  page);
         return new CursoredCategoryDetailDto(menuList, hasNext(cursor));
 
 
@@ -143,10 +143,15 @@ public class CategoryService {
                 );
     }
 
-    private List<Menu> getMenus(Long categoryId, Long cursor, Pageable page) {
+    private List<MenuDto> getMenus(Long categoryId, Long cursor, Pageable page) {
         return cursor == null ?
-                convertCategorizedFoodToMenu(categorizedFoodRepository. findAllByCategoryIdOrderByIdDesc(CategoryId.create(categoryId), page)) :
-                convertCategorizedFoodToMenu(categorizedFoodRepository.findByCategoryIdAndIdLessThanOrderByIdDesc(CategoryId.create(categoryId), cursor, page));
+                convertCategorizedFoodToMenuDto(categorizedFoodRepository. findAllByCategoryIdOrderByIdDesc(CategoryId.create(categoryId), page)) :
+                convertCategorizedFoodToMenuDto(categorizedFoodRepository.findByCategoryIdAndIdLessThanOrderByIdDesc(CategoryId.create(categoryId), cursor, page));
+    }
+
+    private List<MenuDto> convertCategorizedFoodToMenuDto(List<CategorizedFood> allByCategoryIdOrderByIdDesc) {
+        return allByCategoryIdOrderByIdDesc.stream().map(categorizedFood-> menuRepository.findMenuById(categorizedFood.getCategoryId()))
+                .map(this::getMenuDto).collect(Collectors.toList());
     }
 
     private List<Category> getCategories(Long cursor, Pageable page) {
