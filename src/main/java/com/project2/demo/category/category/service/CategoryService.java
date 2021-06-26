@@ -2,6 +2,8 @@ package com.project2.demo.category.category.service;
 
 import com.project2.demo.Menu.menu.domain.Menu;
 import com.project2.demo.Menu.menu.service.MenuDto;
+import com.project2.demo.category.categorizedFood.domain.CategorizedFoodRepository;
+import com.project2.demo.category.categorizedFood.domain.CategoryId;
 import com.project2.demo.category.controller.CategoryParameter;
 import com.project2.demo.category.category.domain.*;
 import com.project2.demo.Menu.menu.domain.MenuRepository;
@@ -22,6 +24,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final MenuRepository menuRepository;
     private final MenuService menuService;
+    private final CategorizedFoodRepository categorizedFoodRepository;
 
 
     @Transactional
@@ -46,11 +49,16 @@ public class CategoryService {
         return getCategoryDto(category);
     }
 
-    public CategoryDetailDto getDetailInfo(Long categoryId, Long cursor, Pageable page) {
+    public List<CategoryDetailDto> getAllDetails(Long cursor, Pageable page) {
+        return getCategories(cursor, page)
+                .stream().map(this::getCategoryDetailDto).collect(Collectors.toList());
+    }
+
+    public CursoredCategoryDetailDto getDetailInfo(Long categoryId, Long cursor, Pageable page) {
         checkExistence(categoryId);
         List<MenuDto> menuList = getMenus(cursor,  page)
                 .stream().map(this::getMenuDto).collect(Collectors.toList());
-        return new CategoryDetailDto(menuList, hasNext(cursor));
+        return new CursoredCategoryDetailDto(menuList, hasNext(cursor));
 
 
     }
@@ -62,6 +70,17 @@ public class CategoryService {
         checkValidInput(description);
         Category category = getCategoryById(categoryId);
         category.changeTitleAndDescription(title, description);
+    }
+
+    private CategoryDetailDto getCategoryDetailDto(Category category) {
+        return new CategoryDetailDto(
+                category.getId(),
+                category.getCategoryName(),
+                category.getDescription(),
+                categorizedFoodRepository.findAllByCategoryId(CategoryId.create(category.getId())).stream()
+                        .map(categorizedFood-> menuRepository.findMenuById(categorizedFood.getCategoryId()))
+                        .map(this::getMenuDto).collect(Collectors.toList())
+        );
     }
 
     private void checkValidInput(String input) {
@@ -127,5 +146,10 @@ public class CategoryService {
     private List<Menu> getMenus(Long cursor, Pageable page) {
         return cursor == null ? menuRepository.findAllByOrderByIdDesc(page) :
                 menuRepository.findByIdLessThanOrderByIdDesc(cursor, page);
+    }
+
+    private List<Category> getCategories(Long cursor, Pageable page) {
+        return cursor == null ? categoryRepository.findAllByOrderByIdDesc(page) :
+                categoryRepository.findByIdLessThanOrderByIdDesc(cursor, page);
     }
 }
