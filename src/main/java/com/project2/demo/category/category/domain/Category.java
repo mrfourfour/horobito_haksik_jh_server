@@ -68,4 +68,9 @@ public class Category {
     public String  getDescription() {
         return this.description.getDescription();
     }
+
+    public void changeTitleAndDescription(String title, String description) {
+        this.categoryName = CategoryName.create(title);
+        this.description = Description.create(description);
+    }
 }
