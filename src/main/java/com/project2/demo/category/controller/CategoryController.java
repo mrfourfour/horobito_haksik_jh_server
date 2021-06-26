@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/categories")
 @RequiredArgsConstructor
@@ -60,6 +62,19 @@ public class CategoryController {
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+
+    @GetMapping("/details")
+    public ResponseEntity<List<CategoryDetailDto>> getAllDetails(
+            @RequestParam(value = "cursor") Long cursor,
+            @RequestParam(value = "size") int size
+    ){
+        try {
+            return ResponseEntity.ok(categoryService.getAllDetails(cursor, PageRequest.of(0, size)));
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @GetMapping("/{categoryId}/details") // 7. 특정 카테고리 세부 조회
