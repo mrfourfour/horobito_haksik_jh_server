@@ -8,7 +8,6 @@ import com.project2.demo.category.categorizedFood.domain.CategoryId;
 import com.project2.demo.category.controller.CategoryParameter;
 import com.project2.demo.category.category.domain.*;
 import com.project2.demo.Menu.menu.domain.MenuRepository;
-import com.project2.demo.Menu.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,6 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final MenuRepository menuRepository;
-    private final MenuService menuService;
     private final CategorizedFoodRepository categorizedFoodRepository;
 
 
