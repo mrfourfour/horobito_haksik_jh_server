@@ -47,6 +47,15 @@ public class CategoryService {
         return getCategoryDto(category);
     }
 
+    public CategoryDetailDto getDetailInfo(Long categoryId, Long cursor, Pageable page) {
+        checkExistence(categoryId);
+        List<MenuDto> menuList = getMenus(cursor,  page)
+                .stream().map(this::getMenuDto).collect(Collectors.toList());
+        return new CategoryDetailDto(menuList, hasNext(cursor));
+
+
+    }
+
     private CategoryDto getCategoryDto(Category category) {
         return new CategoryDto(
                 category.getId(),
@@ -80,15 +89,6 @@ public class CategoryService {
 
     private Category getCategoryById(Long categoryId) {
         return categoryRepository.findCategoryById(categoryId);
-    }
-
-    public CategoryDetailDto getDetailInfo(Long categoryId, Long cursor, Pageable page) {
-        checkExistence(categoryId);
-        List<MenuDto> menuList = getMenus(cursor,  page)
-                .stream().map(this::getMenuDto).collect(Collectors.toList());
-        return new CategoryDetailDto(menuList, hasNext(cursor));
-
-
     }
 
     private boolean hasNext(Long cursor) {
