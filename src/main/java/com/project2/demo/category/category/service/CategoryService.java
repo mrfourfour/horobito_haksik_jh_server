@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,6 +53,21 @@ public class CategoryService {
         return new CategoryDetailDto(menuList, hasNext(cursor));
 
 
+    }
+
+    @Transactional
+    public void changeTitleAndDescription(Long categoryId, String title, String description) {
+        checkExistence(categoryId);
+        checkValidInput(title);
+        checkValidInput(description);
+        Category category = getCategoryById(categoryId);
+        category.changeTitleAndDescription(title, description);
+    }
+
+    private void checkValidInput(String input) {
+        if (input == null){
+            throw new IllegalArgumentException();
+        }
     }
 
     private CategoryDto getCategoryDto(Category category) {
