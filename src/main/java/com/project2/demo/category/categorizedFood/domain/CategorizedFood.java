@@ -1,6 +1,7 @@
 package com.project2.demo.category.categorizedFood.domain;
 
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -29,6 +30,10 @@ public class CategorizedFood {
 
     public static CategorizedFood create(CategoryId categoryId, MenuId menuId){
         return new CategorizedFood(categoryId, menuId);
+    }
+
+    public Long getCategoryId(){
+        return this.categoryId.getCategoryId();
     }
 
     public void delete(){
