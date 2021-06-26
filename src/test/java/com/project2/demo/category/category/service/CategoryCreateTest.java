@@ -42,14 +42,16 @@ class CategoryCreateTest {
             "this is for tes"
     );
 
-    CategoryService sut = new CategoryService(
-            categoryRepository,
-            menuRepository,
-            categorizedFoodRepository);
 
     @DisplayName("카테고리 생성 1. 정상적인 생성")
     @Test
     public void test1(){
+        CategoryService sut = new CategoryService( // ???????
+                categoryRepository,
+                menuRepository,
+                categorizedFoodRepository);
+
+
         sut.create(categoryParam);
         verify(categoryRepository, times(1)).save(any());
 
