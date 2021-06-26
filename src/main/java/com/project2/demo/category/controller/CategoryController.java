@@ -6,6 +6,7 @@ import com.project2.demo.category.category.service.CategoryDetailDto;
 import com.project2.demo.category.category.service.CategoryDto;
 import com.project2.demo.category.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -67,7 +68,7 @@ public class CategoryController {
             @RequestParam(value = "size") int size
     ){
         try {
-            return ResponseEntity.ok(categoryService.getDetailInfo(categoryId, cursor, size));
+            return ResponseEntity.ok(categoryService.getDetailInfo(categoryId, cursor, PageRequest.of(0, size)));
         }catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().build();
         }
