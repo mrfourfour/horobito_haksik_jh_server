@@ -145,8 +145,8 @@ public class CategoryService {
 
     private List<Menu> getMenus(Long categoryId, Long cursor, Pageable page) {
         return cursor == null ?
-                convertCategorizedFoodToMenu(categorizedFoodRepository.findAllByOrderByIdDesc(page)) :
-                convertCategorizedFoodToMenu(categorizedFoodRepository.findByIdLessThanOrderByIdDesc(cursor, page));
+                convertCategorizedFoodToMenu(categorizedFoodRepository. findAllByCategoryIdOrderByIdDesc(CategoryId.create(categoryId), page)) :
+                convertCategorizedFoodToMenu(categorizedFoodRepository.findByCategoryIdAndIdLessThanOrderByIdDesc(CategoryId.create(categoryId), cursor, page));
     }
 
     private List<Category> getCategories(Long cursor, Pageable page) {
