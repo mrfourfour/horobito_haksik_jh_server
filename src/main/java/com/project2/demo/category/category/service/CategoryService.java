@@ -56,7 +56,7 @@ public class CategoryService {
 
     public CursoredCategoryDetailDto getDetailInfo(Long categoryId, Long cursor, Pageable page) {
         checkExistence(categoryId);
-        List<MenuDto> menuList = getMenus(cursor,  page)
+        List<MenuDto> menuList = getMenus(categoryId, cursor,  page)
                 .stream().map(this::getMenuDto).collect(Collectors.toList());
         return new CursoredCategoryDetailDto(menuList, hasNext(cursor));
 
@@ -143,9 +143,10 @@ public class CategoryService {
                 );
     }
 
-    private List<Menu> getMenus(Long cursor, Pageable page) {
-        return cursor == null ? menuRepository.findAllByOrderByIdDesc(page) :
-                menuRepository.findByIdLessThanOrderByIdDesc(cursor, page);
+    private List<Menu> getMenus(Long categoryId, Long cursor, Pageable page) {
+        return cursor == null ?
+                convertCategorizedFoodToMenu(categorizedFoodRepository.findAllByOrderByIdDesc(page)) :
+                convertCategorizedFoodToMenu(categorizedFoodRepository.findByIdLessThanOrderByIdDesc(cursor, page));
     }
 
     private List<Category> getCategories(Long cursor, Pageable page) {
