@@ -6,6 +6,7 @@ import com.project2.demo.category.category.service.CategoryDetailDto;
 import com.project2.demo.category.category.service.CategoryDto;
 import com.project2.demo.category.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,5 +73,25 @@ public class CategoryController {
         }catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<Void> changeTitleAndDescription(
+            @PathVariable Long categoryId,
+            @RequestBody ChangeInfo changeInfo
+    ){
+        try {
+            categoryService.changeTitleAndDescription(
+                    categoryId, changeInfo.getTitle(), changeInfo.getDescription());
+            return ResponseEntity.ok().build();
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @Value
+    private class ChangeInfo {
+        String title;
+        String description;
     }
 }
