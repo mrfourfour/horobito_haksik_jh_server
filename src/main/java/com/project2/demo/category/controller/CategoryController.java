@@ -2,6 +2,7 @@ package com.project2.demo.category.controller;
 
 
 import com.project2.demo.category.categorizedFood.service.CategorizedFoodService;
+import com.project2.demo.category.category.service.CategoryDetailDto;
 import com.project2.demo.category.category.service.CategoryDto;
 import com.project2.demo.category.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,19 @@ public class CategoryController {
             return ResponseEntity.ok().build();
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @GetMapping("/{categoryId}/details") // 7. 특정 카테고리 세부 조회
+    public ResponseEntity<CategoryDetailDto> getDetailCategoryInfo(
+            @PathVariable Long categoryId,
+            @RequestParam(value = "cursor") Long cursor,
+            @RequestParam(value = "size") int size
+    ){
+        try {
+            return ResponseEntity.ok(categoryService.getDetailInfo(categoryId, cursor, size));
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().build();
         }
     }
 }
