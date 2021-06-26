@@ -64,4 +64,21 @@ public class CategoryDeleteTest {
 
     }
 
+    @DisplayName("카테고리 삭제 2. 해당 카테고리가 존재하지 않은 경우")
+    @Test
+    public void test2(){
+        CategoryService sut = new CategoryService( // ???????
+                categoryRepository,
+                menuRepository,
+                categorizedFoodRepository);
+
+        when(categoryRepository.findCategoryById(anyLong()))
+                .thenReturn(null);
+
+        ;
+        assertThrows(IllegalArgumentException.class, ()-> sut.deleteCategory(anyLong()) );
+
+
+    }
+
 }
