@@ -28,22 +28,22 @@ public class CategoryController {
         categorizedFoodService.addFoodInCategory(categoryId, menuId);
     }
 
-    @GetMapping("/{categoryId}}")
-    public ResponseEntity<CategoryDto> getCategoryInfo(@PathVariable Long categoryId){
+    @DeleteMapping("/{categoryId}/{menuId}")
+    public ResponseEntity<Void> deleteMenuInCategory(@PathVariable Long categoryId,
+                                                     @PathVariable Long menuId){
+
         try {
-            return ResponseEntity.ok(categoryService.getCategoryInfo(categoryId));
+            categorizedFoodService.deleteMenuInCategory(categoryId, menuId);
+            return ResponseEntity.ok().build();
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    @DeleteMapping("/{categoryId}/{menuId}")
-    public ResponseEntity<Void> deleteMenuInCategory(@PathVariable Long categoryId,
-                              @PathVariable Long menuId){
-
+    @GetMapping("/{categoryId}}")
+    public ResponseEntity<CategoryDto> getCategoryInfo(@PathVariable Long categoryId){
         try {
-            categorizedFoodService.deleteMenuInCategory(categoryId, menuId);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(categoryService.getCategoryInfo(categoryId));
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
