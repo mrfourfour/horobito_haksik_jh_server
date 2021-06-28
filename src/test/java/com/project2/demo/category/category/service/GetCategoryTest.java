@@ -82,5 +82,21 @@ public class GetCategoryTest {
         assertThrows(IllegalArgumentException.class, () ->sut.get(id));
     }
 
+    @DisplayName("getTest 3. Abnormal condition- category is null")
+    @Test
+    public void test3(){
+        CategoryService sut = new CategoryService(
+                categoryRepository,
+                menuRepository,
+                categorizedFoodRepository);
+
+        when(categoryRepository.findCategoryById(anyLong())).thenReturn(null);
+
+        Long id = Long.parseLong("1");
+
+        assertThrows(IllegalArgumentException.class, () ->sut.get(id));
+    }
+
+
 
 }
