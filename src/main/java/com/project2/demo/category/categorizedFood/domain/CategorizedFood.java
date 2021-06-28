@@ -26,6 +26,7 @@ public class CategorizedFood {
     private CategorizedFood(CategoryId categoryId, MenuId menuId) {
         this.categoryId = categoryId;
         this.menuId = menuId;
+        this.deleted = false;
     }
 
     public static CategorizedFood create(CategoryId categoryId, MenuId menuId){
