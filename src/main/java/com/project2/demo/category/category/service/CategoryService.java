@@ -43,12 +43,6 @@ public class CategoryService {
         category.delete();
     }
 
-    private void checkAlreadyDeleted(Category category) {
-        if (category.checkDeleted()){
-            throw new IllegalArgumentException();
-        }
-    }
-
     public CategoryDto get(Long categoryId) {
         Category category = getCategoryById(categoryId);
         checkExistence(category);
@@ -90,6 +84,12 @@ public class CategoryService {
 
     private void checkValidInput(String input) {
         if (input == null){
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void checkAlreadyDeleted(Category category) {
+        if (category.checkDeleted()){
             throw new IllegalArgumentException();
         }
     }
