@@ -48,6 +48,12 @@ public class GetCategoryTest {
             CategoryName.create("test"),
             Description.create("for Test"));
 
+    Category deletedCategoryForTest
+            = CategoryHelper.create(
+            Long.parseLong("1"),
+            CategoryName.create("test"),
+            Description.create("for Test"));
+
     @DisplayName("getTest 1. Normal condition")
     @Test
     public void test(){
@@ -59,6 +65,21 @@ public class GetCategoryTest {
         Long id = Long.parseLong("1");
         when(categoryRepository.findCategoryById(anyLong())).thenReturn(categoryForTest);
         System.out.println(sut.get(id).toString());
+    }
+
+    @DisplayName("getTest 2. Abnormal condition- category is already deleted")
+    @Test
+    public void test2(){
+        CategoryService sut = new CategoryService(
+                categoryRepository,
+                menuRepository,
+                categorizedFoodRepository);
+        deletedCategoryForTest.delete();
+        when(categoryRepository.findCategoryById(anyLong())).thenReturn(deletedCategoryForTest);
+
+        Long id = Long.parseLong("1");
+
+        assertThrows(IllegalArgumentException.class, () ->sut.get(id));
     }
 
 

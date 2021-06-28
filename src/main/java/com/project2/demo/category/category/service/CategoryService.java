@@ -46,6 +46,7 @@ public class CategoryService {
     public CategoryDto get(Long categoryId) {
         Category category = getCategoryById(categoryId);
         checkExistence(category);
+        checkAlreadyDeleted(category);
         return getCategoryDto(category);
     }
 
