@@ -42,7 +42,7 @@ public class CategoryService {
         categoryRepository.delete(category);
     }
 
-    public CategoryDto getCategoryInfo(Long categoryId) {
+    public CategoryDto get(Long categoryId) {
         Category category = getCategoryById(categoryId);
         checkExistence(category);
         return getCategoryDto(category);

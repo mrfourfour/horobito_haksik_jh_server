@@ -49,7 +49,7 @@ public class CategoryController {
     @GetMapping("/{categoryId}}")
     public ResponseEntity<CategoryDto> getCategoryInfo(@PathVariable Long categoryId){
         try {
-            return ResponseEntity.ok(categoryService.getCategoryInfo(categoryId));
+            return ResponseEntity.ok(categoryService.get(categoryId));
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
