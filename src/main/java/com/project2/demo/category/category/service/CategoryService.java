@@ -160,7 +160,7 @@ public class CategoryService {
     }
 
     private List<Category> getCategories(Long cursor, Pageable page) {
-        return cursor == null ? categoryRepository.findAllByOrderByIdDesc(page) :
-                categoryRepository.findByIdLessThanOrderByIdDesc(cursor, page);
+        return cursor == null ? categoryRepository.findAllByDeletedOrderByIdDesc(false, page) :
+                categoryRepository.findByIdAndDeletedLessThanOrderByIdDesc(cursor, false, page);
     }
 }

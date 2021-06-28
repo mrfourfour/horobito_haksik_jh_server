@@ -10,7 +10,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Category findCategoryById(Long categoryId);
 
-    List<Category> findAllByOrderByIdDesc(Pageable page);
+    List<Category> findAllByDeletedOrderByIdDesc(boolean deleted,Pageable page);
 
-    List<Category> findByIdLessThanOrderByIdDesc(Long cursor, Pageable page);
+    List<Category> findByIdAndDeletedLessThanOrderByIdDesc(Long cursor, boolean deleted, Pageable page);
 }
