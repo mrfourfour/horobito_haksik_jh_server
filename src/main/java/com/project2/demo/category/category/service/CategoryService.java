@@ -39,7 +39,14 @@ public class CategoryService {
     public void deleteCategory(Long categoryId) {
         Category category = getCategoryById(categoryId);
         checkExistence(category);
-        categoryRepository.delete(category);
+        checkAlreadyDeleted(category);
+        category.delete();
+    }
+
+    private void checkAlreadyDeleted(Category category) {
+        if (category.checkDeleted()){
+            throw new IllegalArgumentException();
+        }
     }
 
     public CategoryDto get(Long categoryId) {
