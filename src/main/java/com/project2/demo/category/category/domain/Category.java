@@ -25,6 +25,8 @@ public class Category {
     @Embedded
     private Description description;
 
+    private boolean deleted;
+
 //    @ElementCollection
 //    @CollectionTable(
 //            name = "foodo_id",
@@ -32,16 +34,23 @@ public class Category {
 //    )
 //    private Set<FoodId> foodIds;
 
-
     private Category(CategoryName categoryName, Description description) {
         this.categoryName = categoryName;
         this.description = description;
 //        this.foodIds = new HashSet<>();
     }
 
+    public boolean checkDeleted(){
+        return this.deleted;
+    }
+
     public static Category create(CategoryName categoryName,
                                   Description description){
         return new Category(categoryName, description);
+    }
+
+    public void delete(){
+        this.deleted = true;
     }
 
 //    public void addMenu(FoodId foodId) {
