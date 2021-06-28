@@ -46,6 +46,13 @@ public class CategoryDeleteTest {
             CategoryName.create("test"),
             Description.create("for Test"));
 
+    Category deletedCategoryForTest
+            = CategoryHelper.create(
+            Long.parseLong("1"),
+            CategoryName.create("test"),
+            Description.create("for Test"));
+
+
     @DisplayName("카테고리 삭제 1. 정상적인 삭제의 경우")
     @Test
     public void test1(){
@@ -80,5 +87,22 @@ public class CategoryDeleteTest {
 
 
     }
+
+    @DisplayName("카테고리 삭제 3. 해당 카테고리가 이미 삭제된 경우 ")
+    @Test
+    public void test3(){
+        CategoryService sut = new CategoryService( // ???????
+                categoryRepository,
+                menuRepository,
+                categorizedFoodRepository);
+        deletedCategoryForTest.delete();
+        when(categoryRepository.findCategoryById(anyLong()))
+                .thenReturn(deletedCategoryForTest);
+        assertThrows(IllegalArgumentException.class, ()-> sut.deleteCategory(anyLong()) );
+
+
+    }
+
+
 
 }
