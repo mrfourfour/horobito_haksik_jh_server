@@ -9,9 +9,9 @@ import java.util.List;
 public interface CategorizedFoodRepository extends JpaRepository<CategorizedFood, Long> {
     CategorizedFood findByCategoryIdAndMenuId(CategoryId categoryId, MenuId menuId);
 
-    List<CategorizedFood> findAllByCategoryId(CategoryId categoryId);
+    List<CategorizedFood> findAllByCategoryIdAndDeleted(CategoryId categoryId, boolean deleted);
 
-    List<CategorizedFood> findAllByCategoryIdOrderByIdDesc(CategoryId categoryId, Pageable page);
+    List<CategorizedFood> findAllByCategoryIdAndDeletedOrderByIdDesc(CategoryId categoryId, boolean deleted, Pageable page);
 
-    List<CategorizedFood> findByCategoryIdAndIdLessThanOrderByIdDesc(CategoryId categoryId, Long cursor, Pageable page);
+    List<CategorizedFood> findByCategoryIdAndDeletedAndIdLessThanOrderByIdDesc(CategoryId categoryId, boolean deleted, Long cursor, Pageable page);
 }

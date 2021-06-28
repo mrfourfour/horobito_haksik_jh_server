@@ -68,6 +68,7 @@ public class CategoryService {
         checkValidInput(title);
         checkValidInput(description);
         Category category = getCategoryById(categoryId);
+        checkAlreadyDeleted(category);
         category.changeTitleAndDescription(title, description);
     }
 
@@ -76,7 +77,7 @@ public class CategoryService {
                 category.getId(),
                 category.getCategoryName(),
                 category.getDescription(),
-                categorizedFoodRepository.findAllByCategoryId(CategoryId.create(category.getId())).stream()
+                categorizedFoodRepository.findAllByCategoryIdAndDeleted(CategoryId.create(category.getId()), false).stream()
                         .map(categorizedFood-> menuRepository.findMenuById(categorizedFood.getCategoryId()))
                         .map(this::getMenuDto).collect(Collectors.toList())
         );
@@ -150,8 +151,8 @@ public class CategoryService {
 
     private List<MenuDto> getMenus(Long categoryId, Long cursor, Pageable page) {
         return cursor == null ?
-                convertCategorizedFoodToMenuDto(categorizedFoodRepository.findAllByCategoryIdOrderByIdDesc(CategoryId.create(categoryId), page)) :
-                convertCategorizedFoodToMenuDto(categorizedFoodRepository.findByCategoryIdAndIdLessThanOrderByIdDesc(CategoryId.create(categoryId), cursor, page));
+                convertCategorizedFoodToMenuDto(categorizedFoodRepository.findAllByCategoryIdAndDeletedOrderByIdDesc( CategoryId.create(categoryId), false, page)) :
+                convertCategorizedFoodToMenuDto(categorizedFoodRepository.findByCategoryIdAndDeletedAndIdLessThanOrderByIdDesc(CategoryId.create(categoryId), false, cursor, page));
     }
 
     private List<MenuDto> convertCategorizedFoodToMenuDto(List<CategorizedFood> allByCategoryIdOrderByIdDesc) {
