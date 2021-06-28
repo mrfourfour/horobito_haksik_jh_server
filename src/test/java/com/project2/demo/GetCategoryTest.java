@@ -9,6 +9,7 @@ import com.project2.demo.category.category.domain.CategoryName;
 import com.project2.demo.category.category.domain.CategoryRepository;
 import com.project2.demo.category.category.domain.Description;
 import com.project2.demo.category.category.service.CategoryHelper;
+import com.project2.demo.category.category.service.CategoryService;
 import com.project2.demo.category.controller.CategoryParameter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,4 +47,19 @@ public class GetCategoryTest {
             Long.parseLong("1"),
             CategoryName.create("test"),
             Description.create("for Test"));
+
+    @DisplayName("getTest 1. Normal condition")
+    @Test
+    public void test(){
+        CategoryService sut = new CategoryService(
+                categoryRepository,
+                menuRepository,
+                categorizedFoodRepository);
+
+        Long id = Long.parseLong("1");
+        when(categoryRepository.findCategoryById(anyLong())).thenReturn(categoryForTest);
+        System.out.println(sut.get(id).toString());
+    }
+
+
 }
