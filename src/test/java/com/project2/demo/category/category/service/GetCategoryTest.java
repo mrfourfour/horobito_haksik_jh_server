@@ -1,4 +1,4 @@
-package com.project2.demo;
+package com.project2.demo.category.category.service;
 
 
 import com.project2.demo.Menu.menu.domain.*;
