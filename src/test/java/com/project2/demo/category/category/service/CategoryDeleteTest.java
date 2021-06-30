@@ -35,10 +35,9 @@ public class CategoryDeleteTest {
     CategoryRepository categoryRepository;
 
     @Mock
-    MenuRepository menuRepository;
-
-    @Mock
     CategorizedFoodRepository categorizedFoodRepository;
+    @Mock
+    MenuRepository menuRepository;
 
     Category categoryForTest
             = CategoryHelper.create(
