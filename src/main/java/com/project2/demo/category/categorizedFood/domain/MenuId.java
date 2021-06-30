@@ -9,13 +9,13 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class MenuId {
 
-    private Long foodId;
+    private Long menuId;
 
-    private MenuId(Long foodId) {
-        this.foodId = foodId;
+    private MenuId(Long menuId) {
+        this.menuId = menuId;
     }
 
-    public static MenuId create(Long foodId){
-        return new MenuId(foodId);
+    public static MenuId create(Long menuId){
+        return new MenuId(menuId);
     }
 }
