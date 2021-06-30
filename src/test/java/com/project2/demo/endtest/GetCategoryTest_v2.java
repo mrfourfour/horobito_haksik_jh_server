@@ -44,7 +44,41 @@ public class GetCategoryTest_v2 {
 
 
 
-        List<CategoryDetailDto> result = sut.getAllDetails(6, page);
+        List<CategoryDetailDto> result = sut.getAllDetails(6L, page);
+
+        for (CategoryDetailDto detailDto : result){
+            System.out.println("categoryId : " + detailDto.getCategoryId());
+            System.out.println(detailDto.getCategory());
+            System.out.println(detailDto.getDescription());
+            for (MenuDto dto : detailDto.getMenuDtoList()){
+                System.out.println(dto.getId());
+                System.out.println(dto.getTitle());
+                System.out.println("wow"+dto.getDescription());
+                System.out.println(dto.getImageURL());
+                System.out.println(dto.getPrice());
+                System.out.println(dto.getStartTime().toString());
+                System.out.println(dto.getEndTime().toString());
+            }
+            System.out.println();
+        }
+
+
+    }
+
+    @DisplayName("getAllDetailsTest 2. 정상 테스트 2.  cursor is null")
+    @Test
+    public void getTest2(){
+        CategoryService sut = new CategoryService(
+                categoryRepository,
+                menuRepository,
+                categorizedFoodRepository
+        );
+
+        Pageable page = PageRequest.of(0, 5);
+
+
+
+        List<CategoryDetailDto> result = sut.getAllDetails(null, page);
 
         for (CategoryDetailDto detailDto : result){
             System.out.println("categoryId : " + detailDto.getCategoryId());
