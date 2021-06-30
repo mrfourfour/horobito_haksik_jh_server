@@ -12,5 +12,5 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     List<Category> findAllByDeletedOrderByIdDesc(boolean deleted,Pageable page);
 
-    List<Category> findByIdAndDeletedLessThanOrderByIdDesc(Long cursor, boolean deleted, Pageable page);
+    List<Category> findByIdLessThanAndDeletedOrderByIdDesc(Long id, boolean deleted, Pageable page);
 }
