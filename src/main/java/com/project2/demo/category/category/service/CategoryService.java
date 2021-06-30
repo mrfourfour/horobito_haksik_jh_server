@@ -153,7 +153,7 @@ public class CategoryService {
     private List<MenuDto> getMenus(Long categoryId, Long cursor, Pageable page) {
         return cursor == null ?
                 convertCategorizedFoodToMenuDto(categorizedFoodRepository.findAllByCategoryIdAndDeletedOrderByIdDesc( CategoryId.create(categoryId), false, page)) :
-                convertCategorizedFoodToMenuDto(categorizedFoodRepository.findByCategoryIdAndDeletedAndIdLessThanOrderByIdDesc(CategoryId.create(categoryId), false, cursor, page));
+                convertCategorizedFoodToMenuDto(categorizedFoodRepository.findByIdLessThanAndCategoryIdAndDeletedOrderByIdDesc(cursor, CategoryId.create(categoryId), false, page));
     }
 
     private List<MenuDto> convertCategorizedFoodToMenuDto(List<CategorizedFood> allByCategoryIdOrderByIdDesc) {

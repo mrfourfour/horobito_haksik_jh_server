@@ -1,6 +1,5 @@
 package com.project2.demo.category.categorizedFood.domain;
 
-import com.project2.demo.Menu.menu.service.MenuDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,5 +12,5 @@ public interface CategorizedFoodRepository extends JpaRepository<CategorizedFood
 
     List<CategorizedFood> findAllByCategoryIdAndDeletedOrderByIdDesc(CategoryId categoryId, boolean deleted, Pageable page);
 
-    List<CategorizedFood> findByCategoryIdAndDeletedAndIdLessThanOrderByIdDesc(CategoryId categoryId, boolean deleted, Long cursor, Pageable page);
+    List<CategorizedFood> findByIdLessThanAndCategoryIdAndDeletedOrderByIdDesc(Long cursor, CategoryId categoryId, boolean deleted, Pageable page);
 }
