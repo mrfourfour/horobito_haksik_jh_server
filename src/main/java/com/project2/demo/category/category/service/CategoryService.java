@@ -58,9 +58,11 @@ public class CategoryService {
     public CursoredCategoryDetailDto getDetailInfo(Long categoryId, Long cursor, Pageable page) {
         checkExistence(categoryId);
         List<MenuDto> menuList = getMenus(categoryId, cursor,  page);
-        return new CursoredCategoryDetailDto(menuList, hasNext(cursor));
+        return new CursoredCategoryDetailDto(menuList, hasNext(categoryId, getLastIndex(menuList)));
+    }
 
-
+    private Long getLastIndex(List<MenuDto> menuList) {
+        return (menuList.isEmpty()) ? null : menuList.get(menuList.size()-1).getId();
     }
 
     @Transactional
@@ -131,11 +133,11 @@ public class CategoryService {
         return categoryRepository.findCategoryById(categoryId);
     }
 
-    private boolean hasNext(Long cursor) {
+    private boolean hasNext(Long categoryId, Long cursor) {
         if (cursor == null){
             return false;
         }
-        return menuRepository.existsByIdLessThan(cursor);
+        return categorizedFoodRepository.existsByIdLessThanAndCategoryId(cursor, CategoryId.create(categoryId));
     }
 
     private MenuDto getMenuDto(Menu menu) {
@@ -157,7 +159,7 @@ public class CategoryService {
     }
 
     private List<MenuDto> convertCategorizedFoodToMenuDto(List<CategorizedFood> allByCategoryIdOrderByIdDesc) {
-        return allByCategoryIdOrderByIdDesc.stream().map(categorizedFood-> menuRepository.findMenuById(categorizedFood.getCategoryId()))
+        return allByCategoryIdOrderByIdDesc.stream().map(categorizedFood-> menuRepository.findMenuById(categorizedFood.getMenuId()))
                 .map(this::getMenuDto).collect(Collectors.toList());
     }
 
