@@ -13,4 +13,6 @@ public interface CategorizedFoodRepository extends JpaRepository<CategorizedFood
     List<CategorizedFood> findAllByCategoryIdAndDeletedOrderByIdDesc(CategoryId categoryId, boolean deleted, Pageable page);
 
     List<CategorizedFood> findByIdLessThanAndCategoryIdAndDeletedOrderByIdDesc(Long cursor, CategoryId categoryId, boolean deleted, Pageable page);
+
+    boolean existsByIdLessThanAndCategoryId(Long cursor, CategoryId categoryId);
 }
