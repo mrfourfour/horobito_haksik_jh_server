@@ -106,7 +106,7 @@ public class CategoryController {
     }
 
     @Value
-    private class ChangeInfo {
+    static class ChangeInfo {
         String title;
         String description;
     }
