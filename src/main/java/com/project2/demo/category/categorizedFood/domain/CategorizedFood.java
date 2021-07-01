@@ -40,4 +40,12 @@ public class CategorizedFood {
     public void delete(){
         this.deleted = true;
     }
+
+    public boolean checkDeleted() {
+        return this.deleted;
+    }
+
+    public Long getMenuId() {
+        return this.menuId.getMenuId();
+    }
 }
