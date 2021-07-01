@@ -37,11 +37,18 @@ public class CategorizedFoodService {
     public void deleteMenuInCategory(Long categoryId, Long menuId) {
         menuService.checkExistence(menuId);
         categoryService.checkExistence(categoryId);
-        checkAlreadyExistence(categoryId, menuId);
+        checkExistence(categoryId, menuId);
         CategorizedFood categorizedFood =
                 categorizedFoodRepository.findByCategoryIdAndMenuId(CategoryId.create(categoryId), MenuId.create(menuId));
+        checkAlreadyDeleted(categorizedFood);
         categorizedFood.delete();
 
+    }
+
+    private void checkAlreadyDeleted(CategorizedFood categorizedFood) {
+        if (categorizedFood.checkDeleted()){
+            throw new IllegalArgumentException();
+        }
     }
 
     private void checkAlreadyExistence(Long categoryId, Long menuId) {
@@ -50,9 +57,11 @@ public class CategorizedFoodService {
         }
     }
 
-//
-//
-//    private void checkExistence(Category category, FoodId foodId) {
-//        category.findFoodId(foodId);
-//    }
+
+
+    private void checkExistence(Long categoryId, Long menuId) {
+        if (categorizedFoodRepository.findByCategoryIdAndMenuId(CategoryId.create(categoryId), MenuId.create(menuId))==null){
+            throw new IllegalArgumentException();
+        }
+    }
 }
