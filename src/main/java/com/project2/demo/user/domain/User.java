@@ -18,13 +18,17 @@ public class User {
     @Embedded
     public Username username;
 
+    @Embedded
+    public Password password;
 
-    private User(Username username) {
+
+    private User(Username username, Password password) {
         this.username = username;
+        this.password = password;
     }
 
-    public static User create(Username username) {
-        return new User(username);
+    public static User create(Username username, Password password) {
+        return new User(username, password);
     }
 
     public String getUsername(){

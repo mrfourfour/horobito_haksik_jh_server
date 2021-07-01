@@ -1,4 +1,4 @@
-package com.project2.demo.Menu.category.domain;
+package com.project2.demo.category.category.domain;
 
 
 import lombok.Getter;

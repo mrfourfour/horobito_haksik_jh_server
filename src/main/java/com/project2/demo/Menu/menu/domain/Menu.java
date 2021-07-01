@@ -31,12 +31,29 @@ public class Menu {
     private MenuDescription menuDescription;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(
+                    name = "limited",
+                    column = @Column(name = "limited")),
+            @AttributeOverride(
+                    name = "startTime",
+                    column = @Column(name = "start_time")),
+            @AttributeOverride(
+            name = "endTime",
+            column = @Column(name = "end_time")
+            )
+    })
     private Time salesTime;
 
     @Embedded
+    @Column(name = "amount_of_food_left")
     private AmountOfFoodLeft amountOfFoodLeft;
 
     @Embedded
+    @AttributeOverride(
+            name = "imageURL",
+            column = @Column(name = "image_url")
+    )
     private ImageURL imageURL;
 
     @Embedded
@@ -150,7 +167,7 @@ public class Menu {
     }
 
     public int getPrice() {
-        return this.price.getPrioce();
+        return this.price.getPrice();
     }
 
     public String  getMenuDescription() {

@@ -51,7 +51,7 @@ public class UserController {
     @PostMapping("/sign-up")
     public LoginResponse signUp(@RequestBody SignUpRequest signUpRequest){
         Token token = userService.signUp(signUpRequest.to());
-        userService.save(signUpRequest.getUsername());
+        userService.save(signUpRequest.getUsername(), signUpRequest.getPassword());
         return new LoginResponse(token);
     }
 

@@ -4,6 +4,7 @@ package com.project2.demo.user.service;
 import com.project2.demo.keycloak.service.Token;
 import com.project2.demo.keycloak.service.TokenProvider;
 import com.project2.demo.keycloak.service.TokenRequest;
+import com.project2.demo.user.domain.Password;
 import com.project2.demo.user.domain.User;
 import com.project2.demo.user.domain.UserRepository;
 import com.project2.demo.user.domain.Username;
@@ -55,7 +56,8 @@ public class UserService {
     }
 
     @Transactional
-    public void save(String username) {
-        userRepository.save(User.create(Username.create(username)));
+    public void save(String username, String password) {
+        userRepository.save(User.create(Username.create(username), Password.create(password)));
     }
+
 }
